@@ -1,34 +1,44 @@
 export const metadata = {
   title: "FAQ | Narostack Digital LLC",
   description:
-    "Frequently asked questions about Narostack Digital LLC digital products, delivery, refunds, invoices, and support.",
+    "Frequently asked questions about Narostack Digital LLC downloadable digital products, delivery, refunds, invoices, and product access.",
 };
 
 const faqs = [
   {
     question: "What does Narostack Digital LLC sell?",
     answer:
-      "Narostack Digital LLC sells digital IT services and one-time digital products for small businesses, including website templates, automation kits, cloud setup guides, cybersecurity checklists, digital branding kits, and IT support consultation packages.",
+      "Narostack Digital LLC sells downloadable digital products for small businesses, including website templates, automation templates, cloud setup guides, digital branding kits, and business resource packs.",
+  },
+  {
+    question: "Are these physical products?",
+    answer:
+      "No. All listed products are digital products. They are delivered electronically by email, download link, or online access after payment confirmation.",
   },
   {
     question: "How are products delivered?",
     answer:
-      "Products and services are delivered electronically by email, download, or online access after payment confirmation. No physical shipping is required.",
+      "Products are delivered electronically by email, download link, or online access after payment confirmation. Customers must provide a valid email address for delivery.",
   },
   {
     question: "Can I pay online now?",
     answer:
-      "Online payment integration is coming soon. At this time, customers can request an invoice and receive payment instructions by email.",
+      "Online payment integration is being prepared. At this time, customers can request an invoice and receive payment instructions by email.",
   },
   {
     question: "Do you offer refunds?",
     answer:
-      "Because our products are digital, refunds are limited once a product has been delivered or accessed. If there is a duplicate payment, incorrect charge, or delivery issue, customers should contact us for review.",
+      "Because products are digital, refunds may be limited once a product has been delivered, accessed, or downloaded. Refund requests may be reviewed for duplicate payments, incorrect charges, non-delivery, or technical delivery issues.",
   },
   {
-    question: "Do you provide custom IT services?",
+    question: "Does the cloud guide include cloud accounts?",
     answer:
-      "Yes. We provide digital IT services such as website assistance, cloud setup guidance, business automation support, cybersecurity assistance, branding support, and IT consultation.",
+      "No. The Cloud Setup Guide is a downloadable guide only. It does not include any paid cloud account, live account setup, infrastructure access, or third-party platform account.",
+  },
+  {
+    question: "Can I request an invoice?",
+    answer:
+      "Yes. Customers can request an invoice through the checkout page. Invoice and payment instructions are sent by email.",
   },
   {
     question: "How can I contact support?",
@@ -48,9 +58,21 @@ export default function FAQPage() {
         </h1>
 
         <p className="mt-5 text-lg leading-8 text-slate-600">
-          Find answers about Narostack Digital LLC products, delivery, payment
-          process, refunds, and support.
+          Find answers about Narostack Digital LLC downloadable products,
+          digital delivery, invoice requests, refunds, and product access.
         </p>
+
+        <div className="mt-8 rounded-2xl border border-blue-100 bg-blue-50 p-5">
+          <p className="font-semibold text-slate-950">
+            Digital product store notice
+          </p>
+
+          <p className="mt-2 text-sm leading-6 text-slate-700">
+            Narostack Digital LLC sells downloadable digital resources only.
+            Products are delivered electronically by email, download link, or
+            online access.
+          </p>
+        </div>
 
         <div className="mt-10 grid gap-5">
           {faqs.map((faq) => (
@@ -61,6 +83,7 @@ export default function FAQPage() {
               <h2 className="text-lg font-bold text-slate-950">
                 {faq.question}
               </h2>
+
               <p className="mt-3 leading-7 text-slate-600">{faq.answer}</p>
             </div>
           ))}

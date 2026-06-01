@@ -3,10 +3,10 @@ import {
   ArrowRight,
   CheckCircle2,
   Cloud,
-  Lock,
+  Download,
+  FileText,
   Mail,
   PackageCheck,
-  ShieldCheck,
   Sparkles,
 } from "lucide-react";
 import ProductCard from "@/components/ProductCard";
@@ -19,17 +19,18 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-6xl gap-10 px-6 py-20 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div>
             <span className="inline-flex rounded-full bg-blue-100 px-4 py-2 text-sm font-semibold text-blue-700">
-              Digital IT Services & Software Products
+              Downloadable Digital Products for Small Businesses
             </span>
 
             <h1 className="mt-6 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">
-              Practical digital products and IT services for small businesses.
+              Practical digital templates, guides, and resource packs for small
+              businesses.
             </h1>
 
             <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
-              Narostack Digital LLC provides website templates, automation
-              resources, cloud setup guidance, cybersecurity checklists, digital
-              branding kits, and IT support services delivered online.
+              Narostack Digital LLC sells downloadable digital products,
+              including website templates, automation templates, cloud setup
+              guides, digital branding kits, and business resource packs.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -54,13 +55,15 @@ export default function HomePage() {
                 <CheckCircle2 className="h-5 w-5 text-blue-600" />
                 One-time digital products
               </div>
+
               <div className="flex items-center gap-2">
                 <Mail className="h-5 w-5 text-blue-600" />
                 Email/download delivery
               </div>
+
               <div className="flex items-center gap-2">
-                <ShieldCheck className="h-5 w-5 text-blue-600" />
-                Business-focused support
+                <Download className="h-5 w-5 text-blue-600" />
+                Online access available
               </div>
             </div>
           </div>
@@ -70,13 +73,15 @@ export default function HomePage() {
               <p className="text-sm font-semibold text-blue-300">
                 Narostack Digital LLC
               </p>
+
               <h2 className="mt-4 text-3xl font-bold">
-                Professional digital solutions for modern small businesses.
+                Downloadable resources for business planning.
               </h2>
+
               <p className="mt-4 text-slate-300">
-                Build your online presence, improve workflows, organize cloud
-                tools, and strengthen digital operations with simple products
-                and services.
+                Prepare your website structure, organize workflows, plan cloud
+                setup, and build a cleaner brand foundation using digital
+                templates, guides, and checklists.
               </p>
             </div>
 
@@ -85,22 +90,22 @@ export default function HomePage() {
                 {
                   icon: Sparkles,
                   title: "Website Templates",
-                  text: "Professional layouts for business websites.",
+                  text: "Downloadable website layout and content structure resources.",
                 },
                 {
                   icon: Cloud,
-                  title: "Cloud Guidance",
-                  text: "Simple setup resources for small teams.",
+                  title: "Cloud Guides",
+                  text: "Digital guides for organizing files, access, and cloud planning.",
                 },
                 {
-                  icon: Lock,
-                  title: "Cybersecurity",
-                  text: "Basic checklists for business protection.",
+                  icon: FileText,
+                  title: "Planning Templates",
+                  text: "Simple templates for workflow and business organization.",
                 },
                 {
                   icon: PackageCheck,
                   title: "Digital Delivery",
-                  text: "Delivered by email, download, or online access.",
+                  text: "Delivered by email, download link, or online access.",
                 },
               ].map((item) => (
                 <div
@@ -122,10 +127,10 @@ export default function HomePage() {
       <section className="border-y border-slate-200 bg-white py-8">
         <div className="mx-auto grid max-w-6xl gap-4 px-6 text-center sm:grid-cols-4">
           {[
-            "Digital Products",
+            "Digital Downloads",
             "Invoice Available",
             "Email Delivery",
-            "Small Business Focused",
+            "No Physical Shipping",
           ].map((item) => (
             <div key={item} className="font-semibold text-slate-700">
               {item}
@@ -139,12 +144,14 @@ export default function HomePage() {
           <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
             <div>
               <p className="font-semibold text-blue-600">Featured Products</p>
+
               <h2 className="mt-2 text-3xl font-bold text-slate-950">
-                Popular digital products
+                Popular downloadable products
               </h2>
+
               <p className="mt-3 max-w-2xl text-slate-600">
-                Simple, practical, and professional resources designed for small
-                business technology needs.
+                Simple and clearly described digital products designed for small
+                business planning and organization.
               </p>
             </div>
 
@@ -160,74 +167,6 @@ export default function HomePage() {
             {featuredProducts.map((product) => (
               <ProductCard key={product.slug} product={product} />
             ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-slate-50 py-20">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="max-w-2xl">
-            <p className="font-semibold text-blue-600">Simple Order Process</p>
-            <h2 className="mt-2 text-3xl font-bold text-slate-950">
-              How orders work
-            </h2>
-            <p className="mt-3 text-slate-600">
-              Our checkout is currently invoice-based while online payment
-              integration is being prepared.
-            </p>
-          </div>
-
-          <div className="mt-10 grid gap-6 md:grid-cols-4">
-            {[
-              "Choose a digital product or service",
-              "Add it to your cart",
-              "Request an invoice",
-              "Receive delivery by email/download",
-            ].map((step, index) => (
-              <div
-                key={step}
-                className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
-              >
-                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-blue-600 font-bold text-white">
-                  {index + 1}
-                </div>
-                <p className="mt-5 font-semibold text-slate-800">{step}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-white py-20">
-        <div className="mx-auto grid max-w-6xl gap-6 px-6 md:grid-cols-3">
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h3 className="text-lg font-bold text-slate-900">
-              Secure Digital Delivery
-            </h3>
-            <p className="mt-2 text-sm text-slate-600">
-              Products and services are delivered electronically by email,
-              download, or online access after payment confirmation.
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h3 className="text-lg font-bold text-slate-900">
-              Small Business Focused
-            </h3>
-            <p className="mt-2 text-sm text-slate-600">
-              Our templates, guides, and support packages are designed for small
-              businesses that need simple and professional IT solutions.
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h3 className="text-lg font-bold text-slate-900">
-              Invoice-Based Orders
-            </h3>
-            <p className="mt-2 text-sm text-slate-600">
-              Online payment integration is coming soon. Customers can request
-              an invoice and receive secure payment instructions by email.
-            </p>
           </div>
         </div>
       </section>

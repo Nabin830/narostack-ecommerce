@@ -1,6 +1,7 @@
 export const metadata = {
   title: "Privacy Policy | Narostack Digital LLC",
-  description: "Privacy Policy for Narostack Digital LLC.",
+  description:
+    "Privacy Policy for Narostack Digital LLC downloadable digital products.",
 };
 
 export default function PrivacyPage() {
@@ -22,11 +23,12 @@ export default function PrivacyPage() {
             <h2 className="text-xl font-bold text-slate-950">
               1. Introduction
             </h2>
+
             <p className="mt-3">
               Narostack Digital LLC respects customer privacy. This Privacy
               Policy explains how we collect, use, and protect information when
-              customers visit our website, contact us, request an invoice, or
-              purchase digital products and services.
+              customers visit our website, contact us, request an invoice, sign
+              in with Google, or purchase downloadable digital products.
             </p>
           </section>
 
@@ -34,10 +36,17 @@ export default function PrivacyPage() {
             <h2 className="text-xl font-bold text-slate-950">
               2. Information We Collect
             </h2>
+
             <p className="mt-3">
-              We may collect basic contact and business information such as
-              name, email address, business name, order details, invoice
-              requests, support messages, and communication records.
+              We may collect basic customer and business information such as
+              name, email address, business name, product interest, invoice
+              request details, support messages, and communication records.
+            </p>
+
+            <p className="mt-3">
+              If Google sign-in is used, we may receive basic Google account
+              profile information such as name, email address, and profile image
+              for account access purposes.
             </p>
           </section>
 
@@ -45,20 +54,24 @@ export default function PrivacyPage() {
             <h2 className="text-xl font-bold text-slate-950">
               3. How We Use Information
             </h2>
+
             <p className="mt-3">
               We use customer information to respond to enquiries, process
-              invoice requests, deliver digital products or services, provide
-              support, improve our website, and maintain business records.
+              invoice requests, deliver downloadable digital products, provide
+              product delivery support, improve our website, and maintain
+              business records.
             </p>
           </section>
 
           <section>
             <h2 className="text-xl font-bold text-slate-950">
-              4. Digital Delivery and Orders
+              4. Digital Product Delivery
             </h2>
+
             <p className="mt-3">
-              Customer order information may be used to deliver digital products
-              by email, download, or online access after payment confirmation.
+              Customer order information may be used to deliver downloadable
+              digital products by email, download link, or online access after
+              payment confirmation.
             </p>
           </section>
 
@@ -66,21 +79,62 @@ export default function PrivacyPage() {
             <h2 className="text-xl font-bold text-slate-950">
               5. Payment Information
             </h2>
+
             <p className="mt-3">
               Narostack Digital LLC does not currently process card payments
-              directly through this website. When online payment integration is
-              activated, payment information may be handled by approved third
-              party payment processors.
+              directly through this website. Online payment integration is being
+              prepared. If a third-party payment provider is used in the future,
+              payment information may be handled by that approved payment
+              provider according to its own terms and privacy policy.
             </p>
           </section>
 
           <section>
             <h2 className="text-xl font-bold text-slate-950">
-              6. Contact
+              6. Google Sign-In
             </h2>
+
             <p className="mt-3">
-              For privacy questions, contact us at
-              pandeynabin@narostack.com.
+              If customers choose to sign in with Google, authentication is
+              handled through Google and our authentication provider setup. We
+              do not collect or store customer Google passwords. Customers can
+              sign out of their account at any time from the website.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-xl font-bold text-slate-950">
+              7. Data Sharing
+            </h2>
+
+            <p className="mt-3">
+              We do not sell customer personal information. We may share limited
+              information only when necessary to operate the website, respond to
+              support requests, process invoice requests, deliver products,
+              comply with legal obligations, or use approved service providers.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-xl font-bold text-slate-950">
+              8. Product-Only Store Notice
+            </h2>
+
+            <p className="mt-3">
+              Narostack Digital LLC sells downloadable digital resources only.
+              This website does not sell custom consulting, managed services,
+              hosting, server access, cloud infrastructure resale, manual setup,
+              or professional advisory services.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-xl font-bold text-slate-950">
+              9. Contact
+            </h2>
+
+            <p className="mt-3">
+              For privacy questions, contact pandeynabin@narostack.com.
             </p>
           </section>
         </div>

@@ -38,7 +38,7 @@ export default function AccountPage() {
 
             <p className="mt-4 text-slate-600">
               Please sign in with Google to view your Narostack Digital LLC
-              customer account page.
+              customer account page for downloadable digital products.
             </p>
 
             <Link
@@ -87,45 +87,65 @@ export default function AccountPage() {
             </div>
 
             <Link
-              href="/checkout"
+              href="/products"
               className="rounded-xl bg-blue-600 px-6 py-3 text-center text-sm font-semibold text-white hover:bg-blue-700"
             >
-              Request Invoice
+              View Products
             </Link>
           </div>
+        </div>
+
+        <div className="mt-8 rounded-2xl border border-blue-100 bg-blue-50 p-5">
+          <p className="font-semibold text-slate-950">
+            Digital product account notice
+          </p>
+
+          <p className="mt-2 text-sm leading-6 text-slate-700">
+            This customer account is for access related to downloadable digital
+            products, invoice requests, and delivery support. Narostack Digital
+            LLC does not sell custom consulting, done-for-you implementation,
+            hosting, server access, managed services, or manual professional
+            services through this website.
+          </p>
         </div>
 
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
             <FileText className="h-7 w-7 text-blue-600" />
+
             <h2 className="mt-4 text-xl font-bold text-slate-950">
-              Invoice Records
+              Invoice Requests
             </h2>
+
             <p className="mt-3 text-sm leading-6 text-slate-600">
-              Future customer accounts may allow customers to view invoice
-              requests, payment status, and order records.
+              Future account features may show invoice request history, payment
+              status, and digital product order records.
             </p>
           </div>
 
           <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
             <Download className="h-7 w-7 text-blue-600" />
+
             <h2 className="mt-4 text-xl font-bold text-slate-950">
-              Digital Downloads
+              Digital Delivery
             </h2>
+
             <p className="mt-3 text-sm leading-6 text-slate-600">
-              Digital products may be accessible through email, download links,
-              or online account access after payment confirmation.
+              Digital products may be accessed through email, download links, or
+              online account access after payment confirmation.
             </p>
           </div>
 
           <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
             <Mail className="h-7 w-7 text-blue-600" />
+
             <h2 className="mt-4 text-xl font-bold text-slate-950">
-              Support Requests
+              Product Support
             </h2>
+
             <p className="mt-3 text-sm leading-6 text-slate-600">
-              Contact support for product delivery, invoice questions, and IT
-              service enquiries.
+              Contact support for product delivery questions, invoice requests,
+              download access, or product information.
             </p>
           </div>
         </div>
@@ -151,9 +171,11 @@ export default function AccountPage() {
             <div className="mt-6 grid gap-4 sm:grid-cols-2">
               <div className="rounded-2xl border border-slate-200 p-5">
                 <PackageCheck className="h-6 w-6 text-blue-600" />
+
                 <p className="mt-3 font-semibold text-slate-900">
                   Current Purchase Method
                 </p>
+
                 <p className="mt-2 text-sm text-slate-600">
                   Invoice request by email.
                 </p>
@@ -161,9 +183,11 @@ export default function AccountPage() {
 
               <div className="rounded-2xl border border-slate-200 p-5">
                 <ShieldCheck className="h-6 w-6 text-blue-600" />
+
                 <p className="mt-3 font-semibold text-slate-900">
                   Payment Integration
                 </p>
+
                 <p className="mt-2 text-sm text-slate-600">
                   Secure online checkout coming soon.
                 </p>
@@ -171,19 +195,23 @@ export default function AccountPage() {
 
               <div className="rounded-2xl border border-slate-200 p-5">
                 <Download className="h-6 w-6 text-blue-600" />
+
                 <p className="mt-3 font-semibold text-slate-900">
                   Delivery Method
                 </p>
+
                 <p className="mt-2 text-sm text-slate-600">
-                  Email, download, or online access.
+                  Email, download link, or online access.
                 </p>
               </div>
 
               <div className="rounded-2xl border border-slate-200 p-5">
                 <Clock className="h-6 w-6 text-blue-600" />
+
                 <p className="mt-3 font-semibold text-slate-900">
                   Support Hours
                 </p>
+
                 <p className="mt-2 text-sm text-slate-600">
                   Monday–Friday, 9:00 AM–5:00 PM.
                 </p>
@@ -197,8 +225,9 @@ export default function AccountPage() {
             </h2>
 
             <p className="mt-3 text-sm leading-6 text-slate-600">
-              For current orders, invoice requests, product delivery, or service
-              enquiries, please contact Narostack Digital LLC by email.
+              For current invoice requests, digital product delivery, download
+              access, or product enquiries, please contact Narostack Digital LLC
+              by email.
             </p>
 
             <div className="mt-6 grid gap-3">
@@ -226,6 +255,7 @@ export default function AccountPage() {
 
             <div className="mt-6 border-t border-slate-200 pt-5">
               <p className="text-sm font-semibold text-slate-900">Email</p>
+
               <p className="mt-1 break-words text-sm text-slate-600">
                 pandeynabin@narostack.com
               </p>

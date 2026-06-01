@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Mail } from "lucide-react";
 
@@ -10,7 +11,7 @@ const policyLinks = [
 
 const companyLinks = [
   { href: "/about", label: "About" },
-  { href: "/products", label: "Products" },
+  { href: "/products", label: "Digital Products" },
   { href: "/checkout", label: "Request Invoice" },
   { href: "/contact", label: "Contact" },
   { href: "/faq", label: "FAQ" },
@@ -28,23 +29,27 @@ export default function Footer() {
       <div className="mx-auto grid max-w-6xl gap-10 px-6 py-12 md:grid-cols-4">
         <div className="md:col-span-2">
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-600 text-lg font-bold">
-              N
+            <div className="relative h-12 w-12 overflow-hidden rounded-full bg-white shadow-sm ring-1 ring-slate-700">
+              <Image
+                src="/images/logo.png"
+                alt="Narostack Digital LLC logo"
+                fill
+                className="object-cover"
+              />
             </div>
 
             <div>
               <p className="font-bold">Narostack Digital LLC</p>
               <p className="text-sm text-slate-400">
-                Digital IT Services & Software Products
+                Downloadable Digital Products
               </p>
             </div>
           </div>
 
           <p className="mt-5 max-w-md text-sm leading-6 text-slate-300">
-            Narostack Digital LLC provides website templates, business
-            automation resources, cloud setup guidance, cybersecurity
-            checklists, digital branding kits, and IT support services for small
-            businesses.
+            Narostack Digital LLC sells downloadable digital products for small
+            businesses, including website templates, automation templates, cloud
+            setup guides, digital branding kits, and business resource packs.
           </p>
 
           <div className="mt-5 flex items-center gap-2 text-sm text-slate-300">
@@ -53,11 +58,11 @@ export default function Footer() {
           </div>
 
           <p className="mt-3 text-sm text-slate-400">
-            Support Hours: Monday–Friday, 9:00 AM–5:00 PM
+            Hours: Monday–Friday, 9:00 AM–5:00 PM
           </p>
 
           <p className="mt-2 text-sm text-slate-400">
-            Digital delivery by email, download, or online access.
+            Digital delivery by email, download link, or online access.
           </p>
         </div>
 
@@ -75,10 +80,8 @@ export default function Footer() {
               </Link>
             ))}
           </div>
-        </div>
 
-        <div>
-          <h3 className="font-bold">Account</h3>
+          <h3 className="mt-8 font-bold">Account</h3>
 
           <div className="mt-4 grid gap-3 text-sm">
             {accountLinks.map((link) => (
@@ -91,8 +94,10 @@ export default function Footer() {
               </Link>
             ))}
           </div>
+        </div>
 
-          <h3 className="mt-8 font-bold">Policies</h3>
+        <div>
+          <h3 className="font-bold">Policies</h3>
 
           <div className="mt-4 grid gap-3 text-sm">
             {policyLinks.map((link) => (
@@ -104,6 +109,16 @@ export default function Footer() {
                 {link.label}
               </Link>
             ))}
+          </div>
+
+          <div className="mt-8 rounded-2xl border border-slate-800 bg-slate-900 p-4">
+            <p className="text-sm font-semibold text-white">
+              Digital product store
+            </p>
+
+            <p className="mt-2 text-xs leading-5 text-slate-400">
+              Products are delivered electronically. No physical shipping.
+            </p>
           </div>
         </div>
       </div>

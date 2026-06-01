@@ -1,6 +1,7 @@
 export const metadata = {
   title: "Refund Policy | Narostack Digital LLC",
-  description: "Refund Policy for Narostack Digital LLC digital products.",
+  description:
+    "Refund Policy for Narostack Digital LLC downloadable digital products.",
 };
 
 export default function RefundPage() {
@@ -22,22 +23,26 @@ export default function RefundPage() {
             <h2 className="text-xl font-bold text-slate-950">
               1. Digital Product Refunds
             </h2>
+
             <p className="mt-3">
-              Narostack Digital LLC sells digital products and digital IT
-              services. Because digital products can be accessed, downloaded, or
-              delivered electronically, refunds may be limited once delivery has
+              Narostack Digital LLC sells downloadable digital products,
+              including templates, guides, checklists, and resource packs.
+              Because these products can be delivered, accessed, copied, or
+              downloaded electronically, refunds may be limited once delivery has
               been completed.
             </p>
           </section>
 
           <section>
             <h2 className="text-xl font-bold text-slate-950">
-              2. Eligible Refund Situations
+              2. Eligible Refund Review Situations
             </h2>
+
             <p className="mt-3">
-              Refunds may be reviewed for duplicate payments, incorrect charges,
-              non-delivery of a digital product, or technical delivery issues
-              that cannot be resolved by our support team.
+              Refund requests may be reviewed for duplicate payments, incorrect
+              charges, accidental duplicate orders, non-delivery of a digital
+              product, or technical delivery issues that cannot be resolved by
+              Narostack Digital LLC.
             </p>
           </section>
 
@@ -45,17 +50,39 @@ export default function RefundPage() {
             <h2 className="text-xl font-bold text-slate-950">
               3. Non-Refundable Situations
             </h2>
+
             <p className="mt-3">
               Refunds may not be available after a product has been successfully
-              delivered, downloaded, accessed, or used, unless required by
+              delivered, accessed, downloaded, or used, unless required by
               applicable law or approved by Narostack Digital LLC after review.
+            </p>
+
+            <p className="mt-3">
+              Refunds are not provided simply because a customer changes their
+              mind after receiving digital access, does not read the product
+              description, or expects custom consulting, manual setup, or
+              done-for-you implementation that is not included in the product.
             </p>
           </section>
 
           <section>
             <h2 className="text-xl font-bold text-slate-950">
-              4. How to Request a Refund
+              4. Product-Only Limitation
             </h2>
+
+            <p className="mt-3">
+              Products sold on this website are downloadable digital resources
+              only. Narostack Digital LLC does not sell custom consulting,
+              done-for-you services, hosting, managed services, server access,
+              or professional advisory services through this website.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-xl font-bold text-slate-950">
+              5. How to Request a Refund Review
+            </h2>
+
             <p className="mt-3">
               To request a refund review, contact pandeynabin@narostack.com
               with your name, invoice number, product name, payment date, and
@@ -65,11 +92,13 @@ export default function RefundPage() {
 
           <section>
             <h2 className="text-xl font-bold text-slate-950">
-              5. Review Time
+              6. Review Time
             </h2>
+
             <p className="mt-3">
               Refund requests are reviewed during support hours, Monday–Friday,
-              9:00 AM–5:00 PM.
+              9:00 AM–5:00 PM. Approval is not guaranteed and depends on the
+              order status, delivery status, and reason for the request.
             </p>
           </section>
         </div>

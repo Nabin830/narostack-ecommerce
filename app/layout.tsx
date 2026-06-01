@@ -12,7 +12,29 @@ export const metadata: Metadata = {
     template: "%s | Narostack Digital LLC",
   },
   description:
-    "Narostack Digital LLC provides digital IT services, software products, website templates, automation kits, cloud guides, cybersecurity checklists, branding kits, and IT support packages for small businesses.",
+    "Narostack Digital LLC sells downloadable digital products for small businesses, including website templates, automation templates, cloud setup guides, digital branding kits, and online business resource packs.",
+  keywords: [
+    "Narostack Digital LLC",
+    "downloadable digital products",
+    "small business templates",
+    "website templates",
+    "business automation templates",
+    "cloud setup guide",
+    "digital branding kit",
+    "digital resource packs",
+  ],
+  openGraph: {
+    title: "Narostack Digital LLC",
+    description:
+      "Downloadable templates, guides, and digital resource packs for small businesses.",
+    url: "https://narostack.com",
+    siteName: "Narostack Digital LLC",
+    type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

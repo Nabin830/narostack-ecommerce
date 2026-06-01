@@ -41,7 +41,7 @@ export default function Navbar() {
             <p className="text-base font-bold leading-tight text-slate-950 sm:text-lg">
               Narostack Digital LLC
             </p>
-            <p className="text-xs text-slate-500">Digital IT Services</p>
+            <p className="text-xs text-slate-500">Digital Products</p>
           </div>
         </Link>
 

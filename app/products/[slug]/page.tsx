@@ -1,7 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { CheckCircle2, Mail, ShieldCheck, ShoppingCart } from "lucide-react";
+import {
+  CheckCircle2,
+  Download,
+  FileText,
+  Mail,
+  ShieldCheck,
+  ShoppingCart,
+} from "lucide-react";
 import AddToCartButton from "@/components/AddToCartButton";
 import { getProductBySlug, products } from "@/data/products";
 import { formatPrice } from "@/lib/format";
@@ -42,18 +49,6 @@ export default function ProductDetailsPage({
     notFound();
   }
 
-  const includedItems = product.includes ?? [
-    "Digital product or service resource",
-    "Professional small business guidance",
-    "Electronic delivery by email, download, or online access",
-  ];
-
-  const bestForItems = product.bestFor ?? [
-    "Small businesses",
-    "Digital operations improvement",
-    "Business technology setup",
-  ];
-
   return (
     <main className="bg-slate-50">
       <section className="mx-auto max-w-6xl px-6 py-16">
@@ -80,11 +75,11 @@ export default function ProductDetailsPage({
           <div>
             <div className="flex flex-wrap items-center gap-3">
               <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700">
-                {product.badge ?? "Digital Product"}
+                {product.badge}
               </span>
 
               <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
-                {product.category ?? "Digital IT Product"}
+                {product.category}
               </span>
             </div>
 
@@ -100,17 +95,36 @@ export default function ProductDetailsPage({
               {formatPrice(product.price)}
             </div>
 
-            <div className="mt-6 rounded-2xl border border-blue-100 bg-blue-50 p-5">
-              <div className="flex gap-3">
-                <Mail className="mt-1 h-5 w-5 flex-shrink-0 text-blue-600" />
-                <div>
-                  <h2 className="font-bold text-slate-900">
-                    Digital delivery
-                  </h2>
-                  <p className="mt-1 text-sm text-slate-700">
-                    {product.delivery ??
-                      "Delivered electronically by email, download, or online access after payment confirmation."}
-                  </p>
+            <div className="mt-6 grid gap-4">
+              <div className="rounded-2xl border border-blue-100 bg-blue-50 p-5">
+                <div className="flex gap-3">
+                  <Download className="mt-1 h-5 w-5 flex-shrink-0 text-blue-600" />
+                  <div>
+                    <h2 className="font-bold text-slate-900">
+                      Digital delivery only
+                    </h2>
+                    <p className="mt-1 text-sm text-slate-700">
+                      {product.delivery} No physical shipping is required.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="rounded-2xl border border-slate-200 bg-white p-5">
+                <div className="flex gap-3">
+                  <ShieldCheck className="mt-1 h-5 w-5 flex-shrink-0 text-blue-600" />
+                  <div>
+                    <h2 className="font-bold text-slate-900">
+                      Product-only purchase
+                    </h2>
+                    <p className="mt-1 text-sm text-slate-600">
+                      This listing is for a downloadable digital product,
+                      template, checklist, guide, or resource pack only. It does
+                      not include custom consulting, done-for-you setup, manual
+                      implementation, hosting, server access, managed services,
+                      or professional advisory services.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -130,7 +144,7 @@ export default function ProductDetailsPage({
               <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
                 <ShoppingCart className="h-5 w-5 text-blue-600" />
                 <p className="mt-2 text-sm font-semibold text-slate-900">
-                  One-time purchase
+                  One-time product
                 </p>
               </div>
 
@@ -142,9 +156,9 @@ export default function ProductDetailsPage({
               </div>
 
               <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-                <ShieldCheck className="h-5 w-5 text-blue-600" />
+                <FileText className="h-5 w-5 text-blue-600" />
                 <p className="mt-2 text-sm font-semibold text-slate-900">
-                  Business focused
+                  Clear contents
                 </p>
               </div>
             </div>
@@ -158,7 +172,7 @@ export default function ProductDetailsPage({
             </h2>
 
             <div className="mt-6 space-y-4">
-              {includedItems.map((item) => (
+              {product.includes.map((item) => (
                 <div key={item} className="flex gap-3">
                   <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-blue-600" />
                   <p className="text-slate-700">{item}</p>
@@ -171,7 +185,7 @@ export default function ProductDetailsPage({
             <h2 className="text-2xl font-bold text-slate-950">Best for</h2>
 
             <div className="mt-6 space-y-4">
-              {bestForItems.map((item) => (
+              {product.bestFor.map((item) => (
                 <div key={item} className="flex gap-3">
                   <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-blue-600" />
                   <p className="text-slate-700">{item}</p>
@@ -189,9 +203,16 @@ export default function ProductDetailsPage({
           <p className="mt-4 text-slate-600">
             Narostack Digital LLC is currently using invoice-based checkout
             while online payment integration is being prepared. After your order
-            request is received, we will send an invoice and payment
-            instructions by email. Digital products and services are delivered
-            electronically after payment confirmation.
+            request is received, we will send invoice and payment instructions
+            by email. Digital products are delivered electronically after
+            payment confirmation.
+          </p>
+
+          <p className="mt-4 text-slate-600">
+            This product store is for downloadable digital resources only.
+            Products do not include manual consulting, custom development,
+            done-for-you implementation, hosting, infrastructure access, managed
+            IT services, or professional advisory services.
           </p>
         </section>
       </section>

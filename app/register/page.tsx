@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { Building2, ShieldCheck, UserPlus } from "lucide-react";
+import { Download, ShieldCheck, UserPlus } from "lucide-react";
 import AuthButton from "@/components/AuthButton";
 
 export const metadata = {
   title: "Register | Narostack Digital LLC",
   description:
-    "Register with Google for Narostack Digital LLC customer account access.",
+    "Register with Google for Narostack Digital LLC customer account access for downloadable digital products.",
 };
 
 export default function RegisterPage() {
@@ -21,28 +21,29 @@ export default function RegisterPage() {
 
           <p className="mt-5 text-lg leading-8 text-slate-600">
             Create customer account access for Narostack Digital LLC using
-            Google sign-in. No password is collected or stored by our website.
+            Google sign-in. Customer accounts may be used for invoice requests,
+            product delivery access, and future downloadable product records.
           </p>
 
           <div className="mt-8 grid gap-4 sm:grid-cols-3">
             <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
               <UserPlus className="h-6 w-6 text-blue-600" />
               <p className="mt-3 text-sm font-semibold text-slate-900">
-                Customer Account
+                Google Account
               </p>
             </div>
 
             <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-              <Building2 className="h-6 w-6 text-blue-600" />
+              <Download className="h-6 w-6 text-blue-600" />
               <p className="mt-3 text-sm font-semibold text-slate-900">
-                Business Access
+                Digital Downloads
               </p>
             </div>
 
             <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
               <ShieldCheck className="h-6 w-6 text-blue-600" />
               <p className="mt-3 text-sm font-semibold text-slate-900">
-                Google Sign-In
+                No Password Storage
               </p>
             </div>
           </div>
@@ -55,9 +56,8 @@ export default function RegisterPage() {
             </h2>
 
             <p className="mt-3 text-slate-600">
-              Use your Google account to register. This keeps account access
-              simple and avoids password storage on the Narostack Digital LLC
-              website.
+              Use your Google account to register. Narostack Digital LLC does
+              not collect or store website passwords.
             </p>
           </div>
 
@@ -67,16 +67,23 @@ export default function RegisterPage() {
 
           <div className="mt-6 rounded-2xl border border-slate-200 p-5">
             <p className="text-sm text-slate-600">
-              After signing in, you can access customer account features,
-              request invoices, contact support, and use future delivery tools.
+              Narostack Digital LLC sells downloadable digital products,
+              including templates, guides, checklists, and resource packs.
+              Products are delivered electronically after payment confirmation.
+            </p>
+
+            <p className="mt-3 text-sm text-slate-600">
+              Listed products do not include custom consulting, done-for-you
+              setup, hosting, server access, managed services, or manual
+              professional services.
             </p>
 
             <div className="mt-5 flex flex-col gap-3 sm:flex-row">
               <Link
-                href="/checkout"
+                href="/products"
                 className="rounded-xl bg-blue-600 px-5 py-3 text-center text-sm font-semibold text-white hover:bg-blue-700"
               >
-                Request Invoice
+                View Products
               </Link>
 
               <Link
