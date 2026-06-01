@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { Menu, ShoppingCart, User, X } from "lucide-react";
 import { useState } from "react";
@@ -23,19 +24,24 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/90 backdrop-blur">
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Link href="/" className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-lg font-bold text-white">
-            N
+      <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
+        <Link href="/" className="flex min-w-0 items-center gap-3">
+          <div className="relative h-12 w-12 flex-shrink-0 overflow-hidden rounded-full bg-slate-950 shadow-sm ring-1 ring-slate-200">
+            <Image
+              src="/images/logo.png"
+              alt="Narostack Digital LLC logo"
+              fill
+              priority
+              sizes="48px"
+              className="object-cover"
+            />
           </div>
 
-          <div>
-            <p className="font-bold leading-none text-slate-950">
+          <div className="min-w-0">
+            <p className="text-base font-bold leading-tight text-slate-950 sm:text-lg">
               Narostack Digital LLC
             </p>
-            <p className="mt-1 text-xs text-slate-500">
-              Digital IT Services
-            </p>
+            <p className="text-xs text-slate-500">Digital IT Services</p>
           </div>
         </Link>
 
