@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Menu, ShoppingCart, X } from "lucide-react";
+import { Menu, ShoppingCart, User, X } from "lucide-react";
 import { useState } from "react";
 import { useCart } from "@/components/CartContext";
 
@@ -49,6 +49,14 @@ export default function Navbar() {
 
         <div className="hidden items-center gap-3 md:flex">
           <Link
+            href="/login"
+            className="inline-flex items-center gap-2 rounded-xl border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+          >
+            <User className="h-4 w-4" />
+            Login
+          </Link>
+
+          <Link
             href="/checkout"
             className="rounded-xl border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
           >
@@ -92,6 +100,22 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
+
+            <Link
+              href="/login"
+              onClick={() => setOpen(false)}
+              className="rounded-xl border border-slate-300 px-3 py-2 text-center text-sm font-semibold text-slate-700"
+            >
+              Login
+            </Link>
+
+            <Link
+              href="/account"
+              onClick={() => setOpen(false)}
+              className="rounded-xl border border-slate-300 px-3 py-2 text-center text-sm font-semibold text-slate-700"
+            >
+              Account
+            </Link>
 
             <Link
               href="/checkout"
