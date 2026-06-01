@@ -1,20 +1,32 @@
 import Link from "next/link";
 import { Mail } from "lucide-react";
 
-const footerLinks = [
+const policyLinks = [
   { href: "/privacy", label: "Privacy Policy" },
   { href: "/terms", label: "Terms & Conditions" },
   { href: "/refund", label: "Refund Policy" },
   { href: "/delivery", label: "Delivery Policy" },
+];
+
+const companyLinks = [
+  { href: "/about", label: "About" },
+  { href: "/products", label: "Products" },
+  { href: "/checkout", label: "Request Invoice" },
   { href: "/contact", label: "Contact" },
   { href: "/faq", label: "FAQ" },
+];
+
+const accountLinks = [
+  { href: "/login", label: "Login" },
+  { href: "/register", label: "Register" },
+  { href: "/account", label: "Account" },
 ];
 
 export default function Footer() {
   return (
     <footer className="border-t border-slate-200 bg-slate-950 text-white">
-      <div className="mx-auto grid max-w-6xl gap-10 px-6 py-12 md:grid-cols-[1.2fr_0.8fr_0.8fr]">
-        <div>
+      <div className="mx-auto grid max-w-6xl gap-10 px-6 py-12 md:grid-cols-4">
+        <div className="md:col-span-2">
           <div className="flex items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-600 text-lg font-bold">
               N
@@ -39,35 +51,51 @@ export default function Footer() {
             <Mail className="h-4 w-4 text-blue-400" />
             <span>pandeynabin@narostack.com</span>
           </div>
+
+          <p className="mt-3 text-sm text-slate-400">
+            Support Hours: Monday–Friday, 9:00 AM–5:00 PM
+          </p>
+
+          <p className="mt-2 text-sm text-slate-400">
+            Digital delivery by email, download, or online access.
+          </p>
         </div>
 
         <div>
           <h3 className="font-bold">Company</h3>
 
           <div className="mt-4 grid gap-3 text-sm">
-            <Link href="/about" className="text-slate-300 hover:text-white">
-              About
-            </Link>
-
-            <Link href="/products" className="text-slate-300 hover:text-white">
-              Products
-            </Link>
-
-            <Link href="/checkout" className="text-slate-300 hover:text-white">
-              Request Invoice
-            </Link>
-
-            <Link href="/contact" className="text-slate-300 hover:text-white">
-              Contact
-            </Link>
+            {companyLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-slate-300 hover:text-white"
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
         </div>
 
         <div>
-          <h3 className="font-bold">Policies</h3>
+          <h3 className="font-bold">Account</h3>
 
           <div className="mt-4 grid gap-3 text-sm">
-            {footerLinks.map((link) => (
+            {accountLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-slate-300 hover:text-white"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+
+          <h3 className="mt-8 font-bold">Policies</h3>
+
+          <div className="mt-4 grid gap-3 text-sm">
+            {policyLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -83,7 +111,7 @@ export default function Footer() {
       <div className="border-t border-slate-800">
         <div className="mx-auto flex max-w-6xl flex-col gap-3 px-6 py-5 text-sm text-slate-400 sm:flex-row sm:items-center sm:justify-between">
           <p>© 2026 Narostack Digital LLC. All Rights Reserved.</p>
-          <p>Digital delivery by email, download, or online access.</p>
+          <p>Invoice checkout active. Online payment integration coming soon.</p>
         </div>
       </div>
     </footer>
