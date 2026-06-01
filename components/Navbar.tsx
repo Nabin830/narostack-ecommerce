@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Menu, ShoppingCart, User, X } from "lucide-react";
 import { useState } from "react";
+import { signOut, useSession } from "next-auth/react";
 import { useCart } from "@/components/CartContext";
 
 const navLinks = [
@@ -16,6 +17,9 @@ const navLinks = [
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const { totalItems } = useCart();
+  const { data: session, status } = useSession();
+
+  const isLoggedIn = Boolean(session?.user);
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/90 backdrop-blur">
@@ -48,13 +52,35 @@ export default function Navbar() {
         </div>
 
         <div className="hidden items-center gap-3 md:flex">
-          <Link
-            href="/login"
-            className="inline-flex items-center gap-2 rounded-xl border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
-          >
-            <User className="h-4 w-4" />
-            Login
-          </Link>
+          {status === "loading" ? (
+            <div className="h-10 w-20 rounded-xl bg-slate-100" />
+          ) : isLoggedIn ? (
+            <>
+              <Link
+                href="/account"
+                className="inline-flex items-center gap-2 rounded-xl border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+              >
+                <User className="h-4 w-4" />
+                Account
+              </Link>
+
+              <button
+                type="button"
+                onClick={() => signOut({ callbackUrl: "/" })}
+                className="rounded-xl border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+              >
+                Sign Out
+              </button>
+            </>
+          ) : (
+            <Link
+              href="/login"
+              className="inline-flex items-center gap-2 rounded-xl border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+            >
+              <User className="h-4 w-4" />
+              Login
+            </Link>
+          )}
 
           <Link
             href="/checkout"
@@ -101,21 +127,46 @@ export default function Navbar() {
               </Link>
             ))}
 
-            <Link
-              href="/login"
-              onClick={() => setOpen(false)}
-              className="rounded-xl border border-slate-300 px-3 py-2 text-center text-sm font-semibold text-slate-700"
-            >
-              Login
-            </Link>
+            {status === "loading" ? null : isLoggedIn ? (
+              <>
+                <Link
+                  href="/account"
+                  onClick={() => setOpen(false)}
+                  className="rounded-xl border border-slate-300 px-3 py-2 text-center text-sm font-semibold text-slate-700"
+                >
+                  Account
+                </Link>
 
-            <Link
-              href="/account"
-              onClick={() => setOpen(false)}
-              className="rounded-xl border border-slate-300 px-3 py-2 text-center text-sm font-semibold text-slate-700"
-            >
-              Account
-            </Link>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setOpen(false);
+                    signOut({ callbackUrl: "/" });
+                  }}
+                  className="rounded-xl border border-slate-300 px-3 py-2 text-center text-sm font-semibold text-slate-700"
+                >
+                  Sign Out
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  onClick={() => setOpen(false)}
+                  className="rounded-xl border border-slate-300 px-3 py-2 text-center text-sm font-semibold text-slate-700"
+                >
+                  Login
+                </Link>
+
+                <Link
+                  href="/register"
+                  onClick={() => setOpen(false)}
+                  className="rounded-xl border border-slate-300 px-3 py-2 text-center text-sm font-semibold text-slate-700"
+                >
+                  Register
+                </Link>
+              </>
+            )}
 
             <Link
               href="/checkout"

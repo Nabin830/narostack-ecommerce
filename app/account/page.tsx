@@ -1,4 +1,8 @@
+"use client";
+
+import Image from "next/image";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 import {
   Clock,
   Download,
@@ -8,28 +12,87 @@ import {
   ShieldCheck,
 } from "lucide-react";
 
-export const metadata = {
-  title: "Account | Narostack Digital LLC",
-  description:
-    "Customer account dashboard placeholder for Narostack Digital LLC digital products and IT services.",
-};
-
 export default function AccountPage() {
+  const { data: session, status } = useSession();
+
+  if (status === "loading") {
+    return (
+      <main className="bg-slate-50">
+        <section className="mx-auto max-w-6xl px-6 py-16">
+          <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+            <p className="text-slate-600">Loading account...</p>
+          </div>
+        </section>
+      </main>
+    );
+  }
+
+  if (!session?.user) {
+    return (
+      <main className="bg-slate-50">
+        <section className="mx-auto max-w-3xl px-6 py-20 text-center">
+          <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+            <h1 className="text-4xl font-bold tracking-tight text-slate-950">
+              Sign in required
+            </h1>
+
+            <p className="mt-4 text-slate-600">
+              Please sign in with Google to view your Narostack Digital LLC
+              customer account page.
+            </p>
+
+            <Link
+              href="/login"
+              className="mt-8 inline-flex rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white hover:bg-blue-700"
+            >
+              Login with Google
+            </Link>
+          </div>
+        </section>
+      </main>
+    );
+  }
+
   return (
     <main className="bg-slate-50">
       <section className="mx-auto max-w-6xl px-6 py-16">
-        <div className="max-w-3xl">
-          <p className="font-semibold text-blue-600">Customer Account</p>
+        <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+          <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-4">
+              {session.user.image ? (
+                <Image
+                  src={session.user.image}
+                  alt={session.user.name || "Customer"}
+                  width={72}
+                  height={72}
+                  className="rounded-full"
+                />
+              ) : (
+                <div className="flex h-[72px] w-[72px] items-center justify-center rounded-full bg-blue-600 text-2xl font-bold text-white">
+                  {session.user.name?.charAt(0) || "U"}
+                </div>
+              )}
 
-          <h1 className="mt-3 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">
-            Account dashboard coming soon.
-          </h1>
+              <div>
+                <p className="font-semibold text-blue-600">
+                  Customer Account
+                </p>
 
-          <p className="mt-5 text-lg leading-8 text-slate-600">
-            Narostack Digital LLC is preparing customer account access for
-            invoice records, digital delivery links, order history, and support
-            requests. For current purchases, please request an invoice.
-          </p>
+                <h1 className="text-3xl font-bold tracking-tight text-slate-950">
+                  Welcome, {session.user.name || "Customer"}
+                </h1>
+
+                <p className="mt-1 text-slate-600">{session.user.email}</p>
+              </div>
+            </div>
+
+            <Link
+              href="/checkout"
+              className="rounded-xl bg-blue-600 px-6 py-3 text-center text-sm font-semibold text-white hover:bg-blue-700"
+            >
+              Request Invoice
+            </Link>
+          </div>
         </div>
 
         <div className="mt-10 grid gap-6 md:grid-cols-3">
@@ -61,8 +124,8 @@ export default function AccountPage() {
               Support Requests
             </h2>
             <p className="mt-3 text-sm leading-6 text-slate-600">
-              Customers will be able to contact support for product delivery,
-              invoice questions, and IT service enquiries.
+              Contact support for product delivery, invoice questions, and IT
+              service enquiries.
             </p>
           </div>
         </div>
@@ -70,18 +133,18 @@ export default function AccountPage() {
         <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_360px]">
           <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
             <h2 className="text-2xl font-bold text-slate-950">
-              Current Account Status
+              Account Dashboard
             </h2>
 
             <div className="mt-6 rounded-2xl bg-blue-50 p-5">
               <p className="font-semibold text-slate-950">
-                Customer account access is not active yet.
+                Google sign-in is active.
               </p>
 
               <p className="mt-2 text-sm leading-6 text-slate-600">
-                This page is a professional placeholder for future customer
-                account features. It does not collect passwords or create real
-                accounts at this time.
+                You are signed in with Google. Full customer dashboard features
+                such as order history, invoice records, and download links can
+                be connected later with a database.
               </p>
             </div>
 
@@ -162,9 +225,7 @@ export default function AccountPage() {
             </div>
 
             <div className="mt-6 border-t border-slate-200 pt-5">
-              <p className="text-sm font-semibold text-slate-900">
-                Email
-              </p>
+              <p className="text-sm font-semibold text-slate-900">Email</p>
               <p className="mt-1 break-words text-sm text-slate-600">
                 pandeynabin@narostack.com
               </p>

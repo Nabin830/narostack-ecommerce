@@ -1,10 +1,11 @@
 import Link from "next/link";
-import { Building2, Mail, ShieldCheck, UserPlus } from "lucide-react";
+import { Building2, ShieldCheck, UserPlus } from "lucide-react";
+import AuthButton from "@/components/AuthButton";
 
 export const metadata = {
   title: "Register | Narostack Digital LLC",
   description:
-    "Business customer registration page for Narostack Digital LLC digital products and IT services.",
+    "Register with Google for Narostack Digital LLC customer account access.",
 };
 
 export default function RegisterPage() {
@@ -12,16 +13,15 @@ export default function RegisterPage() {
     <main className="bg-slate-50">
       <section className="mx-auto grid min-h-[80vh] max-w-6xl gap-10 px-6 py-16 lg:grid-cols-[1fr_0.9fr] lg:items-center">
         <div>
-          <p className="font-semibold text-blue-600">Business Account</p>
+          <p className="font-semibold text-blue-600">Google Registration</p>
 
           <h1 className="mt-3 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">
-            Create a Narostack Digital customer account.
+            Register using your Google account.
           </h1>
 
           <p className="mt-5 text-lg leading-8 text-slate-600">
-            Business customer accounts are being prepared for future invoice
-            tracking, digital delivery access, order history, and support
-            management.
+            Create customer account access for Narostack Digital LLC using
+            Google sign-in. No password is collected or stored by our website.
           </p>
 
           <div className="mt-8 grid gap-4 sm:grid-cols-3">
@@ -35,14 +35,14 @@ export default function RegisterPage() {
             <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
               <Building2 className="h-6 w-6 text-blue-600" />
               <p className="mt-3 text-sm font-semibold text-slate-900">
-                Business Details
+                Business Access
               </p>
             </div>
 
             <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
               <ShieldCheck className="h-6 w-6 text-blue-600" />
               <p className="mt-3 text-sm font-semibold text-slate-900">
-                Secure Access
+                Google Sign-In
               </p>
             </div>
           </div>
@@ -51,95 +51,25 @@ export default function RegisterPage() {
         <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
           <div className="rounded-2xl bg-blue-50 p-5">
             <h2 className="text-2xl font-bold text-slate-950">
-              Registration coming soon
+              Continue with Google
             </h2>
 
             <p className="mt-3 text-slate-600">
-              Narostack Digital LLC is preparing customer account registration.
-              This placeholder page does not create real accounts or store
-              passwords.
+              Use your Google account to register. This keeps account access
+              simple and avoids password storage on the Narostack Digital LLC
+              website.
             </p>
           </div>
 
-          <form className="mt-6 grid gap-5">
-            <div>
-              <label
-                htmlFor="full-name"
-                className="text-sm font-semibold text-slate-800"
-              >
-                Full Name
-              </label>
-
-              <input
-                id="full-name"
-                name="fullName"
-                type="text"
-                placeholder="Your full name"
-                disabled
-                className="mt-2 w-full cursor-not-allowed rounded-xl border border-slate-300 bg-slate-100 px-4 py-3 text-sm text-slate-500 outline-none"
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="business-name"
-                className="text-sm font-semibold text-slate-800"
-              >
-                Business Name
-              </label>
-
-              <input
-                id="business-name"
-                name="businessName"
-                type="text"
-                placeholder="Your business name"
-                disabled
-                className="mt-2 w-full cursor-not-allowed rounded-xl border border-slate-300 bg-slate-100 px-4 py-3 text-sm text-slate-500 outline-none"
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="email"
-                className="text-sm font-semibold text-slate-800"
-              >
-                Email Address
-              </label>
-
-              <input
-                id="email"
-                name="email"
-                type="email"
-                placeholder="business@example.com"
-                disabled
-                className="mt-2 w-full cursor-not-allowed rounded-xl border border-slate-300 bg-slate-100 px-4 py-3 text-sm text-slate-500 outline-none"
-              />
-            </div>
-
-            <button
-              type="button"
-              disabled
-              className="cursor-not-allowed rounded-xl bg-slate-300 px-6 py-3 font-semibold text-slate-600"
-            >
-              Registration Coming Soon
-            </button>
-          </form>
+          <div className="mt-6">
+            <AuthButton />
+          </div>
 
           <div className="mt-6 rounded-2xl border border-slate-200 p-5">
-            <div className="flex gap-3">
-              <Mail className="mt-1 h-5 w-5 text-blue-600" />
-
-              <div>
-                <p className="font-semibold text-slate-900">
-                  Need to purchase now?
-                </p>
-
-                <p className="mt-1 text-sm text-slate-600">
-                  Request an invoice and our team will send payment instructions
-                  by email.
-                </p>
-              </div>
-            </div>
+            <p className="text-sm text-slate-600">
+              After signing in, you can access customer account features,
+              request invoices, contact support, and use future delivery tools.
+            </p>
 
             <div className="mt-5 flex flex-col gap-3 sm:flex-row">
               <Link
@@ -157,6 +87,16 @@ export default function RegisterPage() {
               </Link>
             </div>
           </div>
+
+          <p className="mt-5 text-center text-sm text-slate-600">
+            Already registered?{" "}
+            <Link
+              href="/login"
+              className="font-semibold text-blue-600 hover:text-blue-700"
+            >
+              Login with Google
+            </Link>
+          </p>
         </div>
       </section>
     </main>

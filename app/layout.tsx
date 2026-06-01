@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { CartProvider } from "@/components/CartContext";
+import AuthProvider from "@/components/AuthProvider";
 
 export const metadata: Metadata = {
   title: {
@@ -12,36 +13,19 @@ export const metadata: Metadata = {
   },
   description:
     "Narostack Digital LLC provides digital IT services, software products, website templates, automation kits, cloud guides, cybersecurity checklists, branding kits, and IT support packages for small businesses.",
-  keywords: [
-    "Narostack Digital LLC",
-    "digital IT services",
-    "small business IT services",
-    "website templates",
-    "business automation",
-    "cloud setup guide",
-    "cybersecurity checklist",
-    "digital branding kit",
-    "IT support",
-  ],
-  openGraph: {
-    title: "Narostack Digital LLC",
-    description:
-      "Digital IT services and software products for small businesses.",
-    url: "https://narostack.com",
-    siteName: "Narostack Digital LLC",
-    type: "website",
-  },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body>
-        <CartProvider>
-          <Navbar />
-          {children}
-          <Footer />
-        </CartProvider>
+        <AuthProvider>
+          <CartProvider>
+            <Navbar />
+            {children}
+            <Footer />
+          </CartProvider>
+        </AuthProvider>
       </body>
     </html>
   );
