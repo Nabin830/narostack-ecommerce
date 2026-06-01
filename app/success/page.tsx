@@ -70,8 +70,7 @@ export default function SuccessPage() {
             <p className="mt-2 text-sm leading-6 text-slate-700">
               Narostack Digital LLC sells downloadable templates, guides,
               checklists, and resource packs. Products do not include custom
-              consulting, done-for-you implementation, hosting, server access,
-              managed services, or manual professional services.
+              digital resource delivery only.
             </p>
           </div>
 

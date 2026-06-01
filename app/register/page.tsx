@@ -73,9 +73,7 @@ export default function RegisterPage() {
             </p>
 
             <p className="mt-3 text-sm text-slate-600">
-              Listed products do not include custom consulting, done-for-you
-              setup, hosting, server access, managed services, or manual
-              professional services.
+              Listed products are downloadable digital resources.
             </p>
 
             <div className="mt-5 flex flex-col gap-3 sm:flex-row">

@@ -122,9 +122,7 @@ export default function PrivacyPage() {
 
             <p className="mt-3">
               Narostack Digital LLC sells downloadable digital resources only.
-              This website does not sell custom consulting, managed services,
-              hosting, server access, cloud infrastructure resale, manual setup,
-              or professional advisory services.
+              This website sells downloadable digital resources only.
             </p>
           </section>
 

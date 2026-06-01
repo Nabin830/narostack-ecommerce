@@ -71,9 +71,7 @@ Thank you.`);
 
               <p className="mt-2 text-sm leading-6 text-slate-700">
                 This checkout is for downloadable templates, guides, and
-                resource packs only. Products do not include custom consulting,
-                done-for-you implementation, manual setup, hosting, server
-                access, managed services, or professional advisory services.
+                resource packs only. Products are delivered electronically.
               </p>
             </div>
 
@@ -293,8 +291,7 @@ Thank you.`);
                     Product-only checkout
                   </p>
                   <p className="text-sm text-slate-600">
-                    No custom consulting, manual setup, hosting, or managed
-                    services are sold through checkout.
+                    Checkout is for downloadable digital products only.
                   </p>
                 </div>
               </div>

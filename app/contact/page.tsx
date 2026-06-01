@@ -51,8 +51,8 @@ Thank you.`);
           <p className="mt-2 text-sm leading-6 text-slate-700">
             Narostack Digital LLC sells downloadable templates, guides,
             checklists, and resource packs. This website does not sell custom
-            consulting, done-for-you implementation, managed services, hosting,
-            server access, or professional advisory services.
+            downloadable digital products, delivery questions, invoice
+            requests, or product access.
           </p>
         </div>
 

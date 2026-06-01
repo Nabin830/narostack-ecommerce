@@ -103,9 +103,7 @@ export default function AccountPage() {
           <p className="mt-2 text-sm leading-6 text-slate-700">
             This customer account is for access related to downloadable digital
             products, invoice requests, and delivery support. Narostack Digital
-            LLC does not sell custom consulting, done-for-you implementation,
-            hosting, server access, managed services, or manual professional
-            services through this website.
+            LLC sells downloadable digital resources through this website.
           </p>
         </div>
 

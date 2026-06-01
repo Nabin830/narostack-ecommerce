@@ -58,9 +58,7 @@ export default function ProductsPage() {
             Product-only store notice
           </p>
           <p className="mt-2 text-sm leading-6 text-slate-700">
-            Narostack Digital LLC does not sell custom consulting,
-            done-for-you implementation, managed services, hosting, server
-            access, or manual professional services through this product store.
+            Narostack Digital LLC sells downloadable digital resources through this product store.
             The products listed here are downloadable digital resources.
           </p>
         </div>

@@ -81,9 +81,7 @@ export default function LoginPage() {
             </p>
 
             <p className="mt-3 text-sm text-slate-600">
-              This website does not sell custom consulting, done-for-you
-              implementation, hosting, managed services, or manual professional
-              services.
+              This website sells downloadable digital products only.
             </p>
 
             <div className="mt-5 flex flex-col gap-3 sm:flex-row">

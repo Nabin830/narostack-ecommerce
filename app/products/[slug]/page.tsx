@@ -118,11 +118,7 @@ export default function ProductDetailsPage({
                       Product-only purchase
                     </h2>
                     <p className="mt-1 text-sm text-slate-600">
-                      This listing is for a downloadable digital product,
-                      template, checklist, guide, or resource pack only. It does
-                      not include custom consulting, done-for-you setup, manual
-                      implementation, hosting, server access, managed services,
-                      or professional advisory services.
+                      This listing is for a downloadable digital product, template, guide, or resource pack only.
                     </p>
                   </div>
                 </div>
@@ -210,9 +206,7 @@ export default function ProductDetailsPage({
 
           <p className="mt-4 text-slate-600">
             This product store is for downloadable digital resources only.
-            Products do not include manual consulting, custom development,
-            done-for-you implementation, hosting, infrastructure access, managed
-            IT services, or professional advisory services.
+            Products are delivered electronically by email, download link, or online access.
           </p>
         </section>
       </section>

@@ -77,10 +77,7 @@ export default function DeliveryPage() {
 
             <p className="mt-3">
               Delivery includes access to the purchased downloadable digital
-              resource only. Products do not include custom consulting,
-              done-for-you implementation, manual setup, hosting, server access,
-              managed services, remote repair, or professional advisory
-              services.
+              resource only. Products are delivered electronically.
             </p>
           </section>
 

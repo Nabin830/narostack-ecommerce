@@ -26,9 +26,7 @@ export default function CartPage() {
 
           <p className="mt-2 text-sm leading-6 text-slate-700">
             Items in this cart are downloadable digital resources only. Products
-            do not include physical shipping, custom consulting, done-for-you
-            implementation, hosting, server access, managed services, or manual
-            professional services.
+            are delivered electronically and do not require physical shipping.
           </p>
         </div>
 
@@ -155,7 +153,7 @@ export default function CartPage() {
 
                 <p className="mt-2 text-sm text-slate-600">
                   Cart items are downloadable digital products only. No custom
-                  consulting, manual setup, or physical shipping is included.
+                  physical shipping is included.
                 </p>
               </div>
 

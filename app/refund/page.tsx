@@ -60,8 +60,7 @@ export default function RefundPage() {
             <p className="mt-3">
               Refunds are not provided simply because a customer changes their
               mind after receiving digital access, does not read the product
-              description, or expects custom consulting, manual setup, or
-              done-for-you implementation that is not included in the product.
+              description, or expects anything not listed in the product details.
             </p>
           </section>
 
@@ -72,9 +71,7 @@ export default function RefundPage() {
 
             <p className="mt-3">
               Products sold on this website are downloadable digital resources
-              only. Narostack Digital LLC does not sell custom consulting,
-              done-for-you services, hosting, managed services, server access,
-              or professional advisory services through this website.
+              only. Narostack Digital LLC sells downloadable digital resources through this website.
             </p>
           </section>
 
