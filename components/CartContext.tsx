@@ -2,82 +2,64 @@
 
 import {
   createContext,
+  ReactNode,
   useContext,
   useEffect,
   useMemo,
   useState,
-  ReactNode,
 } from "react";
 import { Product } from "@/data/products";
 
-export type CartItem = {
-  slug: string;
-  name: string;
-  price: number;
-  image: string;
+export type CartItem = Product & {
   quantity: number;
 };
 
-type CartContextType = {
+type CartContextValue = {
   items: CartItem[];
+  totalItems: number;
+  subtotal: number;
   addToCart: (product: Product) => void;
   removeFromCart: (slug: string) => void;
   updateQuantity: (slug: string, quantity: number) => void;
   clearCart: () => void;
-  subtotal: number;
-  totalItems: number;
 };
 
-const CartContext = createContext<CartContextType | undefined>(undefined);
+const CartContext = createContext<CartContextValue | undefined>(undefined);
 
-type CartProviderProps = {
-  children: ReactNode;
-};
+const CART_STORAGE_KEY = "narostack-cart";
 
-export function CartProvider({ children }: CartProviderProps) {
+export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    const savedCart = window.localStorage.getItem("narostack-cart");
+    try {
+      const savedCart = window.localStorage.getItem(CART_STORAGE_KEY);
 
-    if (savedCart) {
-      try {
-        setItems(JSON.parse(savedCart));
-      } catch {
-        setItems([]);
+      if (savedCart) {
+        const parsedItems = JSON.parse(savedCart) as CartItem[];
+
+        // Only keep one product in cart and force quantity to 1
+        if (Array.isArray(parsedItems) && parsedItems.length > 0) {
+          setItems([{ ...parsedItems[0], quantity: 1 }]);
+        }
       }
+    } catch {
+      setItems([]);
+    } finally {
+      setLoaded(true);
     }
   }, []);
 
   useEffect(() => {
-    window.localStorage.setItem("narostack-cart", JSON.stringify(items));
-  }, [items]);
+    if (loaded) {
+      window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
+    }
+  }, [items, loaded]);
 
   const addToCart = (product: Product) => {
-    setItems((currentItems) => {
-      const existingItem = currentItems.find(
-        (item) => item.slug === product.slug
-      );
-
-      if (existingItem) {
-        return currentItems.map((item) =>
-          item.slug === product.slug
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-      }
-
-      return [
-        ...currentItems,
-        {
-          slug: product.slug,
-          name: product.name,
-          price: product.price,
-          image: product.image,
-          quantity: 1,
-        },
-      ];
-    });
+    // One product only. New product replaces old product.
+    setItems([{ ...product, quantity: 1 }]);
   };
 
   const removeFromCart = (slug: string) => {
@@ -86,15 +68,13 @@ export function CartProvider({ children }: CartProviderProps) {
     );
   };
 
-  const updateQuantity = (slug: string, quantity: number) => {
-    if (quantity < 1 || Number.isNaN(quantity)) {
-      return;
-    }
-
+  const updateQuantity = (_slug: string, _quantity: number) => {
+    // Quantity is always 1 for digital products
     setItems((currentItems) =>
-      currentItems.map((item) =>
-        item.slug === slug ? { ...item, quantity } : item
-      )
+      currentItems.map((item) => ({
+        ...item,
+        quantity: 1,
+      }))
     );
   };
 
@@ -102,28 +82,22 @@ export function CartProvider({ children }: CartProviderProps) {
     setItems([]);
   };
 
-  const subtotal = useMemo(() => {
-    return items.reduce((total, item) => {
-      return total + item.price * item.quantity;
-    }, 0);
-  }, [items]);
+  const totalItems = items.length > 0 ? 1 : 0;
 
-  const totalItems = useMemo(() => {
-    return items.reduce((total, item) => {
-      return total + item.quantity;
-    }, 0);
+  const subtotal = useMemo(() => {
+    return items.reduce((total, item) => total + item.price, 0);
   }, [items]);
 
   return (
     <CartContext.Provider
       value={{
         items,
+        totalItems,
+        subtotal,
         addToCart,
         removeFromCart,
         updateQuantity,
         clearCart,
-        subtotal,
-        totalItems,
       }}
     >
       {children}
