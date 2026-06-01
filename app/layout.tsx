@@ -31,6 +31,11 @@ export const metadata: Metadata = {
     siteName: "Narostack Digital LLC",
     type: "website",
   },
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
   robots: {
     index: true,
     follow: true,
