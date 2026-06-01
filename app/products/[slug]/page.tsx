@@ -1,30 +1,199 @@
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
+import { CheckCircle2, Mail, ShieldCheck, ShoppingCart } from "lucide-react";
+import AddToCartButton from "@/components/AddToCartButton";
 import { getProductBySlug, products } from "@/data/products";
 import { formatPrice } from "@/lib/format";
-import { AddToCartButton } from "@/components/AddToCartButton";
+
+type ProductDetailsPageProps = {
+  params: {
+    slug: string;
+  };
+};
 
 export function generateStaticParams() {
-  return products.map((product) => ({ slug: product.slug }));
+  return products.map((product) => ({
+    slug: product.slug,
+  }));
 }
 
-export default function ProductDetailsPage({ params }: { params: { slug: string } }) {
+export function generateMetadata({ params }: ProductDetailsPageProps) {
   const product = getProductBySlug(params.slug);
-  if (!product) notFound();
+
+  if (!product) {
+    return {
+      title: "Product Not Found | Narostack Digital LLC",
+    };
+  }
+
+  return {
+    title: `${product.name} | Narostack Digital LLC`,
+    description: product.shortDescription,
+  };
+}
+
+export default function ProductDetailsPage({
+  params,
+}: ProductDetailsPageProps) {
+  const product = getProductBySlug(params.slug);
+
+  if (!product) {
+    notFound();
+  }
+
+  const includedItems = product.includes ?? [
+    "Digital product or service resource",
+    "Professional small business guidance",
+    "Electronic delivery by email, download, or online access",
+  ];
+
+  const bestForItems = product.bestFor ?? [
+    "Small businesses",
+    "Digital operations improvement",
+    "Business technology setup",
+  ];
+
   return (
-    <main className="mx-auto grid max-w-6xl gap-10 px-6 py-16 lg:grid-cols-2">
-      <Image src={product.image} alt={product.name} width={900} height={650} className="rounded-3xl object-cover shadow-soft" />
-      <section>
-        <p className="w-fit rounded-full bg-blue-50 px-3 py-1 text-sm font-semibold text-blue-700">{product.category}</p>
-        <h1 className="mt-5 text-4xl font-bold text-slate-950">{product.name}</h1>
-        <p className="mt-4 text-lg leading-8 text-slate-600">{product.description}</p>
-        <p className="mt-6 text-3xl font-bold text-slate-950">{formatPrice(product.price)}</p>
-        <div className="mt-8"><AddToCartButton product={product} fullWidth /></div>
-        <div className="mt-8 rounded-2xl border bg-white p-6">
-          <h2 className="font-bold">What is included</h2>
-          <ul className="mt-4 grid gap-2 text-sm text-slate-600">{product.features.map((feature) => <li key={feature}>✓ {feature}</li>)}</ul>
+    <main className="bg-slate-50">
+      <section className="mx-auto max-w-6xl px-6 py-16">
+        <Link
+          href="/products"
+          className="text-sm font-semibold text-blue-600 hover:text-blue-700"
+        >
+          ← Back to Products
+        </Link>
+
+        <div className="mt-8 grid gap-10 lg:grid-cols-2 lg:items-start">
+          <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+            <div className="relative aspect-square bg-slate-100">
+              <Image
+                src={product.image}
+                alt={product.name}
+                fill
+                priority
+                className="object-cover"
+              />
+            </div>
+          </div>
+
+          <div>
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700">
+                {product.badge ?? "Digital Product"}
+              </span>
+
+              <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
+                {product.category ?? "Digital IT Product"}
+              </span>
+            </div>
+
+            <h1 className="mt-5 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">
+              {product.name}
+            </h1>
+
+            <p className="mt-4 text-lg leading-8 text-slate-600">
+              {product.description}
+            </p>
+
+            <div className="mt-6 text-4xl font-bold text-blue-600">
+              {formatPrice(product.price)}
+            </div>
+
+            <div className="mt-6 rounded-2xl border border-blue-100 bg-blue-50 p-5">
+              <div className="flex gap-3">
+                <Mail className="mt-1 h-5 w-5 flex-shrink-0 text-blue-600" />
+                <div>
+                  <h2 className="font-bold text-slate-900">
+                    Digital delivery
+                  </h2>
+                  <p className="mt-1 text-sm text-slate-700">
+                    {product.delivery ??
+                      "Delivered electronically by email, download, or online access after payment confirmation."}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <AddToCartButton product={product} />
+
+              <Link
+                href="/checkout"
+                className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-6 py-3 font-semibold text-slate-800 shadow-sm transition hover:bg-slate-50"
+              >
+                Request Invoice
+              </Link>
+            </div>
+
+            <div className="mt-8 grid gap-4 sm:grid-cols-3">
+              <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+                <ShoppingCart className="h-5 w-5 text-blue-600" />
+                <p className="mt-2 text-sm font-semibold text-slate-900">
+                  One-time purchase
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+                <Mail className="h-5 w-5 text-blue-600" />
+                <p className="mt-2 text-sm font-semibold text-slate-900">
+                  Email/download delivery
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+                <ShieldCheck className="h-5 w-5 text-blue-600" />
+                <p className="mt-2 text-sm font-semibold text-slate-900">
+                  Business focused
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
-        <p className="mt-4 text-sm text-slate-500">Digital delivery by email/download. Real payment provider can be connected later.</p>
+
+        <div className="mt-14 grid gap-8 lg:grid-cols-2">
+          <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <h2 className="text-2xl font-bold text-slate-950">
+              What is included
+            </h2>
+
+            <div className="mt-6 space-y-4">
+              {includedItems.map((item) => (
+                <div key={item} className="flex gap-3">
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-blue-600" />
+                  <p className="text-slate-700">{item}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <h2 className="text-2xl font-bold text-slate-950">Best for</h2>
+
+            <div className="mt-6 space-y-4">
+              {bestForItems.map((item) => (
+                <div key={item} className="flex gap-3">
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-blue-600" />
+                  <p className="text-slate-700">{item}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        </div>
+
+        <section className="mt-10 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+          <h2 className="text-2xl font-bold text-slate-950">
+            Purchase and delivery note
+          </h2>
+
+          <p className="mt-4 text-slate-600">
+            Narostack Digital LLC is currently using invoice-based checkout
+            while online payment integration is being prepared. After your order
+            request is received, we will send an invoice and payment
+            instructions by email. Digital products and services are delivered
+            electronically after payment confirmation.
+          </p>
+        </section>
       </section>
     </main>
   );

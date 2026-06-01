@@ -1,26 +1,79 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import { CheckCircle } from "lucide-react";
-import type { Product } from "@/types/product";
+import { ShoppingCart } from "lucide-react";
+import { Product } from "@/data/products";
 import { formatPrice } from "@/lib/format";
-import { AddToCartButton } from "@/components/AddToCartButton";
+import { useCart } from "@/components/CartContext";
 
-export function ProductCard({ product }: { product: Product }) {
+type ProductCardProps = {
+  product: Product;
+};
+
+export default function ProductCard({ product }: ProductCardProps) {
+  const { addToCart } = useCart();
+
+  const handleAddToCart = () => {
+    addToCart(product);
+  };
+
   return (
-    <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-soft transition hover:-translate-y-1 hover:shadow-lg">
-      <Link href={`/products/${product.slug}`}>
-        <Image src={product.image} alt={product.name} width={700} height={450} className="h-52 w-full object-cover" />
-      </Link>
-      <div className="flex flex-1 flex-col p-6">
-        <div className="mb-4 w-fit rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700">{product.category}</div>
-        <h3 className="text-xl font-bold text-slate-950"><Link href={`/products/${product.slug}`} className="hover:text-blue-700">{product.name}</Link></h3>
-        <p className="mt-3 flex-1 text-sm leading-6 text-slate-600">{product.shortDescription}</p>
-        <div className="mt-5 flex items-center gap-2 text-sm text-slate-600"><CheckCircle className="h-4 w-4 text-blue-600" /> Digital delivery by email/download</div>
-        <div className="mt-6 flex items-center justify-between gap-4">
-          <p className="text-2xl font-bold text-slate-950">{formatPrice(product.price)}</p>
-          <AddToCartButton product={product} />
+    <article className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+      <Link href={`/products/${product.slug}`} className="block">
+        <div className="relative aspect-square overflow-hidden bg-slate-100">
+          <Image
+            src={product.image}
+            alt={product.name}
+            fill
+            sizes="(max-width: 768px) 100vw, 33vw"
+            className="object-cover transition duration-300 group-hover:scale-105"
+          />
         </div>
-        <Link href={`/products/${product.slug}`} className="mt-4 text-sm font-semibold text-blue-700 hover:underline">View details</Link>
+      </Link>
+
+      <div className="p-5">
+        <div className="mb-3 flex items-center justify-between gap-3">
+          <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700">
+            {product.badge}
+          </span>
+
+          <span className="text-sm font-semibold text-slate-900">
+            {formatPrice(product.price)}
+          </span>
+        </div>
+
+        <Link href={`/products/${product.slug}`}>
+          <h3 className="text-lg font-bold text-slate-900 transition hover:text-blue-700">
+            {product.name}
+          </h3>
+        </Link>
+
+        <p className="mt-2 text-sm text-slate-600">
+          {product.shortDescription}
+        </p>
+
+        <p className="mt-3 text-xs font-medium text-slate-500">
+          Digital delivery by email/download
+        </p>
+
+        <div className="mt-5 grid grid-cols-2 gap-3">
+          <Link
+            href={`/products/${product.slug}`}
+            className="rounded-xl border border-slate-300 px-4 py-2 text-center text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+          >
+            View Product
+          </Link>
+
+          <button
+            type="button"
+            onClick={handleAddToCart}
+            className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700"
+          >
+            <ShoppingCart className="h-4 w-4" />
+            Add
+          </button>
+        </div>
       </div>
     </article>
   );

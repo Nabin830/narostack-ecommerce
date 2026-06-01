@@ -1,76 +1,142 @@
 "use client";
 
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { products } from "@/data/products";
-import type { Product } from "@/types/product";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  ReactNode,
+} from "react";
+import { Product } from "@/data/products";
 
-export type CartItem = Product & { quantity: number };
+export type CartItem = {
+  slug: string;
+  name: string;
+  price: number;
+  image: string;
+  quantity: number;
+};
 
-type CartContextValue = {
+type CartContextType = {
   items: CartItem[];
   addToCart: (product: Product) => void;
   removeFromCart: (slug: string) => void;
   updateQuantity: (slug: string, quantity: number) => void;
   clearCart: () => void;
-  totalItems: number;
   subtotal: number;
+  totalItems: number;
 };
 
-const CartContext = createContext<CartContextValue | null>(null);
-const STORAGE_KEY = "narostack_cart";
+const CartContext = createContext<CartContextType | undefined>(undefined);
 
-export function CartProvider({ children }: { children: React.ReactNode }) {
+type CartProviderProps = {
+  children: ReactNode;
+};
+
+export function CartProvider({ children }: CartProviderProps) {
   const [items, setItems] = useState<CartItem[]>([]);
 
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) setItems(JSON.parse(saved));
-    } catch {
-      setItems([]);
+    const savedCart = window.localStorage.getItem("narostack-cart");
+
+    if (savedCart) {
+      try {
+        setItems(JSON.parse(savedCart));
+      } catch {
+        setItems([]);
+      }
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+    window.localStorage.setItem("narostack-cart", JSON.stringify(items));
   }, [items]);
 
-  function addToCart(product: Product) {
-    setItems((current) => {
-      const existing = current.find((item) => item.slug === product.slug);
-      if (existing) {
-        return current.map((item) =>
-          item.slug === product.slug ? { ...item, quantity: item.quantity + 1 } : item
+  const addToCart = (product: Product) => {
+    setItems((currentItems) => {
+      const existingItem = currentItems.find(
+        (item) => item.slug === product.slug
+      );
+
+      if (existingItem) {
+        return currentItems.map((item) =>
+          item.slug === product.slug
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
         );
       }
-      return [...current, { ...product, quantity: 1 }];
+
+      return [
+        ...currentItems,
+        {
+          slug: product.slug,
+          name: product.name,
+          price: product.price,
+          image: product.image,
+          quantity: 1,
+        },
+      ];
     });
-  }
+  };
 
-  function removeFromCart(slug: string) {
-    setItems((current) => current.filter((item) => item.slug !== slug));
-  }
+  const removeFromCart = (slug: string) => {
+    setItems((currentItems) =>
+      currentItems.filter((item) => item.slug !== slug)
+    );
+  };
 
-  function updateQuantity(slug: string, quantity: number) {
-    if (quantity <= 0) return removeFromCart(slug);
-    setItems((current) => current.map((item) => (item.slug === slug ? { ...item, quantity } : item)));
-  }
+  const updateQuantity = (slug: string, quantity: number) => {
+    if (quantity < 1 || Number.isNaN(quantity)) {
+      return;
+    }
 
-  function clearCart() {
+    setItems((currentItems) =>
+      currentItems.map((item) =>
+        item.slug === slug ? { ...item, quantity } : item
+      )
+    );
+  };
+
+  const clearCart = () => {
     setItems([]);
-  }
+  };
 
-  const value = useMemo(() => {
-    const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
-    const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    return { items, addToCart, removeFromCart, updateQuantity, clearCart, totalItems, subtotal };
+  const subtotal = useMemo(() => {
+    return items.reduce((total, item) => {
+      return total + item.price * item.quantity;
+    }, 0);
   }, [items]);
 
-  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
+  const totalItems = useMemo(() => {
+    return items.reduce((total, item) => {
+      return total + item.quantity;
+    }, 0);
+  }, [items]);
+
+  return (
+    <CartContext.Provider
+      value={{
+        items,
+        addToCart,
+        removeFromCart,
+        updateQuantity,
+        clearCart,
+        subtotal,
+        totalItems,
+      }}
+    >
+      {children}
+    </CartContext.Provider>
+  );
 }
 
 export function useCart() {
   const context = useContext(CartContext);
-  if (!context) throw new Error("useCart must be used inside CartProvider");
+
+  if (!context) {
+    throw new Error("useCart must be used inside CartProvider");
+  }
+
   return context;
 }

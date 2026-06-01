@@ -1,23 +1,23 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import type { Product } from "@/types/product";
+import { ShoppingCart } from "lucide-react";
+import { Product } from "@/data/products";
 import { useCart } from "@/components/CartContext";
 
-export function AddToCartButton({ product, fullWidth = false }: { product: Product; fullWidth?: boolean }) {
-  const { addToCart } = useCart();
-  const router = useRouter();
+type AddToCartButtonProps = {
+  product: Product;
+};
 
-  function handleClick() {
-    addToCart(product);
-    router.push("/cart");
-  }
+export default function AddToCartButton({ product }: AddToCartButtonProps) {
+  const { addToCart } = useCart();
 
   return (
     <button
-      onClick={handleClick}
-      className={`${fullWidth ? "w-full" : ""} rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-700`}
+      type="button"
+      onClick={() => addToCart(product)}
+      className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white shadow-sm transition hover:bg-blue-700"
     >
+      <ShoppingCart className="mr-2 h-5 w-5" />
       Add to Cart
     </button>
   );
