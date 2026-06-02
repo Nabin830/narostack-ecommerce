@@ -66,29 +66,51 @@ export const products: Product[] = [
     ],
   },
   {
-    slug: "cloud-setup-guide",
-    name: "Cloud Setup Guide",
-    price: 39,
-    category: "Cloud Guide",
-    badge: "Digital Guide",
-    image: "/images/cloud-setup-guide.jpg",
-    shortDescription:
-      "A downloadable guide for organizing files, accounts, access notes, and basic cloud workflows.",
-    description:
-      "The Cloud Setup Guide is a downloadable guide that helps small businesses plan file organization, account notes, access planning, backup habits, and simple cloud workflow preparation.",
-    delivery:
-      "Delivered electronically by email, download link, or online access after payment confirmation.",
-    includes: [
-      "Cloud account planning guide",
-      "File and folder organization checklist",
-      "Access planning sheet",
-      "Backup preparation checklist",
-      "Small business cloud readiness guide",
-    ],
-    bestFor: [
-      "Small businesses planning cloud organization",
-      "Teams preparing file and access structure",
-      "Users who want a downloadable cloud planning resource",
+    slug: "internet-setup-guide",
+
+  name: "Internet Setup Guide",
+
+  price: 39,
+
+  category: "Internet Guide",
+
+  badge: "Digital Guide",
+
+  image: "/images/internet-setup-guide.jpg",
+
+  shortDescription:
+
+    "A downloadable guide for organizing files, accounts, access notes, and simple internet workflow planning.",
+
+  description:
+
+    "The Internet Setup Guide is a downloadable guide that helps small businesses plan file organization, account notes, access planning, backup habits, and simple internet workflow preparation.",
+
+  delivery:
+
+    "Delivered electronically by email, download link, or online access after payment confirmation.",
+
+  includes: [
+
+    "Internet account planning guide",
+
+    "File and folder organization checklist",
+
+    "Access planning sheet",
+
+    "Backup preparation checklist",
+
+    "Small business internet readiness guide",
+
+  ],
+
+  bestFor: [
+
+    "Small businesses planning internet organization",
+
+    "Teams preparing file and access structure",
+
+    "Users who want a downloadable internet planning resource",
     ],
   },
   {

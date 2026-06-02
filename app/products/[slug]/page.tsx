@@ -27,7 +27,7 @@ const polarLinks: Record<string, string> = {
   "small-business-automation-template-kit":
     "https://buy.polar.sh/polar_cl_TQk5oOqRAXFdSKAmtZ0T4CiY22ALmAYhTHOAW0S06Xd",
 
-  "cloud-setup-guide":
+  "Internet-setup-guide":
     "https://buy.polar.sh/polar_cl_sE4nItVkvET3vzB0TreP0BLmtxqhG3THe1vzU2JRIns",
 
   "digital-branding-starter-kit":

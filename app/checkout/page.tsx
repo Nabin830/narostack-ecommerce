@@ -13,7 +13,7 @@ const polarLinks: Record<string, string> = {
   "Small Business Automation Template Kit":
     "https://buy.polar.sh/polar_cl_TQk5oOqRAXFdSKAmtZ0T4CiY22ALmAYhTHOAW0S06Xd",
 
-  "Cloud Setup Guide":
+  "Internet Setup Guide":
     "https://buy.polar.sh/polar_cl_sE4nItVkvET3vzB0TreP0BLmtxqhG3THe1vzU2JRIns",
 
   "Digital Branding Starter Kit":
@@ -24,7 +24,7 @@ const productSlugToName: Record<string, string> = {
   "business-website-starter-template": "Business Website Starter Template",
   "small-business-automation-template-kit":
     "Small Business Automation Template Kit",
-  "cloud-setup-guide": "Cloud Setup Guide",
+  "Internet-setup-guide": "Internet Setup Guide",
   "digital-branding-starter-kit": "Digital Branding Starter Kit",
 };
 
@@ -140,8 +140,8 @@ Thank you.`);
                       Small Business Automation Template Kit - $79
                     </option>
 
-                    <option value="Cloud Setup Guide">
-                      Cloud Setup Guide - $39
+                    <option value="Internet Setup Guide">
+                      Internet Setup Guide - $39
                     </option>
 
                     <option value="Digital Branding Starter Kit">

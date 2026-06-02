@@ -12,14 +12,14 @@ export const metadata: Metadata = {
     template: "%s | Narostack Digital LLC",
   },
   description:
-    "Narostack Digital LLC sells downloadable digital products for small businesses, including website templates, automation templates, cloud setup guides, digital branding kits, and online business resource packs.",
+    "Narostack Digital LLC sells downloadable digital products for small businesses, including website templates, automation templates, Internet setup guides, digital branding kits, and online business resource packs.",
   keywords: [
     "Narostack Digital LLC",
     "downloadable digital products",
     "small business templates",
     "website templates",
     "business automation templates",
-    "cloud setup guide",
+    "Internet setup guide",
     "digital branding kit",
     "digital resource packs",
   ],

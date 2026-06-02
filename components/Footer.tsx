@@ -48,7 +48,7 @@ export default function Footer() {
 
           <p className="mt-5 max-w-md text-sm leading-6 text-slate-300">
             Narostack Digital LLC sells downloadable digital products for small
-            businesses, including website templates, automation templates, cloud
+            businesses, including website templates, automation templates, Internet
             setup guides, digital branding kits, and business resource packs.
           </p>
 

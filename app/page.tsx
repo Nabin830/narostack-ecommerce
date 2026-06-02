@@ -29,7 +29,7 @@ export default function HomePage() {
 
             <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
               Narostack Digital LLC sells downloadable digital products,
-              including website templates, automation templates, cloud setup
+              including website templates, automation templates, Internet setup
               guides, digital branding kits, and business resource packs.
             </p>
 
@@ -79,7 +79,7 @@ export default function HomePage() {
               </h2>
 
               <p className="mt-4 text-slate-300">
-                Prepare your website structure, organize workflows, plan cloud
+                Prepare your website structure, organize workflows, plan Internet
                 setup, and build a cleaner brand foundation using digital
                 templates, guides, and checklists.
               </p>
@@ -94,8 +94,8 @@ export default function HomePage() {
                 },
                 {
                   icon: Cloud,
-                  title: "Cloud Guides",
-                  text: "Digital guides for organizing files, access, and cloud planning.",
+                  title: "Internet Guides",
+                  text: "Digital guides for organizing files, access, and Internet planning.",
                 },
                 {
                   icon: FileText,

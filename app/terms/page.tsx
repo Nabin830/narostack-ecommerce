@@ -27,7 +27,7 @@ export default function TermsPage() {
             <p className="mt-3">
               Narostack Digital LLC sells downloadable digital products for
               small businesses. Products may include website templates,
-              automation templates, cloud setup guides, digital branding kits,
+              automation templates, Internet setup guides, digital branding kits,
               and other downloadable business resource packs.
             </p>
           </section>

@@ -8,7 +8,7 @@ const faqs = [
   {
     question: "What does Narostack Digital LLC sell?",
     answer:
-      "Narostack Digital LLC sells downloadable digital products for small businesses, including website templates, automation templates, cloud setup guides, digital branding kits, and business resource packs.",
+      "Narostack Digital LLC sells downloadable digital products for small businesses, including website templates, automation templates, Internet setup guides, digital branding kits, and business resource packs.",
   },
   {
     question: "Are these physical products?",
@@ -31,9 +31,9 @@ const faqs = [
       "Because products are digital, refunds may be limited once a product has been delivered, accessed, or downloaded. Refund requests may be reviewed for duplicate payments, incorrect charges, non-delivery, or technical delivery issues.",
   },
   {
-    question: "Does the cloud guide include cloud accounts?",
+    question: "Does the Internet guide include Internet accounts?",
     answer:
-      "No. The Cloud Setup Guide is a downloadable guide only. It does not include any paid cloud account, live account setup, infrastructure access, or third-party platform account.",
+      "No. The Internet Setup Guide is a downloadable guide only. It does not include any paid Internet account, live account setup, infrastructure access, or third-party platform account.",
   },
   {
     question: "Can I request an invoice?",
