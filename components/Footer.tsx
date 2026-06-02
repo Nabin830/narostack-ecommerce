@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Mail } from "lucide-react";
+import { Mail, MapPin } from "lucide-react";
 
 const policyLinks = [
   { href: "/privacy", label: "Privacy Policy" },
@@ -48,13 +48,25 @@ export default function Footer() {
 
           <p className="mt-5 max-w-md text-sm leading-6 text-slate-300">
             Narostack Digital LLC sells downloadable digital products for small
-            businesses, including website templates, automation templates, Internet
-            setup guides, digital branding kits, and business resource packs.
+            businesses, including website templates, automation templates,
+            internet setup guides, digital branding kits, and business resource
+            packs.
           </p>
 
           <div className="mt-5 flex items-center gap-2 text-sm text-slate-300">
             <Mail className="h-4 w-4 text-blue-400" />
             <span>pandeynabin@narostack.com</span>
+          </div>
+          <div className="mt-3 text-sm text-slate-300">
+              <p className="font-semibold text-white">Business Address</p>
+              <p>30 N Gould St Ste R, Sheridan, WY 82801, USA</p>
+          </div>
+
+          <div className="mt-3 flex items-start gap-2 text-sm text-slate-300">
+            <MapPin className="mt-0.5 h-4 w-4 text-blue-400" />
+            <span>
+              30 N Gould St Ste R, Sheridan, WY 82801, United States
+            </span>
           </div>
 
           <p className="mt-3 text-sm text-slate-400">
@@ -62,7 +74,8 @@ export default function Footer() {
           </p>
 
           <p className="mt-2 text-sm text-slate-400">
-            Digital delivery by email, download link, or online access.
+            Digital delivery by email, download link, or online access after
+            purchase confirmation.
           </p>
         </div>
 
@@ -117,7 +130,8 @@ export default function Footer() {
             </p>
 
             <p className="mt-2 text-xs leading-5 text-slate-400">
-              Products are delivered electronically. No physical shipping.
+              Products are delivered electronically. No physical shipping is
+              required for digital products.
             </p>
           </div>
         </div>
@@ -126,7 +140,7 @@ export default function Footer() {
       <div className="border-t border-slate-800">
         <div className="mx-auto flex max-w-6xl flex-col gap-3 px-6 py-5 text-sm text-slate-400 sm:flex-row sm:items-center sm:justify-between">
           <p>© 2026 Narostack Digital LLC. All Rights Reserved.</p>
-          <p>Invoice checkout active. Online payment integration coming soon.</p>
+          <p>Payments and invoice requests are handled through approved checkout channels.</p>
         </div>
       </div>
     </footer>

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Clock, Download, Mail, PackageCheck } from "lucide-react";
+import { Clock, Download, Mail, MapPin, PackageCheck } from "lucide-react";
 
 export const metadata = {
   title: "Contact | Narostack Digital LLC",
@@ -44,15 +44,15 @@ Thank you.`);
         </div>
 
         <div className="mt-10 rounded-2xl border border-blue-100 bg-blue-50 p-5">
-          <p className="font-semibold text-slate-950">
-            Product store contact notice
-          </p>
+          <p className="font-semibold text-slate-950">Product Store Notice</p>
 
           <p className="mt-2 text-sm leading-6 text-slate-700">
-            Narostack Digital LLC sells downloadable templates, guides,
-            checklists, and resource packs. This website does not sell custom
-            downloadable digital products, delivery questions, invoice
-            requests, or product access.
+            Narostack Digital LLC provides downloadable digital products and
+            technology resources for small businesses. Our products include
+            templates, guides, checklists, and digital resource packs delivered
+            electronically after purchase. For product questions, delivery
+            assistance, invoice requests, or support enquiries, please contact us
+            by email.
           </p>
         </div>
 
@@ -110,6 +110,24 @@ Thank you.`);
 
               <p className="mt-2 break-words text-sm text-slate-600">
                 {email}
+              </p>
+            </div>
+
+            <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+              <MapPin className="h-6 w-6 text-blue-600" />
+
+              <h3 className="mt-4 font-bold text-slate-950">
+                Business Address
+              </h3>
+
+              <p className="mt-2 text-sm leading-6 text-slate-600">
+                Narostack Digital LLC
+                <br />
+                30 N Gould St Ste R
+                <br />
+                Sheridan, WY 82801
+                <br />
+                United States
               </p>
             </div>
 
