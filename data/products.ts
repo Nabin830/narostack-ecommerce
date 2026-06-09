@@ -12,6 +12,9 @@ export type Product = {
   bestFor: string[];
 };
 
+const DELIVERY =
+  "Delivered automatically by download link after payment confirmation. No human involvement required.";
+
 export const products: Product[] = [
   {
     slug: "business-website-starter-template",
@@ -20,24 +23,11 @@ export const products: Product[] = [
     category: "Website Template",
     badge: "Digital Download",
     image: "/images/website-template.jpg",
-    shortDescription:
-      "A downloadable website starter template for small business landing pages and online product pages.",
-    description:
-      "The Business Website Starter Template is a downloadable website resource created for small businesses that need a clean and professional online presence. It includes structured page sections, layout ideas, and content guidance that can help a business prepare a simple website faster.",
-    delivery:
-      "Delivered electronically by email, download link, or online access after payment confirmation.",
-    includes: [
-      "Homepage layout template",
-      "Product section structure",
-      "About page content guide",
-      "Contact page content guide",
-      "Website launch checklist",
-    ],
-    bestFor: [
-      "Small businesses preparing a simple website",
-      "Business owners who need a professional starting point",
-      "Users who want downloadable website structure and guidance",
-    ],
+    shortDescription: "A downloadable website starter template for small business landing pages and online product pages.",
+    description: "The Business Website Starter Template is a downloadable website resource created for small businesses that need a clean and professional online presence. It includes structured page sections, layout ideas, and content guidance that can help a business prepare a simple website faster.",
+    delivery: DELIVERY,
+    includes: ["Homepage layout template", "Product section structure", "About page content guide", "Contact page content guide", "Website launch checklist"],
+    bestFor: ["Small businesses preparing a simple website", "Business owners who need a professional starting point", "Users who want downloadable website structure and guidance"],
   },
   {
     slug: "small-business-automation-template-kit",
@@ -46,72 +36,24 @@ export const products: Product[] = [
     category: "Automation Templates",
     badge: "Digital Download",
     image: "/images/automation-kit.jpg",
-    shortDescription:
-      "A downloadable template kit for planning repeatable business workflows and internal processes.",
-    description:
-      "The Small Business Automation Template Kit is a downloadable resource pack designed to help small businesses organize repeatable tasks, workflow steps, and internal process notes. It includes planning sheets, checklist templates, example email flows, and task tracking resources.",
-    delivery:
-      "Delivered electronically by email, download link, or online access after payment confirmation.",
-    includes: [
-      "Workflow planning template",
-      "Task tracking sheet",
-      "Process checklist",
-      "Email flow examples",
-      "Business process documentation guide",
-    ],
-    bestFor: [
-      "Small businesses organizing routine tasks",
-      "Business owners creating repeatable workflows",
-      "Users who want downloadable planning resources",
-    ],
+    shortDescription: "A downloadable template kit for planning repeatable business workflows and internal processes.",
+    description: "The Small Business Automation Template Kit is a downloadable resource pack designed to help small businesses organize repeatable tasks, workflow steps, and internal process notes. It includes planning sheets, checklist templates, example email flows, and task tracking resources.",
+    delivery: DELIVERY,
+    includes: ["Workflow planning template", "Task tracking sheet", "Process checklist", "Email flow examples", "Business process documentation guide"],
+    bestFor: ["Small businesses organizing routine tasks", "Business owners creating repeatable workflows", "Users who want downloadable planning resources"],
   },
   {
     slug: "internet-setup-guide",
-
-  name: "Internet Setup Guide",
-
-  price: 39,
-
-  category: "Internet Guide",
-
-  badge: "Digital Guide",
-
-  image: "/images/internet-setup-guide.jpg",
-
-  shortDescription:
-
-    "A downloadable guide for organizing files, accounts, access notes, and simple internet workflow planning.",
-
-  description:
-
-    "The Internet Setup Guide is a downloadable guide that helps small businesses plan file organization, account notes, access planning, backup habits, and simple internet workflow preparation.",
-
-  delivery:
-
-    "Delivered electronically by email, download link, or online access after payment confirmation.",
-
-  includes: [
-
-    "Internet account planning guide",
-
-    "File and folder organization checklist",
-
-    "Access planning sheet",
-
-    "Backup preparation checklist",
-
-    "Small business internet readiness guide",
-
-  ],
-
-  bestFor: [
-
-    "Small businesses planning internet organization",
-
-    "Teams preparing file and access structure",
-
-    "Users who want a downloadable internet planning resource",
-    ],
+    name: "Internet Setup Guide",
+    price: 39,
+    category: "Internet Guide",
+    badge: "Digital Guide",
+    image: "/images/internet-setup-guide.jpg",
+    shortDescription: "A downloadable guide for organizing files, accounts, access notes, and simple internet workflow planning.",
+    description: "The Internet Setup Guide is a downloadable guide that helps small businesses plan file organization, account notes, access planning, backup habits, and simple internet workflow preparation.",
+    delivery: DELIVERY,
+    includes: ["Internet account planning guide", "File and folder organization checklist", "Access planning sheet", "Backup preparation checklist", "Small business internet readiness guide"],
+    bestFor: ["Small businesses planning internet organization", "Teams preparing file and access structure", "Users who want a downloadable internet planning resource"],
   },
   {
     slug: "digital-branding-starter-kit",
@@ -120,24 +62,141 @@ export const products: Product[] = [
     category: "Branding Kit",
     badge: "Digital Kit",
     image: "/images/branding-kit.jpg",
-    shortDescription:
-      "A downloadable branding starter kit with simple brand planning templates for small businesses.",
-    description:
-      "The Digital Branding Starter Kit is a downloadable resource pack for small businesses preparing basic brand materials. It includes brand planning worksheets, color and typography planning guidance, social profile checklist, and content structure templates.",
-    delivery:
-      "Delivered electronically by email, download link, or online access after payment confirmation.",
-    includes: [
-      "Brand identity planning worksheet",
-      "Color and font planning guide",
-      "Social profile checklist",
-      "Business description template",
-      "Basic content planning worksheet",
-    ],
-    bestFor: [
-      "Small businesses preparing brand materials",
-      "Owners who need simple brand organization templates",
-      "Users who want downloadable branding planning resources",
-    ],
+    shortDescription: "A downloadable branding starter kit with simple brand planning templates for small businesses.",
+    description: "The Digital Branding Starter Kit is a downloadable resource pack for small businesses preparing basic brand materials. It includes brand planning worksheets, color and typography planning guidance, social profile checklist, and content structure templates.",
+    delivery: DELIVERY,
+    includes: ["Brand identity planning worksheet", "Color and font planning guide", "Social profile checklist", "Business description template", "Basic content planning worksheet"],
+    bestFor: ["Small businesses preparing brand materials", "Owners who need simple brand organization templates", "Users who want downloadable branding planning resources"],
+  },
+  {
+    slug: "social-media-content-calendar-template",
+    name: "Social Media Content Calendar Template",
+    price: 29,
+    category: "Marketing Templates",
+    badge: "Digital Download",
+    image: "/images/social-media-calendar.jpg",
+    shortDescription: "A downloadable weekly and monthly content calendar for planning social media posts across platforms.",
+    description: "The Social Media Content Calendar Template is a downloadable planning resource that helps small businesses organize their social media posts by platform, topic, and schedule. It includes a monthly overview grid, weekly planning sheets, post idea prompts, and a hashtag planning worksheet.",
+    delivery: DELIVERY,
+    includes: ["Monthly content calendar grid", "Weekly post planning sheet", "Platform-specific planning tabs", "Post idea prompt list", "Hashtag and caption planning worksheet"],
+    bestFor: ["Small businesses managing their own social media", "Business owners who want to plan content in advance", "Users who want a downloadable social media planning resource"],
+  },
+  {
+    slug: "small-business-seo-checklist",
+    name: "Small Business SEO Checklist",
+    price: 34,
+    category: "SEO Resource",
+    badge: "Digital Guide",
+    image: "/images/seo-checklist.jpg",
+    shortDescription: "A downloadable SEO checklist covering on-page, technical, and local SEO steps for small business websites.",
+    description: "The Small Business SEO Checklist is a downloadable resource that walks small business owners through essential SEO tasks including page titles, meta descriptions, image alt text, site speed basics, Google Business setup, and local citation planning.",
+    delivery: DELIVERY,
+    includes: ["On-page SEO checklist", "Technical SEO basics checklist", "Local SEO setup guide", "Google Business profile checklist", "Monthly SEO maintenance checklist"],
+    bestFor: ["Small business owners managing their own website SEO", "Businesses wanting to improve local search visibility", "Users who want a clear downloadable SEO action plan"],
+  },
+  {
+    slug: "email-marketing-starter-kit",
+    name: "Email Marketing Starter Kit",
+    price: 44,
+    category: "Marketing Templates",
+    badge: "Digital Download",
+    image: "/images/email-marketing-kit.jpg",
+    shortDescription: "A downloadable email marketing planning kit with templates for welcome sequences, promotions, and newsletters.",
+    description: "The Email Marketing Starter Kit is a downloadable resource pack for small businesses setting up their first email marketing workflows. It includes a welcome sequence outline, newsletter structure template, promotional email framework, subject line idea sheet, and subscriber list planning guide.",
+    delivery: DELIVERY,
+    includes: ["Welcome email sequence outline", "Newsletter structure template", "Promotional email framework", "Subject line idea sheet (50+ examples)", "Subscriber list planning guide"],
+    bestFor: ["Small businesses starting their first email list", "Business owners who want structured email templates", "Users who want a downloadable email marketing planning resource"],
+  },
+  {
+    slug: "business-financial-planning-spreadsheet",
+    name: "Business Financial Planning Spreadsheet",
+    price: 54,
+    category: "Finance Templates",
+    badge: "Digital Download",
+    image: "/images/financial-planning.jpg",
+    shortDescription: "A downloadable spreadsheet for tracking business income, expenses, and monthly cash flow for small businesses.",
+    description: "The Business Financial Planning Spreadsheet is a downloadable resource that helps small business owners track monthly revenue, categorize expenses, monitor profit and loss, and plan simple budgets. Pre-formatted and ready to fill in — no accounting software required.",
+    delivery: DELIVERY,
+    includes: ["Monthly income tracker", "Expense category sheet", "Profit and loss summary", "Annual cash flow overview", "Simple budget planning worksheet"],
+    bestFor: ["Small business owners tracking income and expenses manually", "Freelancers who want a simple financial planning tool", "Users who want a downloadable financial tracking resource"],
+  },
+  {
+    slug: "customer-onboarding-template-pack",
+    name: "Customer Onboarding Template Pack",
+    price: 39,
+    category: "Business Templates",
+    badge: "Digital Download",
+    image: "/images/onboarding-pack.jpg",
+    shortDescription: "A downloadable template pack for creating a structured onboarding experience for new customers or clients.",
+    description: "The Customer Onboarding Template Pack is a downloadable resource that helps small businesses create a clear and professional onboarding process. It includes a welcome message template, onboarding checklist, client intake form outline, FAQ document structure, and a next-steps communication guide.",
+    delivery: DELIVERY,
+    includes: ["Welcome message template", "Client onboarding checklist", "Client intake form outline", "FAQ document structure", "Next-steps communication guide"],
+    bestFor: ["Service businesses onboarding new clients", "Small businesses that want a repeatable onboarding process", "Users who want downloadable client communication templates"],
+  },
+  {
+    slug: "product-launch-planning-kit",
+    name: "Product Launch Planning Kit",
+    price: 49,
+    category: "Business Templates",
+    badge: "Digital Download",
+    image: "/images/launch-kit.jpg",
+    shortDescription: "A downloadable planning kit for organizing a small business product or service launch from start to finish.",
+    description: "The Product Launch Planning Kit is a downloadable resource for small businesses preparing to launch a new product or service. It includes a launch timeline template, pre-launch task checklist, announcement content outline, launch day checklist, and a post-launch review worksheet.",
+    delivery: DELIVERY,
+    includes: ["Launch timeline template", "Pre-launch task checklist", "Announcement content outline", "Launch day checklist", "Post-launch review worksheet"],
+    bestFor: ["Small businesses launching a new product or service", "Business owners who want a structured launch plan", "Users who want a downloadable launch planning resource"],
+  },
+  {
+    slug: "freelance-proposal-template-pack",
+    name: "Freelance Proposal Template Pack",
+    price: 34,
+    category: "Business Templates",
+    badge: "Digital Download",
+    image: "/images/proposal-pack.jpg",
+    shortDescription: "A downloadable proposal template pack for freelancers and small service businesses to send professional quotes.",
+    description: "The Freelance Proposal Template Pack is a downloadable resource for freelancers and small service businesses that need to send professional project proposals. It includes a proposal structure template, pricing table format, project scope outline, terms summary section, and a follow-up email template.",
+    delivery: DELIVERY,
+    includes: ["Proposal structure template", "Pricing table format", "Project scope outline", "Terms and conditions summary section", "Follow-up email template"],
+    bestFor: ["Freelancers writing client proposals", "Small service businesses creating project quotes", "Users who want downloadable professional proposal templates"],
+  },
+  {
+    slug: "business-password-and-access-organizer",
+    name: "Business Password and Access Organizer",
+    price: 19,
+    category: "Productivity Resource",
+    badge: "Digital Guide",
+    image: "/images/password-organizer.jpg",
+    shortDescription: "A downloadable offline organizer template for tracking business account logins, tools, and access credentials.",
+    description: "The Business Password and Access Organizer is a downloadable offline planning resource designed to help small business owners keep track of their business accounts, platform logins, tool subscriptions, and access details in one organized place. Intended for offline personal use only.",
+    delivery: DELIVERY,
+    includes: ["Account and login tracking sheet", "Tool and subscription list template", "Domain and hosting access notes section", "Team access planning worksheet", "Account recovery checklist"],
+    bestFor: ["Small business owners managing many accounts and tools", "Teams setting up organized access documentation", "Users who want a downloadable offline account organizer"],
+  },
+  {
+    slug: "digital-product-pricing-guide",
+    name: "Digital Product Pricing Guide",
+    price: 24,
+    category: "Business Resource",
+    badge: "Digital Guide",
+    image: "/images/pricing-guide.jpg",
+    shortDescription: "A downloadable guide for planning and setting prices for digital products, templates, and online resources.",
+    description: "The Digital Product Pricing Guide is a downloadable resource that helps creators, freelancers, and small businesses think through how to price their digital products. It covers pricing strategy basics, competitive positioning, value-based pricing, tiered product pricing, and a simple price calculation worksheet.",
+    delivery: DELIVERY,
+    includes: ["Pricing strategy overview guide", "Value-based pricing worksheet", "Competitive pricing analysis template", "Tiered product pricing planner", "Price calculation worksheet"],
+    bestFor: ["Creators launching their first digital product", "Small businesses reviewing or adjusting their pricing", "Users who want a downloadable pricing planning resource"],
+  },
+  {
+    slug: "remote-team-communication-playbook",
+    name: "Remote Team Communication Playbook",
+    price: 44,
+    category: "Team Resources",
+    badge: "Digital Download",
+    image: "/images/remote-team-playbook.jpg",
+    shortDescription: "A downloadable communication playbook for small remote teams covering meetings, updates, and async workflow.",
+    description: "The Remote Team Communication Playbook is a downloadable resource for small businesses and distributed teams that want to standardize how they communicate. It covers meeting cadence templates, async update formats, team channel structure recommendations, decision-making documentation, and a remote onboarding communication outline.",
+    delivery: DELIVERY,
+    includes: ["Meeting cadence template", "Async update format guide", "Team channel structure recommendations", "Decision-making documentation template", "Remote onboarding communication outline"],
+    bestFor: ["Small remote teams setting up communication standards", "Business owners managing a distributed team", "Users who want a downloadable team communication resource"],
   },
 ];
 
