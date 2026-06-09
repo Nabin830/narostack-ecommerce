@@ -1,43 +1,57 @@
 /**
  * lib/dodoLinks.ts
  * Single source of truth for all Dodo Payments checkout URLs.
- * To add a new product:
- *  1. Create it in your Dodo Payments dashboard
- *  2. Add its product ID here
- *  3. Add the product to data/products.ts
- *  4. Add the product to the productOptions array in app/checkout/page.tsx
+ * Replace each PLACEHOLDER_* with your real Dodo product ID after
+ * creating the product in your Dodo Payments dashboard.
  */
-
 export const dodoLinks: Record<string, string> = {
-  // ── Existing 4 products (live Dodo IDs) ─────────────────────────────────────
-  "business-website-starter-template":
-    "https://checkout.dodopayments.com/buy/pdt_0NgYs2CiHthhVsIUqLUpR?quantity=1",
-  "small-business-automation-template-kit":
-    "https://checkout.dodopayments.com/buy/pdt_0NgdaIvD0fKOqoVr8Ib0s?quantity=1",
-  "internet-setup-guide":
-    "https://checkout.dodopayments.com/buy/pdt_0NgdbCYgyO24OQVGWK5AS?quantity=1",
-  "digital-branding-starter-kit":
-    "https://checkout.dodopayments.com/buy/pdt_0NgdbXKYzRcSI9wGKeUk4?quantity=1",
-
-  // ── 10 New products — replace PLACEHOLDER_* after creating in Dodo dashboard ─
-  "social-media-content-calendar-template":
-    "https://checkout.dodopayments.com/buy/PLACEHOLDER_SOCIAL_CALENDAR?quantity=1",
-  "small-business-seo-checklist":
-    "https://checkout.dodopayments.com/buy/PLACEHOLDER_SEO_CHECKLIST?quantity=1",
-  "email-marketing-starter-kit":
-    "https://checkout.dodopayments.com/buy/PLACEHOLDER_EMAIL_MARKETING?quantity=1",
-  "business-financial-planning-spreadsheet":
-    "https://checkout.dodopayments.com/buy/PLACEHOLDER_FINANCIAL_PLANNING?quantity=1",
-  "customer-onboarding-template-pack":
-    "https://checkout.dodopayments.com/buy/PLACEHOLDER_ONBOARDING?quantity=1",
-  "product-launch-planning-kit":
-    "https://checkout.dodopayments.com/buy/PLACEHOLDER_LAUNCH_KIT?quantity=1",
-  "freelance-proposal-template-pack":
-    "https://checkout.dodopayments.com/buy/PLACEHOLDER_PROPOSAL_PACK?quantity=1",
-  "business-password-and-access-organizer":
-    "https://checkout.dodopayments.com/buy/PLACEHOLDER_PASSWORD_ORGANIZER?quantity=1",
-  "digital-product-pricing-guide":
-    "https://checkout.dodopayments.com/buy/PLACEHOLDER_PRICING_GUIDE?quantity=1",
-  "remote-team-communication-playbook":
-    "https://checkout.dodopayments.com/buy/PLACEHOLDER_REMOTE_PLAYBOOK?quantity=1",
+  "daily-task-checklist":                    "https://checkout.dodopayments.com/buy/PLACEHOLDER_DAILY_TASK?quantity=1",
+  "weekly-goal-planner":                     "https://checkout.dodopayments.com/buy/PLACEHOLDER_WEEKLY_GOAL?quantity=1",
+  "business-card-copy-template":             "https://checkout.dodopayments.com/buy/PLACEHOLDER_BIZ_CARD_COPY?quantity=1",
+  "instagram-bio-template-pack":             "https://checkout.dodopayments.com/buy/PLACEHOLDER_INSTA_BIO?quantity=1",
+  "password-manager-sheet":                  "https://checkout.dodopayments.com/buy/PLACEHOLDER_PASSWORD_SHEET?quantity=1",
+  "meeting-agenda-template":                 "https://checkout.dodopayments.com/buy/PLACEHOLDER_MEETING_AGENDA?quantity=1",
+  "invoice-template-pack":                   "https://checkout.dodopayments.com/buy/PLACEHOLDER_INVOICE_PACK?quantity=1",
+  "blog-post-outline-template":              "https://checkout.dodopayments.com/buy/PLACEHOLDER_BLOG_OUTLINE?quantity=1",
+  "cold-email-template-pack":                "https://checkout.dodopayments.com/buy/PLACEHOLDER_COLD_EMAIL?quantity=1",
+  "social-media-bio-kit":                    "https://checkout.dodopayments.com/buy/PLACEHOLDER_SOCIAL_BIO?quantity=1",
+  "youtube-description-template-pack":       "https://checkout.dodopayments.com/buy/PLACEHOLDER_YOUTUBE_DESC?quantity=1",
+  "small-business-legal-checklist":          "https://checkout.dodopayments.com/buy/PLACEHOLDER_LEGAL_CHECKLIST?quantity=1",
+  "client-welcome-email-template":           "https://checkout.dodopayments.com/buy/PLACEHOLDER_WELCOME_EMAIL?quantity=1",
+  "brand-color-palette-planner":             "https://checkout.dodopayments.com/buy/PLACEHOLDER_COLOR_PLANNER?quantity=1",
+  "website-copywriting-guide":               "https://checkout.dodopayments.com/buy/PLACEHOLDER_WEBSITE_COPY?quantity=1",
+  "30-day-content-plan-template":            "https://checkout.dodopayments.com/buy/PLACEHOLDER_30DAY_CONTENT?quantity=1",
+  "facebook-page-setup-checklist":           "https://checkout.dodopayments.com/buy/PLACEHOLDER_FB_SETUP?quantity=1",
+  "email-signature-template-pack":           "https://checkout.dodopayments.com/buy/PLACEHOLDER_EMAIL_SIG?quantity=1",
+  "business-budget-tracker":                 "https://checkout.dodopayments.com/buy/PLACEHOLDER_BUDGET_TRACKER?quantity=1",
+  "google-business-profile-setup-guide":     "https://checkout.dodopayments.com/buy/PLACEHOLDER_GOOGLE_BIZ?quantity=1",
+  "customer-feedback-form-template":         "https://checkout.dodopayments.com/buy/PLACEHOLDER_FEEDBACK_FORM?quantity=1",
+  "linkedin-profile-optimization-guide":     "https://checkout.dodopayments.com/buy/PLACEHOLDER_LINKEDIN?quantity=1",
+  "small-business-tax-prep-checklist":       "https://checkout.dodopayments.com/buy/PLACEHOLDER_TAX_PREP?quantity=1",
+  "digital-product-pricing-guide":           "https://checkout.dodopayments.com/buy/PLACEHOLDER_PRICING_GUIDE?quantity=1",
+  "website-launch-checklist":                "https://checkout.dodopayments.com/buy/PLACEHOLDER_WEB_LAUNCH?quantity=1",
+  "content-repurposing-guide":               "https://checkout.dodopayments.com/buy/PLACEHOLDER_REPURPOSING?quantity=1",
+  "remote-work-productivity-planner":        "https://checkout.dodopayments.com/buy/PLACEHOLDER_REMOTE_WORK?quantity=1",
+  "small-business-grant-checklist":          "https://checkout.dodopayments.com/buy/PLACEHOLDER_GRANT?quantity=1",
+  "social-media-audit-template":             "https://checkout.dodopayments.com/buy/PLACEHOLDER_SOCIAL_AUDIT?quantity=1",
+  "email-marketing-starter-kit":             "https://checkout.dodopayments.com/buy/PLACEHOLDER_EMAIL_MARKETING?quantity=1",
+  "freelance-contract-template-pack":        "https://checkout.dodopayments.com/buy/PLACEHOLDER_CONTRACT?quantity=1",
+  "product-launch-planning-kit":             "https://checkout.dodopayments.com/buy/PLACEHOLDER_LAUNCH_KIT?quantity=1",
+  "small-business-seo-checklist":            "https://checkout.dodopayments.com/buy/PLACEHOLDER_SEO?quantity=1",
+  "customer-onboarding-template-pack":       "https://checkout.dodopayments.com/buy/PLACEHOLDER_ONBOARDING?quantity=1",
+  "social-media-content-calendar-template":  "https://checkout.dodopayments.com/buy/PLACEHOLDER_SOCIAL_CAL?quantity=1",
+  "freelance-proposal-template-pack":        "https://checkout.dodopayments.com/buy/PLACEHOLDER_PROPOSAL?quantity=1",
+  "business-plan-template-kit":              "https://checkout.dodopayments.com/buy/PLACEHOLDER_BIZ_PLAN?quantity=1",
+  "internet-setup-guide":                    "https://checkout.dodopayments.com/buy/pdt_0NgdbCYgyO24OQVGWK5AS?quantity=1",
+  "remote-team-communication-playbook":      "https://checkout.dodopayments.com/buy/PLACEHOLDER_REMOTE_TEAM?quantity=1",
+  "brand-identity-starter-kit":              "https://checkout.dodopayments.com/buy/PLACEHOLDER_BRAND_ID?quantity=1",
+  "digital-branding-starter-kit":            "https://checkout.dodopayments.com/buy/pdt_0NgdbXKYzRcSI9wGKeUk4?quantity=1",
+  "business-financial-planning-spreadsheet": "https://checkout.dodopayments.com/buy/PLACEHOLDER_FINANCIAL?quantity=1",
+  "small-business-automation-template-kit":  "https://checkout.dodopayments.com/buy/pdt_0NgdaIvD0fKOqoVr8Ib0s?quantity=1",
+  "complete-marketing-template-bundle":      "https://checkout.dodopayments.com/buy/PLACEHOLDER_MARKETING_BUNDLE?quantity=1",
+  "ecommerce-store-launch-kit":              "https://checkout.dodopayments.com/buy/PLACEHOLDER_ECOMMERCE?quantity=1",
+  "saas-landing-page-template-kit":          "https://checkout.dodopayments.com/buy/PLACEHOLDER_SAAS_LANDING?quantity=1",
+  "business-website-starter-template":       "https://checkout.dodopayments.com/buy/pdt_0NgYs2CiHthhVsIUqLUpR?quantity=1",
+  "complete-small-business-starter-bundle":  "https://checkout.dodopayments.com/buy/PLACEHOLDER_SMB_BUNDLE?quantity=1",
+  "ultimate-digital-business-kit":           "https://checkout.dodopayments.com/buy/PLACEHOLDER_ULTIMATE_KIT?quantity=1",
 };
