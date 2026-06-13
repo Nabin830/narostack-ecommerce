@@ -13,13 +13,13 @@ import crypto from "crypto";
 import { saveOrder, getOrderById } from "@/lib/orders";
 import { DODO_PRODUCT_ID_TO_SLUG } from "@/lib/dodoProductMap";
 
-// Strip whsec_ prefix if present — Dodo prefixes secrets with whsec_
+// Strip whsec_ prefix if present
 const RAW_SECRET = process.env.DODO_WEBHOOK_SECRET ?? "";
 const WEBHOOK_SECRET = RAW_SECRET.startsWith("whsec_")
   ? RAW_SECRET.slice(6)
   : RAW_SECRET;
 
-// Safe constant-time string comparison — no buffers, no length errors
+// Safe constant-time string comparison
 function safeHmacEqual(a: string, b: string): boolean {
   if (a.length !== b.length) return false;
   let diff = 0;
@@ -89,12 +89,20 @@ export async function POST(req: NextRequest) {
   if (eventType === "payment.succeeded") {
     const data = event.data as Record<string, unknown>;
 
-    const orderId       = (data.payment_id ?? data.id ?? "") as string;
-    const dodoProductId = (data.product_id ?? "") as string;
-    const customer      = data.customer as Record<string, unknown> | undefined;
-    const customerEmail = (customer?.email ?? data.customer_email ?? "") as string;
-    const amount        = (data.amount ?? 0) as number;
-    const currency      = (data.currency ?? "USD") as string;
+    // Payment ID
+    const orderId = (data.payment_id ?? "") as string;
+
+    // Customer email — inside data.customer.email
+    const customer = data.customer as Record<string, unknown> | undefined;
+    const customerEmail = ((customer?.email ?? "") as string).toLowerCase().trim();
+
+    // Amount + currency
+    const amount   = (data.total_amount ?? 0) as number;
+    const currency = (data.currency ?? "USD") as string;
+
+    // Product ID — inside data.product_cart[0].product_id
+    const productCart = data.product_cart as Array<Record<string, unknown>> | undefined;
+    const dodoProductId = (productCart?.[0]?.product_id ?? "") as string;
 
     if (!orderId || !customerEmail) {
       console.error("[Dodo Webhook] Missing orderId or email", { orderId, customerEmail });
@@ -107,22 +115,24 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ received: true });
     }
 
+    // Map Dodo product ID → our slug
     const productSlug = DODO_PRODUCT_ID_TO_SLUG[dodoProductId] ?? dodoProductId;
 
     const order = saveOrder({
       orderId,
       productId:     dodoProductId,
       productSlug,
-      customerEmail: customerEmail.toLowerCase().trim(),
+      customerEmail,
       amount,
       currency,
-      paidAt:        new Date().toISOString(),
+      paidAt: new Date().toISOString(),
     });
 
     console.log(`[Dodo Webhook] ✅ Order saved:`, {
       orderId:   order.orderId,
       product:   order.productSlug,
       email:     order.customerEmail,
+      amount:    order.amount,
       expiresAt: new Date(order.tokenExpiresAt).toISOString(),
     });
   }
