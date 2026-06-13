@@ -13,7 +13,11 @@ import crypto from "crypto";
 import { saveOrder, getOrderById } from "@/lib/orders";
 import { DODO_PRODUCT_ID_TO_SLUG } from "@/lib/dodoProductMap";
 
-const WEBHOOK_SECRET = process.env.DODO_WEBHOOK_SECRET ?? "";
+// Strip whsec_ prefix if present — Dodo prefixes secrets with whsec_
+const RAW_SECRET = process.env.DODO_WEBHOOK_SECRET ?? "";
+const WEBHOOK_SECRET = RAW_SECRET.startsWith("whsec_")
+  ? RAW_SECRET.slice(6)
+  : RAW_SECRET;
 
 // Safe constant-time string comparison — no buffers, no length errors
 function safeHmacEqual(a: string, b: string): boolean {
@@ -54,7 +58,7 @@ function verifyDodoSignature(
       .digest("hex");
 
     return safeHmacEqual(receivedSig, expectedSig);
-  } catch {
+  } catch (_e) {
     return false;
   }
 }
@@ -74,7 +78,7 @@ export async function POST(req: NextRequest) {
   let event: Record<string, unknown>;
   try {
     event = JSON.parse(rawBody);
-  } catch {
+  } catch (_e) {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }
 
