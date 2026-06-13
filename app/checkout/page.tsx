@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { CreditCard, Download, FileText, Mail } from "lucide-react";
+import { CreditCard, Download, ShieldCheck, Zap } from "lucide-react";
 import { dodoLinks } from "@/lib/dodoLinks";
 
 const productOptions: { label: string; slug: string; price: string }[] = [
@@ -58,13 +58,10 @@ const productOptions: { label: string; slug: string; price: string }[] = [
   { label: "Ultimate Digital Business Kit", slug: "ultimate-digital-business-kit", price: "$48.99" },
 ];
 
-const EMAIL = "pandeynabin@narostack.com";
-
-export default function CheckoutPage() {
+function CheckoutInner() {
   const searchParams = useSearchParams();
   const productSlug = searchParams.get("product");
   const [selectedSlug, setSelectedSlug] = useState("");
-  const [form, setForm] = useState({ name: "", businessName: "", customerEmail: "", message: "" });
 
   useEffect(() => {
     if (productSlug) {
@@ -76,103 +73,151 @@ export default function CheckoutPage() {
   const selectedProduct = productOptions.find((p) => p.slug === selectedSlug);
   const checkoutLink = selectedSlug ? dodoLinks[selectedSlug] : "";
 
-  const mailSubject = encodeURIComponent("Digital Product Invoice Request - Narostack Digital LLC");
-  const mailBody = encodeURIComponent(`Hello Narostack Digital LLC,\n\nI would like to request an invoice for a downloadable digital product.\n\nCustomer Name: ${form.name}\nBusiness Name: ${form.businessName}\nCustomer Email: ${form.customerEmail}\nDigital Product: ${selectedProduct?.label ?? ""} (${selectedProduct?.price ?? ""})\n\nMessage:\n${form.message}\n\nI understand products are delivered automatically after payment confirmation.\n\nThank you.`);
-
-  const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${EMAIL}&su=${mailSubject}&body=${mailBody}`;
-  const emailAppLink = `mailto:${EMAIL}?subject=${mailSubject}&body=${mailBody}`;
-
   return (
     <main className="bg-slate-50">
-      <section className="mx-auto max-w-6xl px-6 py-16">
-        <Link href="/cart" className="text-sm font-semibold text-blue-600 hover:text-blue-700">← Back to Cart</Link>
-        <div className="mt-8 grid gap-8 lg:grid-cols-3">
-          <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm lg:col-span-2">
-            <p className="font-semibold text-blue-600">Digital Product Checkout</p>
-            <h1 className="mt-3 text-4xl font-bold tracking-tight text-slate-950">Choose How to Order</h1>
-            <p className="mt-4 text-slate-600">Select a product, then pay instantly through Dodo Payments or request an invoice by email.</p>
-            <div className="mt-8">
-              <label htmlFor="product-select" className="text-sm font-semibold text-slate-800">Digital Product</label>
-              <select id="product-select" value={selectedSlug} onChange={(e) => setSelectedSlug(e.target.value)}
-                className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-blue-600">
-                <option value="">Select a product</option>
-                {productOptions.map((p) => (<option key={p.slug} value={p.slug}>{p.label} — {p.price}</option>))}
+      <section className="mx-auto max-w-5xl px-6 py-16">
+        <Link href="/products" className="text-sm font-semibold text-blue-600 hover:text-blue-700">
+          ← Back to Products
+        </Link>
+
+        <div className="mt-8">
+          <p className="font-semibold text-blue-600">Secure Checkout</p>
+          <h1 className="mt-3 text-4xl font-bold tracking-tight text-slate-950">
+            Complete Your Purchase
+          </h1>
+          <p className="mt-4 text-slate-600">
+            Select your product and pay securely through Dodo Payments. Your download link is sent to you automatically — no waiting, no manual steps.
+          </p>
+        </div>
+
+        <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_320px]">
+          {/* Main checkout panel */}
+          <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-600 text-white">
+              <CreditCard className="h-6 w-6" />
+            </div>
+            <h2 className="mt-5 text-2xl font-bold text-slate-950">Choose Your Product</h2>
+            <p className="mt-2 text-sm text-slate-600">
+              Select a product from the list, then click the button below to go directly to the Dodo Payments secure checkout.
+            </p>
+
+            <div className="mt-6">
+              <label htmlFor="product-select" className="text-sm font-semibold text-slate-800">
+                Digital Product
+              </label>
+              <select
+                id="product-select"
+                value={selectedSlug}
+                onChange={(e) => setSelectedSlug(e.target.value)}
+                className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-blue-600"
+              >
+                <option value="">Select a product to continue</option>
+                {productOptions.map((p) => (
+                  <option key={p.slug} value={p.slug}>
+                    {p.label} — {p.price}
+                  </option>
+                ))}
               </select>
             </div>
-            <div className="mt-8 grid gap-5 md:grid-cols-2">
-              <div className="rounded-3xl border border-blue-200 bg-blue-50 p-6">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-600 text-white"><CreditCard className="h-6 w-6" /></div>
-                <h2 className="mt-5 text-2xl font-bold text-slate-950">Buy Now</h2>
-                <p className="mt-3 text-sm leading-6 text-slate-700">Secure payment through Dodo Payments. Your download link is sent automatically — no human steps required.</p>
-                {checkoutLink ? (
-                  <a href={checkoutLink} target="_blank" rel="noopener noreferrer"
-                    className="mt-6 inline-flex w-full justify-center rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700">
-                    Buy Now via Dodo Payments
-                  </a>
-                ) : (
-                  <button type="button" disabled className="mt-6 inline-flex w-full cursor-not-allowed justify-center rounded-xl bg-slate-300 px-6 py-3 text-sm font-semibold text-slate-600">
-                    Select a Product First
-                  </button>
-                )}
-              </div>
-              <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-950 text-white"><FileText className="h-6 w-6" /></div>
-                <h2 className="mt-5 text-2xl font-bold text-slate-950">Request Invoice</h2>
-                <p className="mt-3 text-sm leading-6 text-slate-600">Fill in your details below, then click one of the email buttons.</p>
-                <div className="mt-6 grid gap-3">
-                  <a href={gmailLink} target="_blank" rel="noopener noreferrer"
-                    className="inline-flex justify-center rounded-xl border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50">Send via Gmail</a>
-                  <a href={emailAppLink}
-                    className="inline-flex justify-center rounded-xl border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50">Send via Email App</a>
+
+            {/* Selected product preview */}
+            {selectedProduct && (
+              <div className="mt-5 rounded-2xl bg-blue-50 border border-blue-100 p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-semibold text-slate-950">{selectedProduct.label}</p>
+                    <p className="mt-1 text-sm text-slate-600">Instant digital download after payment</p>
+                  </div>
+                  <p className="text-2xl font-bold text-blue-600">{selectedProduct.price}</p>
                 </div>
               </div>
+            )}
+
+            {/* Dodo Pay button */}
+            <div className="mt-6">
+              {checkoutLink ? (
+                <a
+                  href={checkoutLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex w-full items-center justify-center gap-3 rounded-xl bg-blue-600 px-6 py-4 text-base font-bold text-white shadow-sm transition hover:bg-blue-700"
+                >
+                  <CreditCard className="h-5 w-5" />
+                  Pay Now via Dodo Payments
+                </a>
+              ) : (
+                <button
+                  type="button"
+                  disabled
+                  className="flex w-full cursor-not-allowed items-center justify-center gap-3 rounded-xl bg-slate-200 px-6 py-4 text-base font-bold text-slate-400"
+                >
+                  <CreditCard className="h-5 w-5" />
+                  Select a Product to Continue
+                </button>
+              )}
             </div>
-            <div className="mt-8 rounded-2xl border border-blue-100 bg-blue-50 p-5">
-              <p className="font-semibold text-slate-950">Instant digital delivery</p>
-              <p className="mt-2 text-sm leading-6 text-slate-700">All products are downloadable digital resources. After payment your download link is delivered automatically. No physical items are shipped. No human involvement required.</p>
-            </div>
-            <h2 className="mt-10 text-2xl font-bold text-slate-950">Invoice Request Details</h2>
-            <p className="mt-2 text-sm text-slate-600">Fill in your details before clicking the email buttons above.</p>
-            <div className="mt-6 grid gap-5">
-              {([["name","Your Name","text","Enter your name"],["businessName","Business Name","text","Enter business name"],["customerEmail","Email Address","email","Enter your email"]] as const).map(([key,label,type,ph]) => (
-                <div key={key}>
-                  <label htmlFor={key} className="text-sm font-semibold text-slate-800">{label}</label>
-                  <input id={key} type={type} value={form[key as keyof typeof form]} placeholder={ph}
-                    onChange={(e) => setForm({ ...form, [key]: e.target.value })}
-                    className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-blue-600" />
-                </div>
-              ))}
-              <div>
-                <label htmlFor="message" className="text-sm font-semibold text-slate-800">Message</label>
-                <textarea id="message" value={form.message} placeholder="Any extra details" rows={4}
-                  onChange={(e) => setForm({ ...form, message: e.target.value })}
-                  className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-blue-600" />
-              </div>
-            </div>
-            <p className="mt-5 text-sm text-slate-500">If payment or email does not open, contact us at <span className="font-semibold text-slate-700">{EMAIL}</span>.</p>
+
+            <p className="mt-4 text-center text-xs text-slate-400">
+              You will be taken to Dodo Payments&apos; secure checkout. Payment is processed entirely by Dodo Payments.
+            </p>
           </div>
-          <aside className="h-fit rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 className="text-lg font-bold text-slate-950">How it works</h2>
-            <div className="mt-6 grid gap-4">
-              {[
-                { Icon: CreditCard, title: "Buy Now", text: "Secure payment via Dodo Payments." },
-                { Icon: FileText, title: "Request Invoice", text: "Fill in details and send by email." },
-                { Icon: Download, title: "Instant Delivery", text: "Download link sent automatically after payment." },
-                { Icon: Mail, title: "Support", text: EMAIL },
-              ].map(({ Icon, title, text }) => (
-                <div key={title} className="flex gap-3">
-                  <Icon className="mt-1 h-5 w-5 flex-shrink-0 text-blue-600" />
-                  <div><p className="font-semibold text-slate-900">{title}</p><p className="text-sm text-slate-600 break-words">{text}</p></div>
-                </div>
-              ))}
-            </div>
-            <div className="mt-6 border-t border-slate-200 pt-5">
-              <p className="text-sm font-semibold text-slate-900">Support Hours</p>
-              <p className="mt-1 text-sm text-slate-600">Monday–Friday, 9:00 AM–5:00 PM</p>
+
+          {/* Sidebar */}
+          <aside className="flex flex-col gap-5">
+            {[
+              {
+                Icon: ShieldCheck,
+                title: "Secure payment",
+                text: "Payments are processed entirely by Dodo Payments. We never see or store your card details.",
+              },
+              {
+                Icon: Zap,
+                title: "Instant delivery",
+                text: "Your download link is sent automatically by Dodo Payments the moment payment is confirmed.",
+              },
+              {
+                Icon: Download,
+                title: "Digital only",
+                text: "All products are downloadable digital resources. Nothing physical is shipped.",
+              },
+            ].map(({ Icon, title, text }) => (
+              <div key={title} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                <Icon className="h-6 w-6 text-blue-600" />
+                <p className="mt-3 font-semibold text-slate-900">{title}</p>
+                <p className="mt-1 text-sm leading-6 text-slate-600">{text}</p>
+              </div>
+            ))}
+
+            <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+              <p className="text-sm font-semibold text-slate-900">Browse all products</p>
+              <p className="mt-1 text-sm text-slate-600">Each product page also has a direct Buy Now button.</p>
+              <Link
+                href="/products"
+                className="mt-3 inline-flex w-full justify-center rounded-xl border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+              >
+                View All Products →
+              </Link>
             </div>
           </aside>
         </div>
       </section>
     </main>
+  );
+}
+
+export default function CheckoutPage() {
+  return (
+    <Suspense fallback={
+      <main className="bg-slate-50">
+        <section className="mx-auto max-w-5xl px-6 py-16">
+          <div className="animate-pulse space-y-4">
+            <div className="h-10 w-48 rounded-xl bg-slate-200" />
+            <div className="h-96 rounded-3xl bg-slate-200" />
+          </div>
+        </section>
+      </main>
+    }>
+      <CheckoutInner />
+    </Suspense>
   );
 }

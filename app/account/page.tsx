@@ -62,7 +62,7 @@ export default function AccountPage() {
               <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
                 <CreditCard className="h-6 w-6 text-blue-600" />
                 <p className="mt-3 font-semibold text-slate-900">Secure Payments</p>
-                <p className="mt-2 text-sm text-slate-600">Pay via Dodo Payments or request an invoice by email.</p>
+                <p className="mt-2 text-sm text-slate-600">Pay securely via Dodo Payments.</p>
               </div>
               <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
                 <Download className="h-6 w-6 text-blue-600" />
@@ -80,13 +80,13 @@ export default function AccountPage() {
               <h2 className="text-2xl font-bold text-slate-950">Account Dashboard</h2>
               <div className="mt-6 rounded-2xl bg-blue-50 p-5">
                 <p className="font-semibold text-slate-950">Google sign-in is active.</p>
-                <p className="mt-2 text-sm leading-6 text-slate-600">You are signed in with Google. Full customer dashboard features such as order history, invoice records, and download links can be connected later with a database.</p>
+                <p className="mt-2 text-sm leading-6 text-slate-600">You are signed in with Google. Your order history and download links are available in My Orders.</p>
               </div>
               <div className="mt-6 grid gap-4 sm:grid-cols-2">
                 <div className="rounded-2xl border border-slate-200 p-5">
                   <ShieldCheck className="h-6 w-6 text-blue-600" />
                   <p className="mt-3 font-semibold text-slate-900">Payment Options</p>
-                  <p className="mt-2 text-sm text-slate-600">Pay via Dodo Payments or request an invoice by email.</p>
+                  <p className="mt-2 text-sm text-slate-600">Pay securely via Dodo Payments.</p>
                 </div>
                 <div className="rounded-2xl border border-slate-200 p-5">
                   <Download className="h-6 w-6 text-blue-600" />
@@ -99,9 +99,10 @@ export default function AccountPage() {
 
           <aside className="h-fit rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
             <h2 className="text-xl font-bold text-slate-950">Need help?</h2>
-            <p className="mt-3 text-sm leading-6 text-slate-600">For invoice requests, digital product delivery, or product enquiries, contact Narostack Digital LLC by email.</p>
+            <p className="mt-3 text-sm leading-6 text-slate-600">For product delivery questions or support, contact Narostack Digital LLC by email.</p>
             <div className="mt-6 grid gap-3">
-              <Link href="/checkout" className="rounded-xl bg-blue-600 px-5 py-3 text-center text-sm font-semibold text-white hover:bg-blue-700">Request Invoice</Link>
+              <Link href="/orders" className="rounded-xl bg-blue-600 px-5 py-3 text-center text-sm font-semibold text-white hover:bg-blue-700">My Orders &amp; Downloads</Link>
+              <Link href="/checkout" className="rounded-xl border border-slate-300 px-5 py-3 text-center text-sm font-semibold text-slate-700 hover:bg-slate-50">Shop Products</Link>
               <Link href="/contact" className="rounded-xl border border-slate-300 px-5 py-3 text-center text-sm font-semibold text-slate-700 hover:bg-slate-50">Contact Support</Link>
               <Link href="/products" className="rounded-xl border border-slate-300 px-5 py-3 text-center text-sm font-semibold text-slate-700 hover:bg-slate-50">View Products</Link>
             </div>

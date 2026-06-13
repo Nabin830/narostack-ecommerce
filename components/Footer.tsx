@@ -11,7 +11,7 @@ const policyLinks = [
 const companyLinks = [
   { href: "/about", label: "About" },
   { href: "/products", label: "Digital Products" },
-  { href: "/checkout", label: "Request Invoice" },
+  { href: "/checkout", label: "Checkout" },
   { href: "/contact", label: "Contact" },
   { href: "/faq", label: "FAQ" },
 ];
