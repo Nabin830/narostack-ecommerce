@@ -1,26 +1,9 @@
-/**
- * app/api/webhooks/dodo/route.ts
- *
- * Dodo Payments webhook — verifies signature, records order, generates download token.
- *
- * ENV required:
- *   DODO_WEBHOOK_SECRET   — from Dodo Dashboard → Settings → Webhooks
- *   DOWNLOAD_TOKEN_SECRET — run: openssl rand -hex 32
- */
-
 import { NextRequest, NextResponse } from "next/server";
 import crypto from "crypto";
 import { saveOrder, getOrderById } from "@/lib/orders";
 import { DODO_PRODUCT_ID_TO_SLUG } from "@/lib/dodoProductMap";
 
-// Strip whsec_ prefix if present
-const RAW_SECRET = process.env.DODO_WEBHOOK_SECRET ?? "";
-const WEBHOOK_SECRET = RAW_SECRET.startsWith("whsec_")
-  ? RAW_SECRET.slice(6)
-  : RAW_SECRET;
-
-// Safe constant-time string comparison
-function safeHmacEqual(a: string, b: string): boolean {
+function safeEqual(a: string, b: string): boolean {
   if (a.length !== b.length) return false;
   let diff = 0;
   for (let i = 0; i < a.length; i++) {
@@ -29,52 +12,61 @@ function safeHmacEqual(a: string, b: string): boolean {
   return diff === 0;
 }
 
-function verifyDodoSignature(
+function getSecret(): string {
+  const raw = process.env.DODO_WEBHOOK_SECRET ?? "";
+  if (raw.startsWith("whsec_")) {
+    return raw.slice(6);
+  }
+  return raw;
+}
+
+function verifySignature(
   rawBody: string,
-  signatureHeader: string,
-  secret: string
+  webhookId: string,
+  webhookTimestamp: string,
+  signatureHeader: string
 ): boolean {
+  const secret = getSecret();
   if (!secret) {
-    console.warn("[Dodo Webhook] No DODO_WEBHOOK_SECRET set — skipping verification");
+    console.warn("[Dodo] No secret — skipping verification");
     return true;
   }
+
   try {
-    // Dodo sends: "t=<timestamp>,v1=<hex_sig>"
-    const parts: Record<string, string> = {};
-    for (const part of signatureHeader.split(",")) {
-      const idx = part.indexOf("=");
-      if (idx !== -1) {
-        parts[part.slice(0, idx)] = part.slice(idx + 1);
+    const signedPayload = `${webhookId}.${webhookTimestamp}.${rawBody}`;
+    const expected = crypto
+      .createHmac("sha256", Buffer.from(secret, "base64") as unknown as string)
+      .update(signedPayload)
+      .digest("base64");
+
+    for (const sig of signatureHeader.split(" ")) {
+      const commaIdx = sig.indexOf(",");
+      if (commaIdx === -1) continue;
+      const version = sig.slice(0, commaIdx);
+      const value = sig.slice(commaIdx + 1);
+      if (version === "v1" && safeEqual(value, expected)) {
+        return true;
       }
     }
-    const timestamp = parts["t"];
-    const receivedSig = parts["v1"];
-    if (!timestamp || !receivedSig) return false;
 
-    const signedPayload = `${timestamp}.${rawBody}`;
-    const expectedSig = crypto
-      .createHmac("sha256", secret)
-      .update(signedPayload)
-      .digest("hex");
-
-    return safeHmacEqual(receivedSig, expectedSig);
+    console.error("[Dodo] Signature mismatch. Expected:", expected, "Got:", signatureHeader);
+    return false;
   } catch (_e) {
+    console.error("[Dodo] Signature error:", _e);
     return false;
   }
 }
 
 export async function POST(req: NextRequest) {
-  // Must read raw body BEFORE any parsing
   const rawBody = await req.text();
-  const signatureHeader = req.headers.get("webhook-signature") ?? "";
+  const webhookId        = req.headers.get("webhook-id") ?? "";
+  const webhookTimestamp = req.headers.get("webhook-timestamp") ?? "";
+  const signatureHeader  = req.headers.get("webhook-signature") ?? "";
 
-  // 1. Verify signature
-  if (!verifyDodoSignature(rawBody, signatureHeader, WEBHOOK_SECRET)) {
-    console.error("[Dodo Webhook] Signature verification failed");
+  if (!verifySignature(rawBody, webhookId, webhookTimestamp, signatureHeader)) {
     return NextResponse.json({ error: "Invalid signature" }, { status: 401 });
   }
 
-  // 2. Parse event
   let event: Record<string, unknown>;
   try {
     event = JSON.parse(rawBody);
@@ -83,44 +75,34 @@ export async function POST(req: NextRequest) {
   }
 
   const eventType = event.type as string;
-  console.log(`[Dodo Webhook] Received: ${eventType}`);
+  console.log(`[Dodo] Event: ${eventType}`);
 
-  // ── payment.succeeded ────────────────────────────────────────────────────────
   if (eventType === "payment.succeeded") {
     const data = event.data as Record<string, unknown>;
 
-    // Payment ID
-    const orderId = (data.payment_id ?? "") as string;
-
-    // Customer email — inside data.customer.email
-    const customer = data.customer as Record<string, unknown> | undefined;
+    const orderId       = (data.payment_id ?? "") as string;
+    const customer      = data.customer as Record<string, unknown> | undefined;
     const customerEmail = ((customer?.email ?? "") as string).toLowerCase().trim();
-
-    // Amount + currency
-    const amount   = (data.total_amount ?? 0) as number;
-    const currency = (data.currency ?? "USD") as string;
-
-    // Product ID — inside data.product_cart[0].product_id
-    const productCart = data.product_cart as Array<Record<string, unknown>> | undefined;
+    const amount        = (data.total_amount ?? 0) as number;
+    const currency      = (data.currency ?? "USD") as string;
+    const productCart   = data.product_cart as Array<Record<string, unknown>> | undefined;
     const dodoProductId = (productCart?.[0]?.product_id ?? "") as string;
 
     if (!orderId || !customerEmail) {
-      console.error("[Dodo Webhook] Missing orderId or email", { orderId, customerEmail });
-      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+      console.error("[Dodo] Missing orderId or email");
+      return NextResponse.json({ error: "Missing fields" }, { status: 400 });
     }
 
-    // Idempotency — ignore duplicate events
     if (getOrderById(orderId)) {
-      console.log(`[Dodo Webhook] Duplicate event for ${orderId} — ignored`);
+      console.log(`[Dodo] Duplicate ${orderId} — ignored`);
       return NextResponse.json({ received: true });
     }
 
-    // Map Dodo product ID → our slug
     const productSlug = DODO_PRODUCT_ID_TO_SLUG[dodoProductId] ?? dodoProductId;
 
     const order = saveOrder({
       orderId,
-      productId:     dodoProductId,
+      productId: dodoProductId,
       productSlug,
       customerEmail,
       amount,
@@ -128,18 +110,7 @@ export async function POST(req: NextRequest) {
       paidAt: new Date().toISOString(),
     });
 
-    console.log(`[Dodo Webhook] ✅ Order saved:`, {
-      orderId:   order.orderId,
-      product:   order.productSlug,
-      email:     order.customerEmail,
-      amount:    order.amount,
-      expiresAt: new Date(order.tokenExpiresAt).toISOString(),
-    });
-  }
-
-  if (eventType === "subscription.active") {
-    const data = event.data as Record<string, unknown>;
-    console.log("[Dodo Webhook] subscription.active:", data);
+    console.log(`[Dodo] ✅ Saved: ${order.productSlug} for ${order.customerEmail}`);
   }
 
   return NextResponse.json({ received: true });
