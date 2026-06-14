@@ -4,7 +4,7 @@ import { Clock, Download, Mail, MapPin, PackageCheck } from "lucide-react";
 export const metadata = {
   title: "Contact | Narostack Digital LLC",
   description:
-    "Contact Narostack Digital LLC for questions about downloadable digital products, invoice requests, and delivery support.",
+    "Contact Narostack Digital LLC for questions about downloadable digital products and delivery support.",
 };
 
 export default function ContactPage() {
@@ -38,7 +38,7 @@ Thank you.`);
 
           <p className="mt-5 text-lg leading-8 text-slate-600">
             Contact us for questions about downloadable digital products,
-            invoice requests, product delivery, download access, or general
+            product delivery, download access, or general
             product information.
           </p>
         </div>
@@ -51,7 +51,7 @@ Thank you.`);
             technology resources for small businesses. Our products include
             templates, guides, checklists, and digital resource packs delivered
             electronically after purchase. For product questions, delivery
-            assistance, invoice requests, or support enquiries, please contact us
+            assistance, or support enquiries, please contact us
             by email.
           </p>
         </div>
@@ -64,7 +64,7 @@ Thank you.`);
 
             <p className="mt-3 text-slate-600">
               Use the buttons below to open an email message. You can ask about
-              a product, delivery method, invoice request, or download access.
+              a product, delivery method, or download access.
             </p>
 
             <div className="mt-8 rounded-2xl bg-slate-50 p-5">
@@ -162,8 +162,8 @@ Thank you.`);
               </h3>
 
               <p className="mt-2 text-sm text-slate-600">
-                Contact us if you need help understanding product contents,
-                delivery method, or invoice request steps.
+                Contact us if you need help understanding product contents
+                or delivery method.
               </p>
             </div>
 
@@ -171,7 +171,7 @@ Thank you.`);
               href="/checkout"
               className="rounded-xl bg-blue-600 px-6 py-3 text-center font-semibold text-white hover:bg-blue-700"
             >
-              Request Invoice
+              Go to Checkout
             </Link>
           </aside>
         </div>

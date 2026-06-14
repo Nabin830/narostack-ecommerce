@@ -21,7 +21,7 @@ export default function RegisterPage() {
 
           <p className="mt-5 text-lg leading-8 text-slate-600">
             Create customer account access for Narostack Digital LLC using
-            Google sign-in. Customer accounts may be used for invoice requests,
+            Google sign-in. Customer accounts may be used for order history,
             product delivery access, and future downloadable product records.
           </p>
 

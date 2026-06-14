@@ -21,7 +21,7 @@ export default function LoginPage() {
 
           <p className="mt-5 text-lg leading-8 text-slate-600">
             Use your Google account to access customer account features for
-            invoice requests, digital product delivery, download access, and
+            order history, digital product delivery, download access, and
             product support. Narostack Digital LLC does not collect or store
             website passwords.
           </p>
@@ -30,7 +30,7 @@ export default function LoginPage() {
             <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
               <Mail className="h-6 w-6 text-blue-600" />
               <p className="mt-3 text-sm font-semibold text-slate-900">
-                Invoice Requests
+                Order History
               </p>
             </div>
 
@@ -89,7 +89,7 @@ export default function LoginPage() {
                 href="/checkout"
                 className="rounded-xl bg-blue-600 px-5 py-3 text-center text-sm font-semibold text-white hover:bg-blue-700"
               >
-                Request Invoice
+                Go to Checkout
               </Link>
 
               <Link

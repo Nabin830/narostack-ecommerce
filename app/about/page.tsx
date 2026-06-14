@@ -28,7 +28,7 @@ export default function AboutPage() {
               {[
                 { label: "Company", value: "Narostack Digital LLC" },
                 { label: "Business Type", value: "Downloadable digital products, templates, guides, and resource packs." },
-                { label: "Payment", value: "Secure checkout via Dodo Payments or invoice by email." },
+                { label: "Payment", value: "Secure checkout via Dodo Payments." },
                 { label: "Product Delivery", value: "Download link sent automatically after payment — instant, no human involvement required." },
                 { label: "Physical Shipping", value: "None. All products are digital." },
                 { label: "Email", value: "pandeynabin@narostack.com" },
@@ -64,7 +64,7 @@ export default function AboutPage() {
         </section>
 
         <section className="mt-10 grid gap-6 md:grid-cols-3">
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"><CreditCard className="h-7 w-7 text-blue-600" /><h3 className="mt-4 text-lg font-bold text-slate-900">Secure Payments</h3><p className="mt-2 text-sm leading-6 text-slate-600">Pay securely through Dodo Payments or request an invoice by email.</p></div>
+          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"><CreditCard className="h-7 w-7 text-blue-600" /><h3 className="mt-4 text-lg font-bold text-slate-900">Secure Payments</h3><p className="mt-2 text-sm leading-6 text-slate-600">Pay securely through Dodo Payments.</p></div>
           <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"><Download className="h-7 w-7 text-blue-600" /><h3 className="mt-4 text-lg font-bold text-slate-900">Instant Delivery</h3><p className="mt-2 text-sm leading-6 text-slate-600">Download link sent automatically after payment. No waiting, no manual steps, no human involvement required.</p></div>
           <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"><FileText className="h-7 w-7 text-blue-600" /><h3 className="mt-4 text-lg font-bold text-slate-900">Clear Contents</h3><p className="mt-2 text-sm leading-6 text-slate-600">Every product page lists exactly what is included, who it is for, and how delivery works before you buy.</p></div>
         </section>

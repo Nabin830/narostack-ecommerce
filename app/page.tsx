@@ -46,7 +46,7 @@ export default function HomePage() {
                 href="/checkout"
                 className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-6 py-3 font-semibold text-slate-800 shadow-sm transition hover:bg-slate-50"
               >
-                Request Invoice
+                Go to Checkout
               </Link>
             </div>
 
@@ -128,7 +128,7 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-6xl gap-4 px-6 text-center sm:grid-cols-4">
           {[
             "Digital Downloads",
-            "Invoice Available",
+            "Secure Dodo Checkout",
             "Email Delivery",
             "No Physical Shipping",
           ].map((item) => (

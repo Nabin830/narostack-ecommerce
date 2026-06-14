@@ -68,8 +68,8 @@ export default function ProductsPage() {
             <p className="mt-1 text-sm text-slate-600">Download link sent automatically after payment. No waiting, no manual steps.</p>
           </div>
           <div>
-            <p className="font-semibold text-slate-900">Pay now or invoice</p>
-            <p className="mt-1 text-sm text-slate-600">Pay securely through Dodo Payments or request an invoice by email.</p>
+            <p className="font-semibold text-slate-900">Secure checkout</p>
+            <p className="mt-1 text-sm text-slate-600">Pay securely through Dodo Payments.</p>
           </div>
         </div>
 
