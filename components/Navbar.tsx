@@ -51,7 +51,7 @@ export default function Navbar() {
                 <User className="h-4 w-4" />Account
               </Link>
               <Link href="/orders" className="inline-flex items-center gap-2 rounded-xl border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">
-                My Orders
+                Delivery
               </Link>
               <button type="button" onClick={() => signOut({ callbackUrl: "/" })}
                 className="rounded-xl border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">
@@ -100,7 +100,7 @@ export default function Navbar() {
                 </Link>
                 <Link href="/orders" onClick={() => setOpen(false)}
                   className="rounded-xl border border-slate-300 px-3 py-2 text-center text-sm font-semibold text-slate-700">
-                  My Orders
+                  Delivery
                 </Link>
                 <button type="button" onClick={() => { setOpen(false); signOut({ callbackUrl: "/" }); }}
                   className="rounded-xl border border-slate-300 px-3 py-2 text-center text-sm font-semibold text-slate-700">

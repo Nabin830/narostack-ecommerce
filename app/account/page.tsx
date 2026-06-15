@@ -80,7 +80,7 @@ export default function AccountPage() {
               <h2 className="text-2xl font-bold text-slate-950">Account Dashboard</h2>
               <div className="mt-6 rounded-2xl bg-blue-50 p-5">
                 <p className="font-semibold text-slate-950">Google sign-in is active.</p>
-                <p className="mt-2 text-sm leading-6 text-slate-600">You are signed in with Google. Your order history and download links are available in My Orders.</p>
+                <p className="mt-2 text-sm leading-6 text-slate-600">You are signed in with Google. Digital product delivery is handled automatically by Dodo Payments after successful checkout.</p>
               </div>
               <div className="mt-6 grid gap-4 sm:grid-cols-2">
                 <div className="rounded-2xl border border-slate-200 p-5">
@@ -101,7 +101,7 @@ export default function AccountPage() {
             <h2 className="text-xl font-bold text-slate-950">Need help?</h2>
             <p className="mt-3 text-sm leading-6 text-slate-600">For product delivery questions or support, contact Narostack Digital LLC by email.</p>
             <div className="mt-6 grid gap-3">
-              <Link href="/orders" className="rounded-xl bg-blue-600 px-5 py-3 text-center text-sm font-semibold text-white hover:bg-blue-700">My Orders &amp; Downloads</Link>
+              <Link href="/orders" className="rounded-xl bg-blue-600 px-5 py-3 text-center text-sm font-semibold text-white hover:bg-blue-700">Delivery &amp; Downloads</Link>
               <Link href="/checkout" className="rounded-xl border border-slate-300 px-5 py-3 text-center text-sm font-semibold text-slate-700 hover:bg-slate-50">Shop Products</Link>
               <Link href="/contact" className="rounded-xl border border-slate-300 px-5 py-3 text-center text-sm font-semibold text-slate-700 hover:bg-slate-50">Contact Support</Link>
               <Link href="/products" className="rounded-xl border border-slate-300 px-5 py-3 text-center text-sm font-semibold text-slate-700 hover:bg-slate-50">View Products</Link>
