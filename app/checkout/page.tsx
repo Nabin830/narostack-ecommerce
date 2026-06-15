@@ -86,7 +86,7 @@ function CheckoutInner() {
             Complete Your Purchase
           </h1>
           <p className="mt-4 text-slate-600">
-            Select your product and pay securely through Dodo Payments. Your download link is sent to you automatically — no waiting, no manual steps.
+            Select your product and pay securely through Dodo Payments. Digital access is delivered by Dodo after successful payment confirmation.
           </p>
         </div>
 
@@ -126,7 +126,7 @@ function CheckoutInner() {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="font-semibold text-slate-950">{selectedProduct.label}</p>
-                    <p className="mt-1 text-sm text-slate-600">Instant digital download after payment</p>
+                    <p className="mt-1 text-sm text-slate-600">Digital access after Dodo payment</p>
                   </div>
                   <p className="text-2xl font-bold text-blue-600">{selectedProduct.price}</p>
                 </div>
@@ -138,8 +138,6 @@ function CheckoutInner() {
               {checkoutLink ? (
                 <a
                   href={checkoutLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   className="flex w-full items-center justify-center gap-3 rounded-xl bg-blue-600 px-6 py-4 text-base font-bold text-white shadow-sm transition hover:bg-blue-700"
                 >
                   <CreditCard className="h-5 w-5" />
@@ -173,7 +171,7 @@ function CheckoutInner() {
               {
                 Icon: Zap,
                 title: "Instant delivery",
-                text: "Your download link is sent automatically by Dodo Payments the moment payment is confirmed.",
+                text: "Dodo Payments sends the download link, files, or access instructions after successful payment confirmation.",
               },
               {
                 Icon: Download,

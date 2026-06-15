@@ -31,11 +31,11 @@ export default function ProductCard({ product }: ProductCardProps) {
         <p className="mt-3 flex-1 text-sm leading-6 text-slate-600">{product.shortDescription}</p>
         <div className="mt-5 flex items-center justify-between">
           <p className="text-2xl font-bold text-blue-600">{formatPrice(product.price)}</p>
-          <p className="text-xs font-medium text-slate-500">Instant download</p>
+          <p className="text-xs font-medium text-slate-500">Dodo delivery</p>
         </div>
         <div className="mt-5 grid gap-3">
           {checkoutLink && (
-            <a href={checkoutLink} target="_blank" rel="noopener noreferrer"
+            <a href={checkoutLink}
               className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-700">
               <CreditCard className="mr-2 h-4 w-4" />Buy Now
             </a>

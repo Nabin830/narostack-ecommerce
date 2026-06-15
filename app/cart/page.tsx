@@ -17,13 +17,13 @@ export default function CartPage() {
       <section className="mx-auto max-w-6xl px-6 py-16">
         <h1 className="text-4xl font-bold text-slate-950">Your Cart</h1>
         <p className="mt-3 max-w-2xl text-slate-600">
-          Review your product and pay securely through Dodo Payments. Your download link is delivered automatically after payment.
+          Review your product and pay securely through Dodo Payments. Digital access is delivered only after successful payment confirmation.
         </p>
 
         <div className="mt-6 rounded-2xl border border-blue-100 bg-blue-50 p-5">
           <p className="font-semibold text-slate-950">Digital download — instant delivery</p>
           <p className="mt-2 text-sm leading-6 text-slate-700">
-            After payment is confirmed through Dodo Payments, your download link is sent to you automatically. No physical items are shipped. No human involvement required.
+            After payment is confirmed through Dodo Payments, Dodo sends the download link, files, or access instructions. No physical items are shipped.
           </p>
         </div>
 
@@ -45,7 +45,7 @@ export default function CartPage() {
                     <h2 className="font-bold text-slate-950 hover:text-blue-700">{item.name}</h2>
                   </Link>
                   <p className="mt-1 text-sm text-slate-600">{formatPrice(item.price)}</p>
-                  <p className="mt-1 text-xs font-medium text-blue-700">Instant download after payment</p>
+                  <p className="mt-1 text-xs font-medium text-blue-700">Digital access after payment</p>
                   <p className="mt-3 text-sm text-slate-600">Qty: 1</p>
                 </div>
                 <button
@@ -71,15 +71,13 @@ export default function CartPage() {
               <div className="mt-5 rounded-2xl bg-blue-50 p-4">
                 <p className="text-sm font-semibold text-slate-900">Secure checkout via Dodo Payments</p>
                 <p className="mt-2 text-sm text-slate-600">
-                  Your download link is sent automatically after payment — no waiting.
+                  Dodo sends access only after successful payment confirmation.
                 </p>
               </div>
 
               {checkoutLink ? (
                 <a
                   href={checkoutLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   className="mt-6 flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 py-4 text-center font-bold text-white hover:bg-blue-700"
                 >
                   <CreditCard className="h-5 w-5" />
