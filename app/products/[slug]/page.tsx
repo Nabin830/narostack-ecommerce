@@ -6,6 +6,7 @@ import AddToCartButton from "@/components/AddToCartButton";
 import { getProductBySlug, products } from "@/data/products";
 import { formatPrice } from "@/lib/format";
 import { dodoLinks } from "@/lib/dodoLinks";
+import { paddleLinks } from "@/lib/paddleLinks";
 
 type Props = { params: { slug: string } };
 
@@ -22,7 +23,8 @@ export function generateMetadata({ params }: Props) {
 export default function ProductDetailsPage({ params }: Props) {
   const product = getProductBySlug(params.slug);
   if (!product) notFound();
-  const checkoutLink = dodoLinks[product.slug];
+  const dodoLink   = dodoLinks[product.slug];
+  const paddleLink = paddleLinks[product.slug];
 
   return (
     <main className="bg-slate-50">
@@ -46,20 +48,25 @@ export default function ProductDetailsPage({ params }: Props) {
               <div className="flex gap-3">
                 <Download className="mt-1 h-5 w-5 flex-shrink-0 text-blue-600" />
                 <div>
-                  <p className="font-bold text-slate-900">Dodo digital delivery</p>
+                  <p className="font-bold text-slate-900">Instant digital delivery</p>
                   <p className="mt-1 text-sm text-slate-700">{product.delivery}</p>
                 </div>
               </div>
             </div>
             <div className="mt-8 grid gap-3 sm:grid-cols-2">
-              {checkoutLink && (
-                <a href={checkoutLink}
+              {dodoLink && (
+                <a href={dodoLink}
                   className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white shadow-sm transition hover:bg-blue-700">
-                  <CreditCard className="mr-2 h-4 w-4" />Buy Now
+                  <CreditCard className="mr-2 h-4 w-4" />Buy with Dodo
+                </a>
+              )}
+              {paddleLink && (
+                <a href={paddleLink}
+                  className="inline-flex items-center justify-center rounded-xl bg-indigo-600 px-6 py-3 font-semibold text-white shadow-sm transition hover:bg-indigo-700">
+                  <CreditCard className="mr-2 h-4 w-4" />Buy with Paddle
                 </a>
               )}
               <AddToCartButton product={product} />
-
             </div>
             <div className="mt-8 grid gap-4 sm:grid-cols-3">
               <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"><ShoppingCart className="h-5 w-5 text-blue-600" /><p className="mt-2 text-sm font-semibold text-slate-900">One-time purchase</p></div>
@@ -88,7 +95,7 @@ export default function ProductDetailsPage({ params }: Props) {
         </div>
         <section className="mt-10 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
           <h2 className="text-2xl font-bold text-slate-950">Purchase and delivery</h2>
-          <p className="mt-4 text-slate-600">Pay securely through Dodo Payments. Digital access is delivered by Dodo only after successful payment confirmation. Nothing physical is shipped.</p>
+          <p className="mt-4 text-slate-600">Pay securely through Dodo Payments or Paddle. Digital access is delivered automatically after successful payment confirmation. Nothing physical is shipped.</p>
         </section>
       </section>
     </main>

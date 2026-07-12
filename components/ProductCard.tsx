@@ -7,11 +7,13 @@ import AddToCartButton from "@/components/AddToCartButton";
 import { Product } from "@/data/products";
 import { formatPrice } from "@/lib/format";
 import { dodoLinks } from "@/lib/dodoLinks";
+import { paddleLinks } from "@/lib/paddleLinks";
 
 type ProductCardProps = { product: Product };
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const checkoutLink = dodoLinks[product.slug];
+  const dodoLink   = dodoLinks[product.slug];
+  const paddleLink = paddleLinks[product.slug];
 
   return (
     <div className="flex h-full flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
@@ -31,18 +33,24 @@ export default function ProductCard({ product }: ProductCardProps) {
         <p className="mt-3 flex-1 text-sm leading-6 text-slate-600">{product.shortDescription}</p>
         <div className="mt-5 flex items-center justify-between">
           <p className="text-2xl font-bold text-blue-600">{formatPrice(product.price)}</p>
-          <p className="text-xs font-medium text-slate-500">Dodo delivery</p>
+          <p className="text-xs font-medium text-slate-500">Secure checkout</p>
         </div>
-        <div className="mt-5 grid gap-3">
-          {checkoutLink && (
-            <a href={checkoutLink}
-              className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-700">
-              <CreditCard className="mr-2 h-4 w-4" />Buy Now
+        <div className="mt-5 grid gap-2">
+          {dodoLink && (
+            <a href={dodoLink}
+              className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700">
+              <CreditCard className="mr-2 h-4 w-4" />Buy with Dodo
+            </a>
+          )}
+          {paddleLink && (
+            <a href={paddleLink}
+              className="inline-flex items-center justify-center rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700">
+              <CreditCard className="mr-2 h-4 w-4" />Buy with Paddle
             </a>
           )}
           <AddToCartButton product={product} />
           <Link href={`/products/${product.slug}`}
-            className="inline-flex justify-center rounded-xl border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">
+            className="inline-flex justify-center rounded-xl border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">
             View Details
           </Link>
         </div>

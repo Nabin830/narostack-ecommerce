@@ -5,6 +5,7 @@ import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { CreditCard, Download, ShieldCheck, Zap } from "lucide-react";
 import { dodoLinks } from "@/lib/dodoLinks";
+import { paddleLinks } from "@/lib/paddleLinks";
 
 const productOptions: { label: string; slug: string; price: string }[] = [
   { label: "Daily Task Checklist", slug: "daily-task-checklist", price: "$1.99" },
@@ -58,10 +59,13 @@ const productOptions: { label: string; slug: string; price: string }[] = [
   { label: "Ultimate Digital Business Kit", slug: "ultimate-digital-business-kit", price: "$48.99" },
 ];
 
+type PaymentMethod = "dodo" | "paddle";
+
 function CheckoutInner() {
   const searchParams = useSearchParams();
   const productSlug = searchParams.get("product");
   const [selectedSlug, setSelectedSlug] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("dodo");
 
   useEffect(() => {
     if (productSlug) {
@@ -71,7 +75,10 @@ function CheckoutInner() {
   }, [productSlug]);
 
   const selectedProduct = productOptions.find((p) => p.slug === selectedSlug);
-  const checkoutLink = selectedSlug ? dodoLinks[selectedSlug] : "";
+  const dodoLink   = selectedSlug ? dodoLinks[selectedSlug]   : "";
+  const paddleLink = selectedSlug ? paddleLinks[selectedSlug] : "";
+  const checkoutLink = paymentMethod === "dodo" ? dodoLink : paddleLink;
+  const processorName = paymentMethod === "dodo" ? "Dodo Payments" : "Paddle";
 
   return (
     <main className="bg-slate-50">
@@ -86,7 +93,7 @@ function CheckoutInner() {
             Complete Your Purchase
           </h1>
           <p className="mt-4 text-slate-600">
-            Select your product and pay securely through Dodo Payments. Digital access is delivered by Dodo after successful payment confirmation.
+            Select your product and preferred payment method. Digital access is delivered automatically after successful payment confirmation.
           </p>
         </div>
 
@@ -98,9 +105,10 @@ function CheckoutInner() {
             </div>
             <h2 className="mt-5 text-2xl font-bold text-slate-950">Choose Your Product</h2>
             <p className="mt-2 text-sm text-slate-600">
-              Select a product from the list, then click the button below to go directly to the Dodo Payments secure checkout.
+              Select a product, choose your payment method, then click the button below to go to secure checkout.
             </p>
 
+            {/* Product selector */}
             <div className="mt-6">
               <label htmlFor="product-select" className="text-sm font-semibold text-slate-800">
                 Digital Product
@@ -120,28 +128,71 @@ function CheckoutInner() {
               </select>
             </div>
 
+            {/* Payment method toggle */}
+            <div className="mt-6">
+              <p className="text-sm font-semibold text-slate-800">Payment Method</p>
+              <div className="mt-2 grid grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  onClick={() => setPaymentMethod("dodo")}
+                  className={`flex flex-col items-center gap-1 rounded-xl border-2 px-4 py-3 text-sm font-semibold transition ${
+                    paymentMethod === "dodo"
+                      ? "border-blue-600 bg-blue-50 text-blue-700"
+                      : "border-slate-200 bg-white text-slate-600 hover:border-slate-300"
+                  }`}
+                >
+                  <CreditCard className="h-5 w-5" />
+                  Dodo Payments
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setPaymentMethod("paddle")}
+                  className={`flex flex-col items-center gap-1 rounded-xl border-2 px-4 py-3 text-sm font-semibold transition ${
+                    paymentMethod === "paddle"
+                      ? "border-indigo-600 bg-indigo-50 text-indigo-700"
+                      : "border-slate-200 bg-white text-slate-600 hover:border-slate-300"
+                  }`}
+                >
+                  <CreditCard className="h-5 w-5" />
+                  Paddle
+                </button>
+              </div>
+            </div>
+
             {/* Selected product preview */}
             {selectedProduct && (
-              <div className="mt-5 rounded-2xl bg-blue-50 border border-blue-100 p-4">
+              <div className={`mt-5 rounded-2xl border p-4 ${
+                paymentMethod === "dodo"
+                  ? "border-blue-100 bg-blue-50"
+                  : "border-indigo-100 bg-indigo-50"
+              }`}>
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="font-semibold text-slate-950">{selectedProduct.label}</p>
-                    <p className="mt-1 text-sm text-slate-600">Digital access after Dodo payment</p>
+                    <p className="mt-1 text-sm text-slate-600">
+                      Digital access via {processorName}
+                    </p>
                   </div>
-                  <p className="text-2xl font-bold text-blue-600">{selectedProduct.price}</p>
+                  <p className={`text-2xl font-bold ${
+                    paymentMethod === "dodo" ? "text-blue-600" : "text-indigo-600"
+                  }`}>{selectedProduct.price}</p>
                 </div>
               </div>
             )}
 
-            {/* Dodo Pay button */}
+            {/* Pay button */}
             <div className="mt-6">
               {checkoutLink ? (
                 <a
                   href={checkoutLink}
-                  className="flex w-full items-center justify-center gap-3 rounded-xl bg-blue-600 px-6 py-4 text-base font-bold text-white shadow-sm transition hover:bg-blue-700"
+                  className={`flex w-full items-center justify-center gap-3 rounded-xl px-6 py-4 text-base font-bold text-white shadow-sm transition ${
+                    paymentMethod === "dodo"
+                      ? "bg-blue-600 hover:bg-blue-700"
+                      : "bg-indigo-600 hover:bg-indigo-700"
+                  }`}
                 >
                   <CreditCard className="h-5 w-5" />
-                  Pay Now via Dodo Payments
+                  Pay Now via {processorName}
                 </a>
               ) : (
                 <button
@@ -156,7 +207,7 @@ function CheckoutInner() {
             </div>
 
             <p className="mt-4 text-center text-xs text-slate-400">
-              You will be taken to Dodo Payments&apos; secure checkout. Payment is processed entirely by Dodo Payments.
+              You will be taken to {processorName}&apos;s secure checkout. Payment is processed entirely by {processorName}.
             </p>
           </div>
 
@@ -166,12 +217,12 @@ function CheckoutInner() {
               {
                 Icon: ShieldCheck,
                 title: "Secure payment",
-                text: "Payments are processed entirely by Dodo Payments. We never see or store your card details.",
+                text: "Payments are processed by Dodo Payments or Paddle. We never see or store your card details.",
               },
               {
                 Icon: Zap,
                 title: "Instant delivery",
-                text: "Dodo Payments sends the download link, files, or access instructions after successful payment confirmation.",
+                text: "Your chosen payment processor sends the download link or access instructions after successful payment.",
               },
               {
                 Icon: Download,
@@ -188,7 +239,7 @@ function CheckoutInner() {
 
             <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
               <p className="text-sm font-semibold text-slate-900">Browse all products</p>
-              <p className="mt-1 text-sm text-slate-600">Each product page also has a direct Buy Now button.</p>
+              <p className="mt-1 text-sm text-slate-600">Each product page also has direct Buy buttons for both processors.</p>
               <Link
                 href="/products"
                 className="mt-3 inline-flex w-full justify-center rounded-xl border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
