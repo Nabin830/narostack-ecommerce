@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { CreditCard } from "lucide-react";
 import AddToCartButton from "@/components/AddToCartButton";
+import PaddleCheckoutButton from "@/components/PaddleCheckoutButton";
 import { Product } from "@/data/products";
 import { formatPrice } from "@/lib/format";
 import { dodoLinks } from "@/lib/dodoLinks";
@@ -43,10 +44,10 @@ export default function ProductCard({ product }: ProductCardProps) {
             </a>
           )}
           {paddleLink && (
-            <a href={paddleLink}
-              className="inline-flex items-center justify-center rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700">
-              <CreditCard className="mr-2 h-4 w-4" />Buy with Paddle
-            </a>
+            <PaddleCheckoutButton
+              priceId={paddleLink}
+              className="inline-flex items-center justify-center rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700"
+            />
           )}
           <AddToCartButton product={product} />
           <Link href={`/products/${product.slug}`}

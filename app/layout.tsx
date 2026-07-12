@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { CartProvider } from "@/components/CartContext";
 import AuthProvider from "@/components/AuthProvider";
+import PaddleScript from "@/components/PaddleScript";
 
 export const metadata: Metadata = {
   title: {
@@ -46,6 +47,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body>
+        <PaddleScript />
         <AuthProvider>
           <CartProvider>
             <Navbar />

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CheckCircle2, CreditCard, Download, FileText, Mail, ShoppingCart } from "lucide-react";
 import AddToCartButton from "@/components/AddToCartButton";
+import PaddleCheckoutButton from "@/components/PaddleCheckoutButton";
 import { getProductBySlug, products } from "@/data/products";
 import { formatPrice } from "@/lib/format";
 import { dodoLinks } from "@/lib/dodoLinks";
@@ -61,10 +62,10 @@ export default function ProductDetailsPage({ params }: Props) {
                 </a>
               )}
               {paddleLink && (
-                <a href={paddleLink}
-                  className="inline-flex items-center justify-center rounded-xl bg-indigo-600 px-6 py-3 font-semibold text-white shadow-sm transition hover:bg-indigo-700">
-                  <CreditCard className="mr-2 h-4 w-4" />Buy with Paddle
-                </a>
+                <PaddleCheckoutButton
+                  priceId={paddleLink}
+                  className="inline-flex items-center justify-center rounded-xl bg-indigo-600 px-6 py-3 font-semibold text-white shadow-sm transition hover:bg-indigo-700"
+                />
               )}
               <AddToCartButton product={product} />
             </div>

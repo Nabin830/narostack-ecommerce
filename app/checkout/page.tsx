@@ -183,17 +183,31 @@ function CheckoutInner() {
             {/* Pay button */}
             <div className="mt-6">
               {checkoutLink ? (
-                <a
-                  href={checkoutLink}
-                  className={`flex w-full items-center justify-center gap-3 rounded-xl px-6 py-4 text-base font-bold text-white shadow-sm transition ${
-                    paymentMethod === "dodo"
-                      ? "bg-blue-600 hover:bg-blue-700"
-                      : "bg-indigo-600 hover:bg-indigo-700"
-                  }`}
-                >
-                  <CreditCard className="h-5 w-5" />
-                  Pay Now via {processorName}
-                </a>
+                paymentMethod === "dodo" ? (
+                  <a
+                    href={dodoLink}
+                    className="flex w-full items-center justify-center gap-3 rounded-xl bg-blue-600 px-6 py-4 text-base font-bold text-white shadow-sm transition hover:bg-blue-700"
+                  >
+                    <CreditCard className="h-5 w-5" />
+                    Pay Now via Dodo Payments
+                  </a>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const Paddle = (window as any).Paddle;
+                      if (!Paddle) { alert("Paddle is still loading, please try again."); return; }
+                      Paddle.Checkout.open({
+                        items: [{ priceId: paddleLink, quantity: 1 }],
+                        settings: { successUrl: "https://narostack.com/success", displayMode: "overlay" },
+                      });
+                    }}
+                    className="flex w-full items-center justify-center gap-3 rounded-xl bg-indigo-600 px-6 py-4 text-base font-bold text-white shadow-sm transition hover:bg-indigo-700"
+                  >
+                    <CreditCard className="h-5 w-5" />
+                    Pay Now via Paddle
+                  </button>
+                )
               ) : (
                 <button
                   type="button"
