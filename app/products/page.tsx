@@ -43,22 +43,28 @@ export default function ProductsPage() {
 
   return (
     <main className="bg-slate-50">
-      <section className="mx-auto max-w-6xl px-6 py-16">
-
-        {/* Header */}
-        <div className="max-w-3xl">
-          <p className="font-semibold text-blue-600">Downloadable Digital Products</p>
-          <h1 className="mt-3 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">
-            Digital templates, guides, and resource packs.
-          </h1>
-          <p className="mt-5 text-lg leading-8 text-slate-600">
-            {products.length} downloadable digital products for small businesses. Pay securely
-            through Dodo Payments and receive your download link automatically.
-          </p>
+      {/* Premium header band */}
+      <div className="relative overflow-hidden bg-slate-950 bg-ink-radial">
+        <div className="bg-grid-ink pointer-events-none absolute inset-0" />
+        <div className="pointer-events-none absolute -top-32 left-1/2 h-72 w-[720px] -translate-x-1/2 rounded-full bg-blue-600/25 blur-[120px]" />
+        <div className="relative mx-auto max-w-6xl px-6 pb-14 pt-16">
+          <div className="max-w-3xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-blue-300">Downloadable Digital Products</p>
+            <h1 className="mt-3 text-4xl font-bold tracking-tight text-white sm:text-5xl">
+              Digital templates, guides, and resource packs.
+            </h1>
+            <p className="mt-5 text-lg leading-8 text-slate-300">
+              {products.length} downloadable digital products for small businesses. Pay securely
+              through Dodo Payments and receive your download link automatically.
+            </p>
+          </div>
         </div>
+      </div>
+
+      <section className="mx-auto max-w-6xl px-6 py-12">
 
         {/* Stats bar */}
-        <div className="mt-8 grid gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:grid-cols-3">
+        <div className="grid gap-4 rounded-3xl border border-slate-200 bg-white p-6 shadow-card sm:grid-cols-3">
           <div>
             <p className="font-semibold text-slate-900">Digital products only</p>
             <p className="mt-1 text-sm text-slate-600">Templates, guides, and resource packs. Nothing physical is shipped.</p>
@@ -74,7 +80,7 @@ export default function ProductsPage() {
         </div>
 
         {/* Notice */}
-        <div className="mt-6 rounded-2xl border border-blue-100 bg-blue-50 p-5">
+        <div className="mt-6 rounded-3xl border border-blue-200/60 bg-gradient-to-r from-blue-50 to-indigo-50 p-6 shadow-card">
           <p className="font-semibold text-slate-950">Product store notice</p>
           <p className="mt-2 text-sm leading-6 text-slate-700">
             Narostack Digital LLC sells downloadable digital resources only. All products are
@@ -91,17 +97,17 @@ export default function ProductsPage() {
                 key={tab.label}
                 type="button"
                 onClick={() => setActive(tab.label)}
-                className={`inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all ${
+                className={`inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold transition-all duration-300 ${
                   active === tab.label
-                    ? "bg-blue-600 text-white shadow-sm"
-                    : "bg-white text-slate-700 border border-slate-200 hover:border-blue-300 hover:text-blue-600"
+                    ? "bg-brand-gradient text-white shadow-card-hover"
+                    : "bg-white text-slate-700 border border-slate-200 shadow-sm hover:-translate-y-px hover:border-blue-300 hover:text-blue-600 hover:shadow-card"
                 }`}
               >
                 <span>{tab.icon}</span>
                 <span>{tab.label}</span>
                 <span className={`rounded-full px-2 py-0.5 text-xs font-bold ${
                   active === tab.label
-                    ? "bg-blue-500 text-white"
+                    ? "bg-white/20 text-white"
                     : "bg-slate-100 text-slate-600"
                 }`}>
                   {tab.count}
@@ -145,7 +151,7 @@ export default function ProductsPage() {
           <div className="mt-10 rounded-3xl border border-slate-200 bg-white p-10 text-center shadow-sm">
             <p className="text-lg font-semibold text-slate-950">No products in this category yet.</p>
             <button type="button" onClick={() => setActive("All")}
-              className="mt-4 rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white hover:bg-blue-700">
+              className="mt-4 rounded-xl bg-brand-gradient px-6 py-3 text-sm font-semibold text-white shadow-card transition-all duration-300 hover:-translate-y-px hover:shadow-card-hover hover:brightness-110">
               View all products
             </button>
           </div>
