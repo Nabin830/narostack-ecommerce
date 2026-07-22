@@ -93,14 +93,17 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Missing fields" }, { status: 400 });
     }
 
-    if (getOrderById(orderId)) {
+    // ✅ FIX 1: await added — was: if (getOrderById(orderId)) {
+    const existing = await getOrderById(orderId);
+    if (existing) {
       console.log(`[Dodo] Duplicate ${orderId} — ignored`);
       return NextResponse.json({ received: true });
     }
 
     const productSlug = DODO_PRODUCT_ID_TO_SLUG[dodoProductId] ?? dodoProductId;
 
-    const order = saveOrder({
+    // ✅ FIX 2: await added — was: const order = saveOrder({...
+    const order = await saveOrder({
       orderId,
       productId: dodoProductId,
       productSlug,

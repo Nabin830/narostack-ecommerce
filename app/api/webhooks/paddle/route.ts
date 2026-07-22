@@ -3,18 +3,9 @@ import crypto from "crypto";
 import { saveOrder, getOrderById } from "@/lib/orders";
 import { PADDLE_PRICE_ID_TO_SLUG } from "@/lib/paddleProductMap";
 import { getDownloadLink } from "@/lib/productDownloadLinks";
+import { sendDownloadEmail } from "@/lib/sendEmail";
+import { products } from "@/data/products";
 
-/**
- * Paddle webhook signature verification.
- *
- * Paddle sends the signature in the "Paddle-Signature" header.
- * Format: "ts=TIMESTAMP;h1=HMAC_SHA256_HEX"
- *
- * The signed payload is: "TIMESTAMP:RAW_BODY"
- * The secret is your webhook secret key from Paddle dashboard (no prefix to strip).
- *
- * Docs: https://developer.paddle.com/webhooks/signature-verification
- */
 function verifyPaddleSignature(
   rawBody: string,
   signatureHeader: string,
@@ -26,7 +17,6 @@ function verifyPaddleSignature(
   }
 
   try {
-    // Parse ts and h1 from "ts=...;h1=..."
     const parts: Record<string, string> = {};
     for (const part of signatureHeader.split(";")) {
       const eqIdx = part.indexOf("=");
@@ -41,7 +31,6 @@ function verifyPaddleSignature(
       return false;
     }
 
-    // Reject events older than 5 minutes
     const age = Math.abs(Date.now() / 1000 - parseInt(ts, 10));
     if (age > 300) {
       console.error(`[Paddle] Webhook too old: ${age}s`);
@@ -54,21 +43,47 @@ function verifyPaddleSignature(
       .update(signedPayload)
       .digest("hex");
 
-    // Constant-time comparison
     if (expected.length !== h1.length) return false;
     let diff = 0;
     for (let i = 0; i < expected.length; i++) {
       diff |= expected.charCodeAt(i) ^ h1.charCodeAt(i);
     }
-    if (diff !== 0) {
-      console.error("[Paddle] Signature mismatch");
-      return false;
-    }
-
-    return true;
+    return diff === 0;
   } catch (err) {
     console.error("[Paddle] Signature verification error:", err);
     return false;
+  }
+}
+
+/**
+ * Paddle's transaction.completed webhook only gives us customer_id,
+ * not the actual email. We fetch it from Paddle's Customer API.
+ */
+async function getCustomerEmail(customerId: string): Promise<string | null> {
+  const apiKey = process.env.PADDLE_API_KEY;
+
+  if (!apiKey) {
+    console.error("[Paddle] PADDLE_API_KEY not set — cannot fetch customer email");
+    return null;
+  }
+
+  try {
+    const response = await fetch(`https://api.paddle.com/customers/${customerId}`, {
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+      },
+    });
+
+    if (!response.ok) {
+      console.error(`[Paddle] Failed to fetch customer ${customerId}: ${response.status}`);
+      return null;
+    }
+
+    const result = await response.json();
+    return result?.data?.email ?? null;
+  } catch (err) {
+    console.error("[Paddle] Error fetching customer email:", err);
+    return null;
   }
 }
 
@@ -91,38 +106,56 @@ export async function POST(req: NextRequest) {
   const eventType = (event.event_type ?? event.type) as string;
   console.log(`[Paddle] Event: ${eventType}`);
 
-  // Paddle Billing fires "transaction.completed" on successful payment
   if (eventType === "transaction.completed") {
     const data = event.data as Record<string, unknown>;
 
-    const orderId       = (data.id ?? "") as string;
-    const customerData  = data.customer as Record<string, unknown> | undefined;
-    const customerEmail = ((customerData?.email ?? "") as string).toLowerCase().trim();
-    const details       = data.details as Record<string, unknown> | undefined;
-    const totals        = details?.totals as Record<string, unknown> | undefined;
-    const amount        = Number(totals?.total ?? 0);
-    const currencyCode  = (data.currency_code ?? "USD") as string;
-    const items         = data.items as Array<Record<string, unknown>> | undefined;
-    const priceId       = (items?.[0]?.price as Record<string, unknown> | undefined)?.id as string ?? "";
+    // Log the raw data once so we can confirm field names if anything else is off
+    console.log("[Paddle] Raw transaction data:", JSON.stringify(data));
 
-    if (!orderId || !customerEmail) {
-      console.error("[Paddle] Missing orderId or email");
+    const orderId    = (data.id ?? "") as string;
+    const customerId = (data.customer_id ?? "") as string;
+    const details    = data.details as Record<string, unknown> | undefined;
+    const totals     = details?.totals as Record<string, unknown> | undefined;
+    const amount     = Number(totals?.total ?? 0);
+    const currencyCode = (data.currency_code ?? "USD") as string;
+
+    const items = data.items as Array<Record<string, unknown>> | undefined;
+    const firstItem = items?.[0];
+    // Handle both possible shapes Paddle may send
+    const priceId =
+      (firstItem?.price_id as string) ??
+      ((firstItem?.price as Record<string, unknown> | undefined)?.id as string) ??
+      "";
+
+    if (!orderId || !customerId) {
+      console.error("[Paddle] Missing orderId or customerId", { orderId, customerId });
       return NextResponse.json({ error: "Missing fields" }, { status: 400 });
     }
 
+    // Fetch the real customer email via Paddle's API
+    const customerEmail = await getCustomerEmail(customerId);
+
+    if (!customerEmail) {
+      console.error(`[Paddle] Could not resolve email for customer ${customerId}`);
+      return NextResponse.json({ error: "Could not resolve customer email" }, { status: 400 });
+    }
+
     // Deduplicate
-    if (getOrderById(`paddle_${orderId}`)) {
+    const existing = await getOrderById(`paddle_${orderId}`);
+    if (existing) {
       console.log(`[Paddle] Duplicate ${orderId} — ignored`);
       return NextResponse.json({ received: true });
     }
 
     const productSlug = PADDLE_PRICE_ID_TO_SLUG[priceId] ?? priceId;
+    const product = products.find((p) => p.slug === productSlug);
+    const productName = product?.name ?? productSlug;
 
-    const order = saveOrder({
+    const order = await saveOrder({
       orderId: `paddle_${orderId}`,
       productId: priceId,
       productSlug,
-      customerEmail,
+      customerEmail: customerEmail.toLowerCase().trim(),
       amount,
       currency: currencyCode,
       paidAt: new Date().toISOString(),
@@ -130,10 +163,17 @@ export async function POST(req: NextRequest) {
 
     console.log(`[Paddle] ✅ Saved: ${order.productSlug} for ${order.customerEmail}`);
 
-    // Log download link for debugging
-    const downloadLink = getDownloadLink(order.productSlug);
+    const downloadLink = getDownloadLink(productSlug);
+
     if (downloadLink) {
-      console.log(`[Paddle] 📥 Download link: ${downloadLink}`);
+      await sendDownloadEmail({
+        to: customerEmail,
+        productName,
+        downloadLink,
+        orderId: `paddle_${orderId}`,
+      });
+    } else {
+      console.error(`[Paddle] ⚠️ No download link configured for: ${productSlug}`);
     }
   }
 

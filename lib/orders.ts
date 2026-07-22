@@ -1,13 +1,14 @@
 /**
  * lib/orders.ts
  *
- * Lightweight payment record helpers for Dodo webhook events.
+ * Persistent order storage using Upstash Redis.
+ * Replaces the old in-memory Map, which did not survive
+ * across Vercel's serverless function instances.
  *
- * Important compliance note:
- * Narostack does NOT deliver files from this website using placeholder links.
- * Product access and digital delivery are managed inside Dodo Payments through
- * Dodo's customer-facing checkout and Entitlement/Digital Product Delivery setup.
+ * Used by both the Paddle and Dodo webhooks.
  */
+
+import { redis } from "@/lib/redis";
 
 export type Order = {
   orderId: string;
@@ -19,20 +20,43 @@ export type Order = {
   paidAt: string;
 };
 
-// In-memory record only. This is not used for product delivery.
-const orderStore = new Map<string, Order>();
+const ORDER_KEY = (orderId: string) => `order:${orderId}`;
+const EMAIL_INDEX_KEY = (email: string) => `orders_by_email:${email.toLowerCase().trim()}`;
 
-export function saveOrder(order: Order): Order {
-  orderStore.set(order.orderId, order);
+/**
+ * Save an order and index it by customer email.
+ */
+export async function saveOrder(order: Order): Promise<Order> {
+  await redis.set(ORDER_KEY(order.orderId), order);
+
+  const emailKey = EMAIL_INDEX_KEY(order.customerEmail);
+  await redis.sadd(emailKey, order.orderId);
+
   return order;
 }
 
-export function getOrderById(orderId: string): Order | undefined {
-  return orderStore.get(orderId);
+/**
+ * Look up a single order by its ID (used for webhook deduplication).
+ */
+export async function getOrderById(orderId: string): Promise<Order | undefined> {
+  const order = await redis.get<Order>(ORDER_KEY(orderId));
+  return order ?? undefined;
 }
 
-export function getOrdersByEmail(email: string): Order[] {
-  return Array.from(orderStore.values())
-    .filter((o) => o.customerEmail.toLowerCase() === email.toLowerCase())
+/**
+ * Get all orders for a customer email, newest first.
+ */
+export async function getOrdersByEmail(email: string): Promise<Order[]> {
+  const emailKey = EMAIL_INDEX_KEY(email);
+  const orderIds = await redis.smembers(emailKey);
+
+  if (!orderIds || orderIds.length === 0) return [];
+
+  const orders = await Promise.all(
+    orderIds.map((id) => redis.get<Order>(ORDER_KEY(id)))
+  );
+
+  return orders
+    .filter((o): o is Order => o !== null)
     .sort((a, b) => b.paidAt.localeCompare(a.paidAt));
 }
