@@ -6,13 +6,7 @@ import { getDownloadLink } from "@/lib/productDownloadLinks";
 /**
  * POST /api/secure-download
  * 
- * SECURITY VERIFICATION:
- * 1. ✅ User must be authenticated
- * 2. ✅ User must have purchased the product
- * 3. ✅ Product must have a download link
- * 4. ✅ Only returns link if ALL checks pass
- * 
- * Logs all access for security audit
+ * Verifies user has purchased product, then returns Google Drive link
  */
 export async function POST(req: NextRequest) {
   try {
