@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import crypto from "crypto";
 import { saveOrder, getOrderById } from "@/lib/orders";
 import { PADDLE_PRICE_ID_TO_SLUG } from "@/lib/paddleProductMap";
+import { getDownloadLink } from "@/lib/productDownloadLinks";
 
 /**
  * Paddle webhook signature verification.
@@ -128,6 +129,12 @@ export async function POST(req: NextRequest) {
     });
 
     console.log(`[Paddle] ✅ Saved: ${order.productSlug} for ${order.customerEmail}`);
+
+    // Log download link for debugging
+    const downloadLink = getDownloadLink(order.productSlug);
+    if (downloadLink) {
+      console.log(`[Paddle] 📥 Download link: ${downloadLink}`);
+    }
   }
 
   return NextResponse.json({ received: true });
