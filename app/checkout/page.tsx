@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { CreditCard, Download, ShieldCheck, Zap } from "lucide-react";
 import { dodoLinks } from "@/lib/dodoLinks";
 import { paddleLinks } from "@/lib/paddleLinks";
+import { polarProductIds } from "@/lib/polarProductIds";
 
 const productOptions: { label: string; slug: string; price: string }[] = [
   { label: "Daily Task Checklist", slug: "daily-task-checklist", price: "$1.99" },
@@ -59,7 +60,7 @@ const productOptions: { label: string; slug: string; price: string }[] = [
   { label: "Ultimate Digital Business Kit", slug: "ultimate-digital-business-kit", price: "$48.99" },
 ];
 
-type PaymentMethod = "dodo" | "paddle";
+type PaymentMethod = "dodo" | "paddle" | "polar";
 
 function CheckoutInner() {
   const searchParams = useSearchParams();
@@ -77,8 +78,13 @@ function CheckoutInner() {
   const selectedProduct = productOptions.find((p) => p.slug === selectedSlug);
   const dodoLink   = selectedSlug ? dodoLinks[selectedSlug]   : "";
   const paddleLink = selectedSlug ? paddleLinks[selectedSlug] : "";
-  const checkoutLink = paymentMethod === "dodo" ? dodoLink : paddleLink;
-  const processorName = paymentMethod === "dodo" ? "Dodo Payments" : "Paddle";
+  const polarLink  = selectedSlug && polarProductIds[selectedSlug]
+    ? `/api/polar/checkout?product=${selectedSlug}`
+    : "";
+  const checkoutLink =
+    paymentMethod === "dodo" ? dodoLink : paymentMethod === "paddle" ? paddleLink : polarLink;
+  const processorName =
+    paymentMethod === "dodo" ? "Dodo Payments" : paymentMethod === "paddle" ? "Paddle" : "Polar";
 
   return (
     <main className="bg-slate-50">
@@ -131,7 +137,7 @@ function CheckoutInner() {
             {/* Payment method toggle */}
             <div className="mt-6">
               <p className="text-sm font-semibold text-slate-800">Payment Method</p>
-              <div className="mt-2 grid grid-cols-2 gap-3">
+              <div className="mt-2 grid grid-cols-3 gap-3">
                 <button
                   type="button"
                   onClick={() => setPaymentMethod("dodo")}
@@ -156,6 +162,18 @@ function CheckoutInner() {
                   <CreditCard className="h-5 w-5" />
                   Paddle
                 </button>
+                <button
+                  type="button"
+                  onClick={() => setPaymentMethod("polar")}
+                  className={`flex flex-col items-center gap-1 rounded-xl border-2 px-4 py-3 text-sm font-semibold transition ${
+                    paymentMethod === "polar"
+                      ? "border-slate-900 bg-slate-100 text-slate-900"
+                      : "border-slate-200 bg-white text-slate-600 hover:border-slate-300"
+                  }`}
+                >
+                  <CreditCard className="h-5 w-5" />
+                  Polar
+                </button>
               </div>
             </div>
 
@@ -164,7 +182,9 @@ function CheckoutInner() {
               <div className={`mt-5 rounded-2xl border p-4 ${
                 paymentMethod === "dodo"
                   ? "border-blue-100 bg-blue-50"
-                  : "border-indigo-100 bg-indigo-50"
+                  : paymentMethod === "paddle"
+                  ? "border-indigo-100 bg-indigo-50"
+                  : "border-slate-200 bg-slate-50"
               }`}>
                 <div className="flex items-center justify-between">
                   <div>
@@ -174,7 +194,11 @@ function CheckoutInner() {
                     </p>
                   </div>
                   <p className={`text-2xl font-bold ${
-                    paymentMethod === "dodo" ? "text-blue-600" : "text-indigo-600"
+                    paymentMethod === "dodo"
+                      ? "text-blue-600"
+                      : paymentMethod === "paddle"
+                      ? "text-indigo-600"
+                      : "text-slate-900"
                   }`}>{selectedProduct.price}</p>
                 </div>
               </div>
@@ -191,7 +215,7 @@ function CheckoutInner() {
                     <CreditCard className="h-5 w-5" />
                     Pay Now via Dodo Payments
                   </a>
-                ) : (
+                ) : paymentMethod === "paddle" ? (
                   <button
                     type="button"
                     onClick={() => {
@@ -207,6 +231,14 @@ function CheckoutInner() {
                     <CreditCard className="h-5 w-5" />
                     Pay Now via Paddle
                   </button>
+                ) : (
+                  <a
+                    href={polarLink}
+                    className="flex w-full items-center justify-center gap-3 rounded-xl bg-slate-900 px-6 py-4 text-base font-bold text-white shadow-sm transition hover:bg-slate-800"
+                  >
+                    <CreditCard className="h-5 w-5" />
+                    Pay Now via Polar
+                  </a>
                 )
               ) : (
                 <button
@@ -231,7 +263,7 @@ function CheckoutInner() {
               {
                 Icon: ShieldCheck,
                 title: "Secure payment",
-                text: "Payments are processed by Dodo Payments or Paddle. We never see or store your card details.",
+                text: "Payments are processed by Dodo Payments, Paddle, or Polar. We never see or store your card details.",
               },
               {
                 Icon: Zap,

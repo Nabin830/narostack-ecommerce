@@ -8,6 +8,7 @@ import { getProductBySlug, products } from "@/data/products";
 import { formatPrice } from "@/lib/format";
 import { dodoLinks } from "@/lib/dodoLinks";
 import { paddleLinks } from "@/lib/paddleLinks";
+import { polarProductIds } from "@/lib/polarProductIds";
 
 type Props = { params: { slug: string } };
 
@@ -26,6 +27,7 @@ export default function ProductDetailsPage({ params }: Props) {
   if (!product) notFound();
   const dodoLink   = dodoLinks[product.slug];
   const paddleLink = paddleLinks[product.slug];
+  const polarReady = Boolean(polarProductIds[product.slug]);
 
   return (
     <main className="bg-slate-50">
@@ -67,6 +69,12 @@ export default function ProductDetailsPage({ params }: Props) {
                   className="inline-flex items-center justify-center rounded-xl bg-indigo-600 px-6 py-3 font-semibold text-white shadow-sm transition hover:bg-indigo-700"
                 />
               )}
+              {polarReady && (
+                <a href={`/api/polar/checkout?product=${product.slug}`}
+                  className="inline-flex items-center justify-center rounded-xl bg-slate-900 px-6 py-3 font-semibold text-white shadow-sm transition hover:bg-slate-800">
+                  <CreditCard className="mr-2 h-4 w-4" />Buy with Polar
+                </a>
+              )}
               <AddToCartButton product={product} />
             </div>
             <div className="mt-8 grid gap-4 sm:grid-cols-3">
@@ -96,7 +104,7 @@ export default function ProductDetailsPage({ params }: Props) {
         </div>
         <section className="mt-10 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
           <h2 className="text-2xl font-bold text-slate-950">Purchase and delivery</h2>
-          <p className="mt-4 text-slate-600">Pay securely through Dodo Payments or Paddle. Digital access is delivered automatically after successful payment confirmation. Nothing physical is shipped.</p>
+          <p className="mt-4 text-slate-600">Pay securely through Dodo Payments, Paddle, or Polar. Digital access is delivered automatically after successful payment confirmation. Nothing physical is shipped.</p>
         </section>
       </section>
     </main>

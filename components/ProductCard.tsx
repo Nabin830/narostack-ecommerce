@@ -9,12 +9,14 @@ import { Product } from "@/data/products";
 import { formatPrice } from "@/lib/format";
 import { dodoLinks } from "@/lib/dodoLinks";
 import { paddleLinks } from "@/lib/paddleLinks";
+import { polarProductIds } from "@/lib/polarProductIds";
 
 type ProductCardProps = { product: Product };
 
 export default function ProductCard({ product }: ProductCardProps) {
   const dodoLink   = dodoLinks[product.slug];
   const paddleLink = paddleLinks[product.slug];
+  const polarReady = Boolean(polarProductIds[product.slug]);
 
   return (
     <div className="card-lift group flex h-full flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-card hover:border-blue-300/60 hover:shadow-card-hover">
@@ -49,6 +51,12 @@ export default function ProductCard({ product }: ProductCardProps) {
               priceId={paddleLink}
               className="inline-flex items-center justify-center rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-card transition-all duration-300 hover:-translate-y-px hover:bg-indigo-700 hover:shadow-card-hover"
             />
+          )}
+          {polarReady && (
+            <a href={`/api/polar/checkout?product=${product.slug}`}
+              className="inline-flex items-center justify-center rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white shadow-card transition-all duration-300 hover:-translate-y-px hover:bg-slate-800 hover:shadow-card-hover">
+              <CreditCard className="mr-2 h-4 w-4" />Buy with Polar
+            </a>
           )}
           <AddToCartButton product={product} />
           <Link href={`/products/${product.slug}`}
