@@ -18,6 +18,7 @@ export type StaffNotification = {
   summary: string;
   orderId?: string;
   customerEmail?: string;
+  customerName?: string;
   amount?: number;
   currency?: string;
   receivedAt: string;

@@ -58,9 +58,11 @@ function verifyPaddleSignature(
 
 /**
  * Paddle's transaction.completed webhook only gives us customer_id,
- * not the actual email. We fetch it from Paddle's Customer API.
+ * not the actual email/name. We fetch them from Paddle's Customer API.
  */
-async function getCustomerEmail(customerId: string): Promise<string | null> {
+async function getCustomerDetails(
+  customerId: string
+): Promise<{ email: string; name: string | null } | null> {
   const apiKey = process.env.PADDLE_API_KEY;
 
   if (!apiKey) {
@@ -81,7 +83,10 @@ async function getCustomerEmail(customerId: string): Promise<string | null> {
     }
 
     const result = await response.json();
-    return result?.data?.email ?? null;
+    const email = result?.data?.email ?? null;
+    if (!email) return null;
+
+    return { email, name: result?.data?.name ?? null };
   } catch (err) {
     console.error("[Paddle] Error fetching customer email:", err);
     return null;
@@ -133,22 +138,26 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Missing fields" }, { status: 400 });
     }
 
-    // Fetch the real customer email via Paddle's API
-    const customerEmail = await getCustomerEmail(customerId);
+    // Fetch the real customer email/name via Paddle's API
+    const customerDetails = await getCustomerDetails(customerId);
 
-    if (!customerEmail) {
+    if (!customerDetails) {
       console.error(`[Paddle] Could not resolve email for customer ${customerId}`);
       return NextResponse.json({ error: "Could not resolve customer email" }, { status: 400 });
     }
+
+    const customerEmail = customerDetails.email;
+    const customerName = customerDetails.name ?? undefined;
 
     await logNotification({
       provider: "paddle",
       eventType,
       orderId: `paddle_${orderId}`,
       customerEmail: customerEmail.toLowerCase().trim(),
+      customerName,
       amount,
       currency: currencyCode,
-      summary: `Paddle payment received from ${customerEmail}`,
+      summary: `Paddle payment received from ${customerName ?? customerEmail}`,
     }).catch((err) => console.error("[Paddle] Failed to log staff notification:", err));
 
     // Deduplicate

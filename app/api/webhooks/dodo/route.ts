@@ -84,6 +84,7 @@ export async function POST(req: NextRequest) {
     const orderId       = (data.payment_id ?? "") as string;
     const customer      = data.customer as Record<string, unknown> | undefined;
     const customerEmail = ((customer?.email ?? "") as string).toLowerCase().trim();
+    const customerName  = (customer?.name as string | undefined) || undefined;
     const amount        = (data.total_amount ?? 0) as number;
     const currency      = (data.currency ?? "USD") as string;
     const productCart   = data.product_cart as Array<Record<string, unknown>> | undefined;
@@ -99,9 +100,10 @@ export async function POST(req: NextRequest) {
       eventType,
       orderId,
       customerEmail,
+      customerName,
       amount,
       currency,
-      summary: `Dodo payment received from ${customerEmail}`,
+      summary: `Dodo payment received from ${customerName ?? customerEmail}`,
     }).catch((err) => console.error("[Dodo] Failed to log staff notification:", err));
 
     // ✅ FIX 1: await added — was: if (getOrderById(orderId)) {

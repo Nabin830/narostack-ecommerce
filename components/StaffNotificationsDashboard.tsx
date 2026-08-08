@@ -11,6 +11,7 @@ type StaffNotification = {
   summary: string;
   orderId?: string;
   customerEmail?: string;
+  customerName?: string;
   amount?: number;
   currency?: string;
   receivedAt: string;
@@ -166,7 +167,12 @@ export default function StaffNotificationsDashboard() {
                           {n.eventType}
                         </span>
                       </div>
-                      <p className="mt-1 text-sm text-slate-600">
+                      {n.customerName && (
+                        <p className="mt-1 text-sm font-semibold text-slate-800">
+                          {n.customerName}
+                        </p>
+                      )}
+                      <p className="mt-0.5 text-sm text-slate-600">
                         {[n.customerEmail, n.orderId, formatAmount(n.amount, n.currency)]
                           .filter(Boolean)
                           .join(" · ") || "No additional details"}

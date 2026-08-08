@@ -34,6 +34,7 @@ export async function POST(req: NextRequest) {
     const order = event.data;
     const orderId = `polar_${order.id}`;
     const customerEmail = (order.customer?.email ?? "").toLowerCase().trim();
+    const customerName = order.customer?.name ?? undefined;
     const productSlug =
       (order.metadata?.productSlug as string | undefined) ||
       slugFromProductId(order.productId);
@@ -52,9 +53,10 @@ export async function POST(req: NextRequest) {
       eventType: event.type,
       orderId,
       customerEmail,
+      customerName,
       amount: order.totalAmount,
       currency: order.currency,
-      summary: `Polar payment received from ${customerEmail}`,
+      summary: `Polar payment received from ${customerName ?? customerEmail}`,
     }).catch((err) => console.error("[Polar] Failed to log staff notification:", err));
 
     const existing = await getOrderById(orderId);
