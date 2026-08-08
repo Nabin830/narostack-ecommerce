@@ -18,6 +18,20 @@ type StaffNotification = {
 
 type FilterKey = "all" | "paddle" | "polar" | "dodo";
 
+function formatAmount(amount?: number, currency?: string): string | null {
+  if (amount == null) return null;
+  try {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: currency || "USD",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(amount);
+  } catch {
+    return `${amount} ${currency ?? ""}`.trim();
+  }
+}
+
 const PROVIDER_LABEL: Record<StaffNotification["provider"], string> = {
   paddle: "Paddle",
   polar: "Polar",
@@ -153,7 +167,7 @@ export default function StaffNotificationsDashboard() {
                         </span>
                       </div>
                       <p className="mt-1 text-sm text-slate-600">
-                        {[n.customerEmail, n.orderId, n.amount != null ? `${n.amount} ${n.currency ?? ""}`.trim() : null]
+                        {[n.customerEmail, n.orderId, formatAmount(n.amount, n.currency)]
                           .filter(Boolean)
                           .join(" · ") || "No additional details"}
                       </p>
