@@ -5,6 +5,7 @@ import { getDownloadLink } from "@/lib/productDownloadLinks";
 import { sendDownloadEmail } from "@/lib/sendEmail";
 import { products } from "@/data/products";
 import { polarProductIds } from "@/lib/polarProductIds";
+import { logNotification } from "@/lib/notifications";
 
 function slugFromProductId(productId: string | null): string {
   if (!productId) return "";
@@ -28,6 +29,12 @@ export async function POST(req: NextRequest) {
   }
 
   console.log(`[Polar] Event: ${event.type}`);
+
+  await logNotification({
+    provider: "polar",
+    eventType: event.type,
+    summary: `Polar event: ${event.type}`,
+  }).catch((err) => console.error("[Polar] Failed to log staff notification:", err));
 
   if (event.type === "order.paid") {
     const order = event.data;

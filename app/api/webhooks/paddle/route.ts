@@ -5,6 +5,7 @@ import { PADDLE_PRICE_ID_TO_SLUG } from "@/lib/paddleProductMap";
 import { getDownloadLink } from "@/lib/productDownloadLinks";
 import { sendDownloadEmail } from "@/lib/sendEmail";
 import { products } from "@/data/products";
+import { logNotification } from "@/lib/notifications";
 
 function verifyPaddleSignature(
   rawBody: string,
@@ -105,6 +106,14 @@ export async function POST(req: NextRequest) {
 
   const eventType = (event.event_type ?? event.type) as string;
   console.log(`[Paddle] Event: ${eventType}`);
+
+  const rawData = event.data as Record<string, unknown> | undefined;
+  await logNotification({
+    provider: "paddle",
+    eventType,
+    orderId: (rawData?.id as string) || undefined,
+    summary: `Paddle event: ${eventType}`,
+  }).catch((err) => console.error("[Paddle] Failed to log staff notification:", err));
 
   if (eventType === "transaction.completed") {
     const data = event.data as Record<string, unknown>;

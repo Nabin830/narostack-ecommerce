@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import crypto from "crypto";
 import { saveOrder, getOrderById } from "@/lib/orders";
 import { DODO_PRODUCT_ID_TO_SLUG } from "@/lib/dodoProductMap";
+import { logNotification } from "@/lib/notifications";
 
 function safeEqual(a: string, b: string): boolean {
   if (a.length !== b.length) return false;
@@ -76,6 +77,14 @@ export async function POST(req: NextRequest) {
 
   const eventType = event.type as string;
   console.log(`[Dodo] Event: ${eventType}`);
+
+  const rawData = event.data as Record<string, unknown> | undefined;
+  await logNotification({
+    provider: "dodo",
+    eventType,
+    orderId: (rawData?.payment_id as string) || undefined,
+    summary: `Dodo event: ${eventType}`,
+  }).catch((err) => console.error("[Dodo] Failed to log staff notification:", err));
 
   if (eventType === "payment.succeeded") {
     const data = event.data as Record<string, unknown>;
