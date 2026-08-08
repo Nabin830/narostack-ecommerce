@@ -78,14 +78,6 @@ export async function POST(req: NextRequest) {
   const eventType = event.type as string;
   console.log(`[Dodo] Event: ${eventType}`);
 
-  const rawData = event.data as Record<string, unknown> | undefined;
-  await logNotification({
-    provider: "dodo",
-    eventType,
-    orderId: (rawData?.payment_id as string) || undefined,
-    summary: `Dodo event: ${eventType}`,
-  }).catch((err) => console.error("[Dodo] Failed to log staff notification:", err));
-
   if (eventType === "payment.succeeded") {
     const data = event.data as Record<string, unknown>;
 
@@ -101,6 +93,16 @@ export async function POST(req: NextRequest) {
       console.error("[Dodo] Missing orderId or email");
       return NextResponse.json({ error: "Missing fields" }, { status: 400 });
     }
+
+    await logNotification({
+      provider: "dodo",
+      eventType,
+      orderId,
+      customerEmail,
+      amount,
+      currency,
+      summary: `Dodo payment received from ${customerEmail}`,
+    }).catch((err) => console.error("[Dodo] Failed to log staff notification:", err));
 
     // ✅ FIX 1: await added — was: if (getOrderById(orderId)) {
     const existing = await getOrderById(orderId);
@@ -123,6 +125,12 @@ export async function POST(req: NextRequest) {
     });
 
     console.log(`[Dodo] ✅ Saved: ${order.productSlug} for ${order.customerEmail}`);
+  } else {
+    await logNotification({
+      provider: "dodo",
+      eventType,
+      summary: `Dodo event: ${eventType}`,
+    }).catch((err) => console.error("[Dodo] Failed to log staff notification:", err));
   }
 
   return NextResponse.json({ received: true });

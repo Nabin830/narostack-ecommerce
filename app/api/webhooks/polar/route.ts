@@ -30,12 +30,6 @@ export async function POST(req: NextRequest) {
 
   console.log(`[Polar] Event: ${event.type}`);
 
-  await logNotification({
-    provider: "polar",
-    eventType: event.type,
-    summary: `Polar event: ${event.type}`,
-  }).catch((err) => console.error("[Polar] Failed to log staff notification:", err));
-
   if (event.type === "order.paid") {
     const order = event.data;
     const orderId = `polar_${order.id}`;
@@ -52,6 +46,16 @@ export async function POST(req: NextRequest) {
       });
       return NextResponse.json({ error: "Missing fields" }, { status: 400 });
     }
+
+    await logNotification({
+      provider: "polar",
+      eventType: event.type,
+      orderId,
+      customerEmail,
+      amount: order.totalAmount,
+      currency: order.currency,
+      summary: `Polar payment received from ${customerEmail}`,
+    }).catch((err) => console.error("[Polar] Failed to log staff notification:", err));
 
     const existing = await getOrderById(orderId);
     if (existing) {
@@ -85,6 +89,12 @@ export async function POST(req: NextRequest) {
     } else {
       console.error(`[Polar] ⚠️ No download link configured for: ${productSlug}`);
     }
+  } else {
+    await logNotification({
+      provider: "polar",
+      eventType: event.type,
+      summary: `Polar event: ${event.type}`,
+    }).catch((err) => console.error("[Polar] Failed to log staff notification:", err));
   }
 
   return NextResponse.json({ received: true });

@@ -107,14 +107,6 @@ export async function POST(req: NextRequest) {
   const eventType = (event.event_type ?? event.type) as string;
   console.log(`[Paddle] Event: ${eventType}`);
 
-  const rawData = event.data as Record<string, unknown> | undefined;
-  await logNotification({
-    provider: "paddle",
-    eventType,
-    orderId: (rawData?.id as string) || undefined,
-    summary: `Paddle event: ${eventType}`,
-  }).catch((err) => console.error("[Paddle] Failed to log staff notification:", err));
-
   if (eventType === "transaction.completed") {
     const data = event.data as Record<string, unknown>;
 
@@ -148,6 +140,16 @@ export async function POST(req: NextRequest) {
       console.error(`[Paddle] Could not resolve email for customer ${customerId}`);
       return NextResponse.json({ error: "Could not resolve customer email" }, { status: 400 });
     }
+
+    await logNotification({
+      provider: "paddle",
+      eventType,
+      orderId: `paddle_${orderId}`,
+      customerEmail: customerEmail.toLowerCase().trim(),
+      amount,
+      currency: currencyCode,
+      summary: `Paddle payment received from ${customerEmail}`,
+    }).catch((err) => console.error("[Paddle] Failed to log staff notification:", err));
 
     // Deduplicate
     const existing = await getOrderById(`paddle_${orderId}`);
@@ -184,6 +186,12 @@ export async function POST(req: NextRequest) {
     } else {
       console.error(`[Paddle] ⚠️ No download link configured for: ${productSlug}`);
     }
+  } else {
+    await logNotification({
+      provider: "paddle",
+      eventType,
+      summary: `Paddle event: ${eventType}`,
+    }).catch((err) => console.error("[Paddle] Failed to log staff notification:", err));
   }
 
   return NextResponse.json({ received: true });
